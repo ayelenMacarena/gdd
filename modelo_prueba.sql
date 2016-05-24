@@ -50,6 +50,10 @@ IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('FK_Roles_Usuario_U
 ALTER TABLE Roles_Usuario DROP CONSTRAINT FK_Roles_Usuario_Usuario
 ;
 
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('FK_username') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+ALTER TABLE Usuario DROP CONSTRAINT FK_username
+;
+
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('FK_Vendedor_Usuario') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE Vendedor DROP CONSTRAINT FK_Vendedor_Usuario
 ;
@@ -160,7 +164,8 @@ CREATE TABLE Compra (
 	id_compra numeric(18) NOT NULL,
 	id_vendedor numeric(18) NOT NULL,
 	id_comprador numeric(18) NOT NULL,
-	num_factura numeric(18) NOT NULL
+	num_factura numeric(18) NOT NULL,
+	username nvarchar(20) NOT NULL
 )
 ;
 
@@ -204,7 +209,8 @@ CREATE TABLE Funcionalidad_Rol (
 CREATE TABLE Item_Factura ( 
 	num_factura numeric(18) NOT NULL,
 	id_publicacion numeric(18) NOT NULL,
-	cantidad numeric(18)
+	cantidad numeric(18),
+	precio_unitario numeric(18,2)
 )
 ;
 
