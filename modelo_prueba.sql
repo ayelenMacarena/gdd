@@ -1,3 +1,5 @@
+--TODO: Faltan cambiar los nombres a los drops.
+
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('FK_Clientes_Tipo_Dni') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE Clientes DROP CONSTRAINT FK_Clientes_Tipo_Dni
 ;
@@ -141,310 +143,310 @@ DROP TABLE Visibilidad
 ;
 
 
-CREATE TABLE Calificacion ( 
-	id_calificacion numeric(18) NOT NULL,
-	valor numeric(5),
-	detalle nvarchar(100)
+CREATE TABLE calificacion ( 
+	calificacion_id numeric(18) NOT NULL,
+	cali_valor numeric(5),
+	cali_detalle nvarchar(100)
 )
 ;
 
-CREATE TABLE Clientes ( 
-	apellido nvarchar(255) NOT NULL,
-	nombre nvarchar(255) NOT NULL,
-	dni numeric(18) NOT NULL,
-	id_tipo_doc numeric(18) NOT NULL,
-	fecha_nac datetime,
-	fecha_creacion datetime NOT NULL,
-	id_vendedor numeric(18) NOT NULL
+CREATE TABLE clientes ( 
+	clie_apellido nvarchar(255) NOT NULL,
+	clie_nombre nvarchar(255) NOT NULL,
+	clie_dni numeric(18) NOT NULL,
+	clie_id_tipo_doc numeric(18) NOT NULL,
+	clie_fecha_nac datetime,
+	clie_fecha_creacion datetime NOT NULL,
+	clie_id_vendedor numeric(18) NOT NULL
 )
 ;
 
-CREATE TABLE Compra ( 
-	id_publicacion numeric(18) NOT NULL,
-	id_compra numeric(18) NOT NULL,
-	id_vendedor numeric(18) NOT NULL,
-	id_comprador numeric(18) NOT NULL,
-	num_factura numeric(18) NOT NULL,
-	username nvarchar(20) NOT NULL
+CREATE TABLE compra ( 
+	comp_id_publicacion numeric(18) NOT NULL,
+	compra_id numeric(18) NOT NULL,
+	comp_id_vendedor numeric(18) NOT NULL,
+	comp_id_comprador numeric(18) NOT NULL,
+	comp_num_factura numeric(18) NOT NULL,
+	comp_username nvarchar(20) NOT NULL
 )
 ;
 
-CREATE TABLE Empresa ( 
-	razon_social nvarchar(255) NOT NULL,
-	ciudad nvarchar(255),
-	cuit nvarchar(50) NOT NULL,
-	nombre_contacto nvarchar(255),
-	cod_rubro numeric(18) NOT NULL,
-	id_vendedor numeric(18) NOT NULL
+CREATE TABLE empresa ( 
+	empr_razon_social nvarchar(255) NOT NULL,
+	empr_ciudad nvarchar(255),
+	empr_cuit nvarchar(50) NOT NULL,
+	empr_nombre_contacto nvarchar(255),
+	empr_cod_rubro numeric(18) NOT NULL,
+	empr_id_vendedor numeric(18) NOT NULL
 )
 ;
 
-CREATE TABLE Estado ( 
-	id_estado int NOT NULL,
-	descripcion varchar(30)
+CREATE TABLE estado ( 
+	esta_id int NOT NULL,
+	esta_descripcion varchar(30)
 )
 ;
 
-CREATE TABLE Factura ( 
-	num_factura numeric(18) NOT NULL,
-	fecha datetime,
-	total numeric(18,2),
-	id_vendedor numeric(18),
-	id_publicacion numeric(18)
+CREATE TABLE factura ( 
+	fact_num numeric(18) NOT NULL,
+	fact_fecha datetime,
+	fact_total numeric(18,2),
+	fact_id_vendedor numeric(18),
+	fact_id_publicacion numeric(18)
 )
 ;
 
-CREATE TABLE Funcionalidad ( 
-	id_funcionalidad numeric(18) NOT NULL,
-	descripcion nvarchar(255)
+CREATE TABLE funcionalidad ( 
+	func_id numeric(18) NOT NULL,
+	func_descripcion nvarchar(255)
 )
 ;
 
-CREATE TABLE Funcionalidad_Rol ( 
-	id_funcionalidad numeric(18) NOT NULL,
-	id_rol numeric(18) NOT NULL
+CREATE TABLE funcionalidad_rol ( 
+	furo_id_funcionalidad numeric(18) NOT NULL,
+	furo_id_rol numeric(18) NOT NULL
 )
 ;
 
-CREATE TABLE Item_Factura ( 
-	num_factura numeric(18) NOT NULL,
-	id_publicacion numeric(18) NOT NULL,
-	cantidad numeric(18),
-	precio_unitario numeric(18,2)
+CREATE TABLE item_factura ( 
+	item_num_factura numeric(18) NOT NULL,
+	item_id_publicacion numeric(18) NOT NULL,
+	item_cantidad numeric(18),
+	item_precio_unitario numeric(18,2)
 )
 ;
 
-CREATE TABLE Oferta ( 
-	id_oferta numeric(18) NOT NULL,
-	id_publicacion numeric(18) NOT NULL,
-	valor numeric(18) NOT NULL,
-	username nvarchar(20) NOT NULL
+CREATE TABLE oferta ( 
+	oferta_id numeric(18) NOT NULL,
+	ofer_id_publicacion numeric(18) NOT NULL,
+	ofer_valor numeric(18) NOT NULL,
+	ofer_username nvarchar(20) NOT NULL
 )
 ;
 
-CREATE TABLE Operacion ( 
-	id_operacion numeric(18) NOT NULL,
-	id_vendedor numeric(18) NOT NULL,
-	id_comprador numeric(18) NOT NULL,
-	calif_vendedor numeric(18),
-	calif_comprador numeric(18)
+CREATE TABLE operacion ( 
+	operacion_id numeric(18) NOT NULL,
+	oper_id_vendedor numeric(18) NOT NULL,
+	oper_id_comprador numeric(18) NOT NULL,
+	oper_calif_vendedor numeric(18),
+	oper_calif_comprador numeric(18)
 )
 ;
 
-CREATE TABLE Publicacion ( 
-	id_publicacion numeric(18) identity(1,1)  NOT NULL,
-	descripcion nvarchar(255),
-	precio numeric(18,2),
-	costo numeric(18,2),
-	cod_rubro numeric(18) NOT NULL,
-	cod_visibilidad numeric(18) NOT NULL,
-	id_vendedor numeric(18) NOT NULL,
-	id_estado numeric(18) NOT NULL,
-	fecha_inicio datetime,
-	fecha_fin datetime,
-	preguntas bit,
-	cantidad numeric(18),
-	id_tipo numeric(18) NOT NULL
+CREATE TABLE publicacion ( 
+	publicacion_id numeric(18) identity(1,1)  NOT NULL,
+	publ_descripcion nvarchar(255),
+	publ_precio numeric(18,2),
+	publ_costo numeric(18,2),
+	publ_cod_rubro numeric(18) NOT NULL,
+	publ_cod_visibilidad numeric(18) NOT NULL,
+	publ_id_vendedor numeric(18) NOT NULL,
+	publ_id_estado numeric(18) NOT NULL,
+	publ_fecha_inicio datetime,
+	publ_fecha_fin datetime,
+	publ_preguntas bit,
+	publ_cantidad numeric(18),
+	publ_id_tipo numeric(18) NOT NULL
 )
 ;
 
-CREATE TABLE Rol ( 
-	id_rol numeric(18) NOT NULL,
-	descripcion nvarchar(255) NOT NULL,
-	habilitado bit NOT NULL
+CREATE TABLE rol ( 
+	rol_id numeric(18) NOT NULL,
+	rol_descripcion nvarchar(255) NOT NULL,
+	rol_habilitado bit NOT NULL
 )
 ;
 
-CREATE TABLE Roles_Usuario ( 
-	id_rol numeric(18) NOT NULL,
-	username nvarchar(20) NOT NULL
+CREATE TABLE roles_usuario ( 
+	rolu_id_rol numeric(18) NOT NULL,
+	rolu_username nvarchar(20) NOT NULL
 )
 ;
 
-CREATE TABLE Rubro ( 
-	cod_rubro numeric(18) NOT NULL,
-	descripcion_corta nvarchar(125),
-	descripcion_larga nvarchar(255)
+CREATE TABLE rubro ( 
+	rubro_cod numeric(18) NOT NULL,
+	rubr_descripcion_corta nvarchar(125),
+	rubr_descripcion_larga nvarchar(255)
 )
 ;
 
-CREATE TABLE Tipo ( 
-	id_tipo numeric(18) NOT NULL,
-	descripcion nvarchar(255)
+CREATE TABLE tipo ( 
+	tipo_id numeric(18) NOT NULL,
+	tipo_descripcion nvarchar(255)
 )
 ;
 
-CREATE TABLE Tipo_Dni ( 
-	id_tipo numeric(18) NOT NULL,
-	descripcion nvarchar(255) NOT NULL
+CREATE TABLE document_type ( 
+	type_id numeric(18) NOT NULL,
+	type_descripcion nvarchar(255) NOT NULL
 )
 ;
 
-CREATE TABLE Usuario ( 
-	username nvarchar(20) NOT NULL,
-	password nvarchar(20) NOT NULL
+CREATE TABLE usuario ( 
+	usua_username nvarchar(20) NOT NULL,
+	usua_password nvarchar(20) NOT NULL
 )
 ;
 
-CREATE TABLE Vendedor ( 
-	id_vendedor numeric(18) NOT NULL,
-	username nvarchar(20) NOT NULL,
-	mail nvarchar(50),
-	telefono nvarchar(50),
-	domicilio_calle nvarchar(255),
-	cod_postal nvarchar(50),
-	habilitado bit NOT NULL,
-	calificacion numeric(18,2),
-	numero_calle numeric(18),
-	piso numeric(18),
-	depto nvarchar(50)
+CREATE TABLE vendedor ( 
+	vendedor_id numeric(18) NOT NULL,
+	vend_username nvarchar(20) NOT NULL,
+	vend_mail nvarchar(50),
+	vend_telefono nvarchar(50),
+	vend_domicilio_calle nvarchar(255),
+	vend_cod_postal nvarchar(50),
+	vend_habilitado bit NOT NULL,
+	vend_calificacion numeric(18,2),
+	vend_numero_calle numeric(18),
+	vend_piso numeric(18),
+	vend_depto nvarchar(50)
 )
 ;
 
-CREATE TABLE Visibilidad ( 
-	cod_visibilidad numeric(18) NOT NULL,
-	precio numeric(18,2),
-	porcentaje numeric(18,2),
-	envio bit,
-	descripcion nvarchar(255)
+CREATE TABLE visibilidad ( 
+	visibilidad_cod numeric(18) NOT NULL,
+	visi_precio numeric(18,2),
+	visi_porcentaje numeric(18,2),
+	visi_envio bit,
+	visi_descripcion nvarchar(255)
 )
 ;
 
 
-ALTER TABLE Calificacion ADD CONSTRAINT PK_Calificacion 
-	PRIMARY KEY CLUSTERED (id_calificacion)
+ALTER TABLE calificacion ADD CONSTRAINT PK_calificacion 
+	PRIMARY KEY CLUSTERED (calificacion_id)
 ;
 
-ALTER TABLE Clientes ADD CONSTRAINT PK_Clientes 
-	PRIMARY KEY CLUSTERED (dni, id_tipo_doc)
+ALTER TABLE clientes ADD CONSTRAINT PK_clientes 
+	PRIMARY KEY CLUSTERED (dni, clie_id_tipo_doc)
 ;
 
-ALTER TABLE Compra ADD CONSTRAINT PK_Compra 
-	PRIMARY KEY CLUSTERED (id_compra)
+ALTER TABLE compra ADD CONSTRAINT PK_compra 
+	PRIMARY KEY CLUSTERED (compra_id)
 ;
 
-ALTER TABLE Empresa ADD CONSTRAINT PK_Empresa 
-	PRIMARY KEY CLUSTERED (cuit)
+ALTER TABLE empresa ADD CONSTRAINT PK_empresa 
+	PRIMARY KEY CLUSTERED (empr_cuit)
 ;
 
-ALTER TABLE Estado ADD CONSTRAINT PK_Estado 
-	PRIMARY KEY CLUSTERED (id_estado)
+ALTER TABLE estado ADD CONSTRAINT PK_estado 
+	PRIMARY KEY CLUSTERED (estado_id)
 ;
 
-ALTER TABLE Factura ADD CONSTRAINT PK_Factura 
-	PRIMARY KEY CLUSTERED (num_factura)
+ALTER TABLE factura ADD CONSTRAINT PK_factura 
+	PRIMARY KEY CLUSTERED (fact_num)
 ;
 
-ALTER TABLE Funcionalidad ADD CONSTRAINT PK_Funcionalidad 
-	PRIMARY KEY CLUSTERED (id_funcionalidad)
+ALTER TABLE funcionalidad ADD CONSTRAINT PK_funcionalidad 
+	PRIMARY KEY CLUSTERED (func_id)
 ;
 
-ALTER TABLE Funcionalidad_Rol ADD CONSTRAINT PK_Funcionalidad_Rol 
-	PRIMARY KEY CLUSTERED (id_funcionalidad, id_rol)
+ALTER TABLE funcionalidad_rol ADD CONSTRAINT PK_funcionalidad_rol 
+	PRIMARY KEY CLUSTERED (func_id, rol_id)
 ;
 
-ALTER TABLE Item_Factura ADD CONSTRAINT PK_Item_Factura 
-	PRIMARY KEY CLUSTERED (num_factura, id_publicacion)
+ALTER TABLE item_factura ADD CONSTRAINT PK_item_factura 
+	PRIMARY KEY CLUSTERED (fact_num, publ_id)
 ;
 
-ALTER TABLE Oferta ADD CONSTRAINT PK_Oferta 
-	PRIMARY KEY CLUSTERED (id_oferta)
+ALTER TABLE oferta ADD CONSTRAINT PK_oferta 
+	PRIMARY KEY CLUSTERED (oferta_id)
 ;
 
-ALTER TABLE Operacion ADD CONSTRAINT PK_Operacion 
-	PRIMARY KEY CLUSTERED (id_operacion)
+ALTER TABLE operacion ADD CONSTRAINT PK_operacion 
+	PRIMARY KEY CLUSTERED (operacion_id)
 ;
 
-ALTER TABLE Publicacion ADD CONSTRAINT PK_Publicacion 
-	PRIMARY KEY CLUSTERED (id_publicacion)
+ALTER TABLE publicacion ADD CONSTRAINT PK_publicacion 
+	PRIMARY KEY CLUSTERED (publ_id)
 ;
 
-ALTER TABLE Rol ADD CONSTRAINT PK_Usuario 
-	PRIMARY KEY CLUSTERED (id_rol)
+ALTER TABLE rol ADD CONSTRAINT PK_usuario 
+	PRIMARY KEY CLUSTERED (rol_id)
 ;
 
-ALTER TABLE Roles_Usuario ADD CONSTRAINT PK_roles_usuario 
-	PRIMARY KEY CLUSTERED (id_rol, username)
+ALTER TABLE roles_usuario ADD CONSTRAINT PK_roles_usuario 
+	PRIMARY KEY CLUSTERED (rolu_id_rol, rolu_username)
 ;
 
-ALTER TABLE Rubro ADD CONSTRAINT PK_Rubro 
-	PRIMARY KEY CLUSTERED (cod_rubro)
+ALTER TABLE rubro ADD CONSTRAINT PK_rubro 
+	PRIMARY KEY CLUSTERED (rubro_cod)
 ;
 
-ALTER TABLE Tipo ADD CONSTRAINT PK_Tipo 
-	PRIMARY KEY CLUSTERED (id_tipo)
+ALTER TABLE tipo ADD CONSTRAINT PK_tipo 
+	PRIMARY KEY CLUSTERED (tipo_id)
 ;
 
-ALTER TABLE Tipo_Dni ADD CONSTRAINT PK_Tipo 
-	PRIMARY KEY CLUSTERED (id_tipo)
+ALTER TABLE document_type ADD CONSTRAINT PK_document_type 
+	PRIMARY KEY CLUSTERED (type_id)
 ;
 
-ALTER TABLE Usuario ADD CONSTRAINT PK_Usuario 
-	PRIMARY KEY CLUSTERED (username)
+ALTER TABLE usuario ADD CONSTRAINT PK_usuario 
+	PRIMARY KEY CLUSTERED (usua_username)
 ;
 
-ALTER TABLE Vendedor ADD CONSTRAINT PK_Vendedor 
-	PRIMARY KEY CLUSTERED (id_vendedor)
+ALTER TABLE vendedor ADD CONSTRAINT PK_vendedor 
+	PRIMARY KEY CLUSTERED (vendedor_id)
 ;
 
-ALTER TABLE Visibilidad ADD CONSTRAINT PK_Visibilidad 
-	PRIMARY KEY CLUSTERED (cod_visibilidad)
+ALTER TABLE visibilidad ADD CONSTRAINT PK_visibilidad 
+	PRIMARY KEY CLUSTERED (visibilidad_cod)
 ;
 
 
 
-ALTER TABLE Clientes ADD CONSTRAINT FK_Clientes_Tipo_Dni 
-	FOREIGN KEY (id_tipo_doc) REFERENCES Tipo_Dni (id_tipo)
+ALTER TABLE clientes ADD CONSTRAINT FK_clientes_tipo_dni 
+	FOREIGN KEY (clie_id_tipo_doc) REFERENCES document_type (type_id)
 ;
 
-ALTER TABLE Clientes ADD CONSTRAINT FK_Clientes_Vendedor 
-	FOREIGN KEY (id_vendedor) REFERENCES Vendedor (id_vendedor)
+ALTER TABLE clientes ADD CONSTRAINT FK_clientes_vendedor 
+	FOREIGN KEY (clie_id_vendedor) REFERENCES vendedor (vendedor_id)
 ;
 
-ALTER TABLE Empresa ADD CONSTRAINT FK_Empresa_Rubro 
-	FOREIGN KEY (cod_rubro) REFERENCES Rubro (cod_rubro)
+ALTER TABLE empresa ADD CONSTRAINT FK_empresa_rubro 
+	FOREIGN KEY (empr_cod_rubro) REFERENCES rubro (rubro_cod)
 ;
 
-ALTER TABLE Factura ADD CONSTRAINT FK_Factura_Vendedor 
-	FOREIGN KEY (id_vendedor) REFERENCES Vendedor (id_vendedor)
+ALTER TABLE factura ADD CONSTRAINT FK_factura_vendedor 
+	FOREIGN KEY (fact_id_vendedor) REFERENCES vendedor (vendedor_id)
 ;
 
-ALTER TABLE Funcionalidad_Rol ADD CONSTRAINT FK_Funcionalidad_Rol_Funcionalidad 
-	FOREIGN KEY (id_funcionalidad) REFERENCES Funcionalidad (id_funcionalidad)
+ALTER TABLE funcionalidad_rol ADD CONSTRAINT FK_funcionalidad_rol_funcionalidad 
+	FOREIGN KEY (furo_id_funcionalidad) REFERENCES funcionalidad (funcionalidad_id)
 ;
 
-ALTER TABLE Funcionalidad_Rol ADD CONSTRAINT FK_Funcionalidad_Rol_Rol a 
-	FOREIGN KEY (id_rol) REFERENCES Rol (id_rol)
+ALTER TABLE funcionalidad_rol ADD CONSTRAINT FK_funcionalidad_rol_rol a
+	FOREIGN KEY (furo_id_rol) REFERENCES rol (rol_id)
 ;
 
-ALTER TABLE Publicacion ADD CONSTRAINT FK_Publicacion_Estado 
-	FOREIGN KEY (id_estado) REFERENCES Estado (id_estado)
+ALTER TABLE publicacion ADD CONSTRAINT FK_publicacion_estado 
+	FOREIGN KEY (publ_id_estado) REFERENCES estado (estado_id)
 ;
 
-ALTER TABLE Publicacion ADD CONSTRAINT FK_Publicacion_Rubro 
-	FOREIGN KEY (cod_rubro) REFERENCES Rubro (cod_rubro)
+ALTER TABLE publicacion ADD CONSTRAINT FK_publicacion_rubro 
+	FOREIGN KEY (publ_cod_rubro) REFERENCES rubro (rubro_cod)
 ;
 
-ALTER TABLE Publicacion ADD CONSTRAINT FK_Publicacion_Tipo 
-	FOREIGN KEY (id_tipo) REFERENCES Tipo (id_tipo)
+ALTER TABLE publicacion ADD CONSTRAINT FK_publicacion_tipo 
+	FOREIGN KEY (publ_id_tipo) REFERENCES tipo (tipo_id)
 ;
 
-ALTER TABLE Publicacion ADD CONSTRAINT FK_Publicacion_Vendedor 
-	FOREIGN KEY (id_vendedor) REFERENCES Vendedor (id_vendedor)
+ALTER TABLE publicacion ADD CONSTRAINT FK_publicacion_vendedor 
+	FOREIGN KEY (publ_id_vendedor) REFERENCES vendedor (vendedor_id)
 ;
 
-ALTER TABLE Publicacion ADD CONSTRAINT FK_Publicacion_Visibilidad 
-	FOREIGN KEY (cod_visibilidad) REFERENCES Visibilidad (cod_visibilidad)
+ALTER TABLE publicacion ADD CONSTRAINT FK_publicacion_visibilidad 
+	FOREIGN KEY (publ_cod_visibilidad) REFERENCES visibilidad (visibilidad_cod)
 ;
 
-ALTER TABLE Roles_Usuario ADD CONSTRAINT FK_Roles_Usuario_Rol a 
-	FOREIGN KEY (id_rol) REFERENCES Rol (id_rol)
+ALTER TABLE roles_usuario ADD CONSTRAINT FK_roles_usuario_rol a 
+	FOREIGN KEY (rolu_id_rol) REFERENCES rol (rol_id)
 ;
 
-ALTER TABLE Roles_Usuario ADD CONSTRAINT FK_Roles_Usuario_Usuario 
-	FOREIGN KEY (username) REFERENCES Usuario (username)
+ALTER TABLE roles_usuario ADD CONSTRAINT FK_roles_usuario_usuario 
+	FOREIGN KEY (rolu_username) REFERENCES usuario (usua_username)
 ;
 
-ALTER TABLE Vendedor ADD CONSTRAINT FK_Vendedor_Usuario 
-	FOREIGN KEY (username) REFERENCES Usuario (username)
+ALTER TABLE vendedor ADD CONSTRAINT FK_vendedor_usuario 
+	FOREIGN KEY (vend_username) REFERENCES usuario (usua_username)
 ;
