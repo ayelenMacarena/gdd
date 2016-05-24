@@ -65,9 +65,9 @@ fetch next into  @dni ,
 		@piso ,
 		@depto ,
 		@cod_postal ,
-		@razon_social ,
-		@cuit ,
-		@fecha_creacion ,
+		@empr_razon_social ,
+		@empr_cuit ,
+		@empr_fecha_creacion ,
 		@empr_mail ,
 		@empr_calle ,
 		@empr_calle_numero ,
@@ -101,12 +101,36 @@ fetch next into  @dni ,
 		@comp_cantidad ,
 		@ofer_fecha,
 		@ofer_monto	
+		
+		--contadores
+		@cont_rubro,
+		@cont_vendedor
 
 while @@FETCH_STATUS=0 begin
+	--corrobora que no exista la empresa
 	if not isNull@razon_social and not exists(select *
 	                                            from Empresa
 	                                            where empr_razon_social=@razon_social)
 	 BEGIN
-	  insert into Empresa(empr_razon_social,empr_cuit... (me falta terminar de insertar en esta tabla y tengo que completar la otra)
-	 END
-	
+	 --crea la empresa
+	  insert into Empresa(empr_razon_social,empr_cuit,empr_cod_rubro,empr_id_vendedor) values(@empr_razon_social,@empr_cuit,@cont_rubro,@cont_vendedor)
+	--crea el rubro	(sigue un contador para los ids)
+		if not exists(select *
+				from Rubro
+				where rubr_descripcion_corta=@rubr:descr)
+				begin
+				insert into Rubro(rubro_cod,rubr_descripcion_corta) values(@cont_rubro,@rubr_descr)
+				@cont_rubro++
+				end
+	 --crea el vendedor (sigue un contador para los ids)
+	 insert into Vendedor(vendedor_id,vend_username,vend_mail,vend_domicilio_calle,vend_cod_postal,vend_habilitado,vend_numero_calle,vend_piso,vend_depto) 
+	 values(@cont_vendedor,@empr_mail,@empr_calle,@empr_cod_postal,1,@empr_calle_numero,@empr_piso,@empr_dpto)
+	 @cont_vendedor++
+	 --crea un usuario con el mail y de contra 12345
+	 if not exists(select*
+	 		from Usuario
+	 		where usua_username=@empr_mail)
+	 		begin
+	 		insert into Usuario(usua_username,usua_password) values(@empr_mail,"12345")
+	 		end
+	 end
