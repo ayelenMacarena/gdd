@@ -173,7 +173,6 @@ CREATE TABLE compra (
 
 CREATE TABLE empresa ( 
 	empr_razon_social nvarchar(255) NOT NULL,
-	empr_ciudad nvarchar(255),
 	empr_cuit nvarchar(50) NOT NULL,
 	empr_nombre_contacto nvarchar(255),
 	empr_cod_rubro numeric(18) NOT NULL,
@@ -284,7 +283,8 @@ CREATE TABLE document_type (
 
 CREATE TABLE usuario ( 
 	usua_username nvarchar(20) NOT NULL,
-	usua_password nvarchar(20) NOT NULL
+	usua_password nvarchar(20) NOT NULL,
+	usua_habilitado bit NOT NULL
 )
 ;
 
@@ -295,6 +295,7 @@ CREATE TABLE vendedor (
 	vend_telefono nvarchar(50),
 	vend_domicilio_calle nvarchar(255),
 	vend_cod_postal nvarchar(50),
+	vend_ciudad nvarchar(255),
 	vend_habilitado bit NOT NULL,
 	vend_calificacion numeric(18,2),
 	vend_numero_calle numeric(18),
