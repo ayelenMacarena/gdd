@@ -30,10 +30,9 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.ingresoUser = new System.Windows.Forms.TextBox();
+            this.ingresoPass = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
@@ -57,16 +56,6 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Contraseña";
             // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(157, 226);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(125, 13);
-            this.linkLabel1.TabIndex = 2;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Olvidaste tu contraseña?";
-            // 
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
@@ -76,21 +65,23 @@
             this.linkLabel2.TabIndex = 3;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "No tenes usuario?, registrate!";
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
-            // textBox1
+            // ingresoUser
             // 
-            this.textBox1.Location = new System.Drawing.Point(94, 58);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 4;
+            this.ingresoUser.Location = new System.Drawing.Point(94, 58);
+            this.ingresoUser.Name = "ingresoUser";
+            this.ingresoUser.Size = new System.Drawing.Size(100, 20);
+            this.ingresoUser.TabIndex = 4;
             // 
-            // textBox2
+            // ingresoPass
             // 
-            this.textBox2.Location = new System.Drawing.Point(94, 96);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 5;
+            this.ingresoPass.Location = new System.Drawing.Point(94, 96);
+            this.ingresoPass.Multiline = true;
+            this.ingresoPass.Name = "ingresoPass";
+            this.ingresoPass.Size = new System.Drawing.Size(100, 20);
+            this.ingresoPass.TabIndex = 5;
+            this.ingresoPass.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // button1
             // 
@@ -100,6 +91,7 @@
             this.button1.TabIndex = 6;
             this.button1.Text = "Ingresar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // linkLabel3
             // 
@@ -119,10 +111,9 @@
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Controls.Add(this.linkLabel3);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.ingresoPass);
+            this.Controls.Add(this.ingresoUser);
             this.Controls.Add(this.linkLabel2);
-            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "user";
@@ -137,10 +128,9 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.LinkLabel linkLabel2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox ingresoUser;
+        private System.Windows.Forms.TextBox ingresoPass;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.LinkLabel linkLabel3;
     }
