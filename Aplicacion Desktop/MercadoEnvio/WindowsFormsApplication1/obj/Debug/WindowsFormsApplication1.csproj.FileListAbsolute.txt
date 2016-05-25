@@ -1,0 +1,13 @@
+c:\users\matias\documents\visual studio 2012\Projects\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Facturas.Form1.resources
+D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Inicio.resources
+D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.user.resources
+D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.altaUser.resources
