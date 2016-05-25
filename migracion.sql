@@ -103,8 +103,17 @@ fetch next into  @dni ,
 		@ofer_monto	
 		
 		--contadores
-		@cont_rubro,
-		@cont_vendedor
+		create sequence cont_rubro
+			as int
+			start with 0
+			increment by 1;
+			go
+			
+		create sequence cont_vendedor
+			as int
+			start with 0
+			increment by 1;
+			go
 
 while @@FETCH_STATUS=0 begin
 	--corrobora que no exista la empresa
@@ -119,8 +128,7 @@ while @@FETCH_STATUS=0 begin
 				from Rubro
 				where rubr_descripcion_corta=@rubr:descr)
 				begin
-				insert into Rubro(rubro_cod,rubr_descripcion_corta) values(@cont_rubro,@rubr_descr)
-				@cont_rubro++
+				insert into Rubro(rubro_cod,rubr_descripcion_corta) values(next value for cont_rubro,@rubr_descr)
 				end
 	 --crea el vendedor (sigue un contador para los ids)
 	 insert into Vendedor(vendedor_id,vend_username,vend_mail,vend_domicilio_calle,vend_cod_postal,vend_habilitado,vend_numero_calle,vend_piso,vend_depto) 
