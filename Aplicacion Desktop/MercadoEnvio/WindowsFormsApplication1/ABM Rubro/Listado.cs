@@ -66,5 +66,13 @@ namespace WindowsFormsApplication1.ABM_Rubro
         {
 
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Selección seleccion = new Selección();
+            seleccion.ShowDialog();
+            this.Hide();
+
+        }
     }
 }

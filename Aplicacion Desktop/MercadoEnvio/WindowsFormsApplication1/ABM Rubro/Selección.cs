@@ -10,21 +10,11 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Rubro
 {
-    public partial class Alta : Form
+    public partial class Selección : Form
     {
-        public Alta()
+        public Selección()
         {
             InitializeComponent();
-        }
-
-        private void Form2_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
