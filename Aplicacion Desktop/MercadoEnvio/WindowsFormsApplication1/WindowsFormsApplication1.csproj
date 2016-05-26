@@ -37,6 +37,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,11 +48,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ABM Rubro\Form1.cs">
+    <Compile Include="ABM Rubro\Listado.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Rubro\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ABM Rubro\Listado.Designer.cs">
+      <DependentUpon>Listado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Rubro\Rubro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Rubro\Rubro.Designer.cs">
+      <DependentUpon>Rubro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Rubro\Alta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Rubro\Alta.Designer.cs">
+      <DependentUpon>Alta.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Usuario\altaUser.cs">
       <SubType>Form</SubType>
@@ -115,6 +128,15 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ABM Rubro\Listado.resx">
+      <DependentUpon>Listado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Rubro\Rubro.resx">
+      <DependentUpon>Rubro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Rubro\Alta.resx">
+      <DependentUpon>Alta.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\altaUser.resx">
       <DependentUpon>altaUser.cs</DependentUpon>
     </EmbeddedResource>

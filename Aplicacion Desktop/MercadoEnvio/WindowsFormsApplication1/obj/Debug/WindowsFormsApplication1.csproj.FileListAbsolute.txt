@@ -11,3 +11,18 @@ D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicaci
 D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Inicio.resources
 D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.user.resources
 D:\Users\Usuario\Documents\Facultad\Tercer Año\Gestion de datos\TP2016\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.altaUser.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rubro.Rubro.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rubro.Alta.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.altaUser.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.user.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Facturas.Form1.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Inicio.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rubro.Listado.resources
