@@ -114,6 +114,22 @@ fetch next into  @dni ,
 			start with 0
 			increment by 1;
 			go
+		create sequence cont_rol
+			as int
+			start with 0
+			increment by 1;
+			go
+		create sequence cont_funcionalidad
+			as int
+			start with 0
+			increment by 1;
+			go
+		insert into rol(rol_id,rol_descripcion,rol_habilitado) values(next value for cont_rol,"empresa",1)
+		insert into rol(rol_id,rol_descripcion,rol_habilitado) values(next value for cont_rol,"cliente",1)
+		insert into rol(rol_id,rol_descripcion,rol_habilitado) values(next value for cont_rol,"administrativo",1)
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"publicar")
+		insert into funcionalidad_rol(furo_id_funcionalidad,furo_id_rol) values(0,0)
+		insert into funcionalidad_rol(furo_id_funcionalidad,furo_id_rol) values(0,1)
 
 while @@FETCH_STATUS=0 begin
 	--corrobora que no exista la empresa
@@ -140,5 +156,6 @@ while @@FETCH_STATUS=0 begin
 	 		where usua_username=@empr_mail)
 	 		begin
 	 		insert into Usuario(usua_username,usua_password) values(@empr_mail,"12345")
+	 		insert into roles_usuario(rolu_id_rol,rolu_username) values(0,@empr_mail)
 	 		end
 	 end
