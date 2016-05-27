@@ -137,10 +137,32 @@ fetch next into  @dni ,
 		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"calificar")
 		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"facturas_realizadas")
 		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"listado_estadistico")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"administrar_usuario")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"administrar_rol")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"administrar_rubro")
 
+		-- Inserto sus funcionalidades al rol admin
+		insert into funcionalidad_rol(furo_id_funcionalidad,furo_id_rol) values(
+			(select funcionalidad_id from funcionalidad where func_descripcion = "administrar_usuario" or 
+									  func_descripcion = "administrar_rol" or
+									  func_descripcion = "administrar_rubro"),
+			(select rol_id from rol where rol_descripcion = "administrativo"))
+			
+		-- Inserto sus funcionalidades al rol cliente
+		insert into funcionalidad_rol(furo_id_funcionalidad, furo_id_rol) values(
+			(select funcionalidad_id from funcionalidad where func_descripcion = "comprar_ofertar" or
+									  func_descripcion = "publicar" or
+									  func_descripcion = "calificar" or 
+									  func_descripcion = "visibilidad" or
+									  func_descripcion = "historial_cliente"),
+			(select rol_id from rol where rol_descripcion = "cliente"))
 
-		insert into funcionalidad_rol(furo_id_funcionalidad,furo_id_rol) values(0,0)
-		insert into funcionalidad_rol(furo_id_funcionalidad,furo_id_rol) values(0,1)
+		-- Inserto sus funcionalidades al rol empresa
+		insert into funcionalidad_rol(furo_id_funcionalidad, furo_id_rol) values(
+			(select funcionalidad_id from funcionalidad where func_descripcion = "publicar" or
+									  func_descripcion = "visibilidad"),
+			(select rol_id from rol where rol_descripcion = "empresa"))
+
 
 while @@FETCH_STATUS=0 begin
 	--corrobora que no exista la empresa
