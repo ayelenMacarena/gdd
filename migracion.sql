@@ -127,7 +127,18 @@ fetch next into  @dni ,
 		insert into rol(rol_id,rol_descripcion,rol_habilitado) values(next value for cont_rol,"empresa",1)
 		insert into rol(rol_id,rol_descripcion,rol_habilitado) values(next value for cont_rol,"cliente",1)
 		insert into rol(rol_id,rol_descripcion,rol_habilitado) values(next value for cont_rol,"administrativo",1)
+		
+		-- Cargado de datos de funcionalidades
 		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"publicar")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"categorizar_publicacion")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"visibilidad")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"comprar_ofertar")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"historial_cliente")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"calificar")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"facturas_realizadas")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"listado_estadistico")
+
+
 		insert into funcionalidad_rol(furo_id_funcionalidad,furo_id_rol) values(0,0)
 		insert into funcionalidad_rol(furo_id_funcionalidad,furo_id_rol) values(0,1)
 
