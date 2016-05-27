@@ -142,24 +142,49 @@ fetch next from C into  @dni ,
 --FUNCIONALIDAD_ROL
 		-- Rol Admin
 		insert into Funcionalidad_Rol(furo_id_funcionalidad,furo_id_rol) 
-		values((select funcionalidad_id from Funcionalidad where func_descripcion = 'administrar_usuario' or 
-							func_descripcion = 'administrar_rol' or func_descripcion = 'administrar_rubro'),
+		values((select funcionalidad_id from Funcionalidad where func_descripcion = 'administrar_usuario',
 				(select rol_id from Rol where rol_descripcion = 'administrativo'))
+
+		insert into funcionalidad_rol(furo_id_funcionalidad, furo_id_rol)
+		values ((select funcionadad_id from funcionalidad where func_descripcion = 'administrar_rubro'),
+			(select rol_id from rol where rol_descripcion = 'administrativo'))
+
+		insert into funcionalidad_rol(furo_id_funcionalidad, furo_id_rol)
+		values ((select funcionalidad_id from funcionalidad where func_descripcion = 'administrar_rol'),
+		(select rol_id from rol where rol_descripcion = 'administrativo'))
+
+
 			
 		-- Rol Cliente
 		insert into Funcionalidad_Rol(furo_id_funcionalidad, furo_id_rol) 
-		values((select funcionalidad_id from Funcionalidad where func_descripcion = 'comprar_ofertar' or
-							func_descripcion = 'publicar' or func_descripcion = 'calificar' or 
-							func_descripcion = 'visibilidad' or func_descripcion = 'historial_cliente'),
+		values((select funcionalidad_id from Funcionalidad where func_descripcion = 'comprar_ofertar'),
 				(select rol_id from Rol where rol_descripcion = 'cliente'))
 
+		insert into funcionalidad_rol(furo_id_funcionalidad, furo_id_rol)
+			values ((select funcionalidad_id from funcionalidad where func_descripcion = 'publicar'),
+			(select rol_id from rol where rol_descripcion = 'cliente'))
+
+		insert into funcionalidad_rol (furo_id_funcionalidad, furo_id_rol)
+		values ((select funcionalidad_id from funcionalidad where func_descripcion = 'calificar'),
+		(select rol_id from rol where rol_descripcion = 'cliente'))
+
+		insert into funcionalidad_rol (furo_id_funcionalidad, furo_id_rol)
+		values ((select funcionalidad_id from funcionalidad where func_descripcion = 'visibilidad'),
+		(select rol_id from rol where rol_descripcion = 'cliente'))
+
+		insert into funcionalidad_rol (furo_id_funcionalidad, furo_id_rol)
+		values ((select funcionalidad_id from funcionalidad where func_descripcion = 'historial_cliente'),
+		(select rol_id from rol where rol_descripcion = 'cliente'))
+		
 		-- Rol Empresa
+		
 		insert into Funcionalidad_Rol(furo_id_funcionalidad, furo_id_rol) 
-		values((select funcionalidad_id from Funcionalidad where func_descripcion = 'publicar' or
-							func_descripcion = 'visibilidad'),
+		values((select funcionalidad_id from Funcionalidad where func_descripcion = 'publicar'),
 				(select rol_id from Rol where rol_descripcion = 'empresa'))
 
-
+		insert into funcionalidad_rol(furo_id_funcionalidad, furo_id_rol)
+		values (( select funcionalidad_id from funcionalidad where func_descripcion = 'visibilidad'),
+		(select rol_id from rol where rol_descripcion = 'empresa'))
 
 while @@FETCH_STATUS=0 begin
 
