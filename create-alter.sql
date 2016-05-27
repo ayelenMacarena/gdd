@@ -4,7 +4,7 @@
 
 
 CREATE TABLE calificacion ( 
-	calificacion_id numeric(18) NOT NULL,
+	calificacion_id numeric(18) NOT NULL IDENTITY(1,1),
 	cali_valor numeric(5),
 	cali_detalle nvarchar(100)
 )
@@ -22,7 +22,7 @@ CREATE TABLE clientes (
 ;
 
 CREATE TABLE compra ( 
-	compra_id numeric(18) NOT NULL,
+	compra_id numeric(18) NOT NULL IDENTITY(1,1),
 	comp_id_publicacion numeric(18) NOT NULL,
 	comp_id_vendedor numeric(18) NOT NULL,
 	comp_id_comprador numeric(18) NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE empresa (
 ;
 
 CREATE TABLE estado ( 
-	estado_id numeric(18) NOT NULL,
+	estado_id numeric(18) NOT NULL IDENTITY(1,1) IDENTITY(1,1),
 	esta_descripcion varchar(30)
 )
 ;
@@ -57,7 +57,7 @@ CREATE TABLE factura (
 ;
 
 CREATE TABLE funcionalidad ( 
-	funcionalidad_id numeric(18) NOT NULL,
+	funcionalidad_id numeric(18) NOT NULL IDENTITY(1,1),
 	func_descripcion nvarchar(255)
 )
 ;
@@ -77,7 +77,7 @@ CREATE TABLE item_factura (
 ;
 
 CREATE TABLE oferta ( 
-	oferta_id numeric(18) NOT NULL,
+	oferta_id numeric(18) NOT NULL IDENTITY(1,1),
 	ofer_id_publicacion numeric(18) NOT NULL,
 	ofer_valor numeric(18) NOT NULL,
 	ofer_username nvarchar(20) NOT NULL
@@ -102,7 +102,7 @@ CREATE TABLE publicacion (
 ;
 
 CREATE TABLE rol ( 
-	rol_id numeric(18) NOT NULL,
+	rol_id numeric(18) NOT NULL IDENTITY(1,1),
 	rol_descripcion nvarchar(255) NOT NULL,
 	rol_habilitado bit NOT NULL
 )
@@ -122,13 +122,13 @@ CREATE TABLE rubro (
 ;
 
 CREATE TABLE tipo ( 
-	tipo_id numeric(18) NOT NULL,
+	tipo_id numeric(18) NOT NULL IDENTITY(1,1),
 	tipo_descripcion nvarchar(255)
 )
 ;
 
 CREATE TABLE document_type ( 
-	type_id numeric(18) NOT NULL,
+	type_id numeric(18) NOT NULL IDENTITY(1,1),
 	type_descripcion nvarchar(255) NOT NULL
 )
 ;
@@ -141,7 +141,7 @@ CREATE TABLE usuario (
 ;
 
 CREATE TABLE vendedor ( 
-	vendedor_id numeric(18) NOT NULL,
+	vendedor_id numeric(18) NOT NULL IDENTITY(1,1),
 	vend_username nvarchar(20) NOT NULL,
 	vend_mail nvarchar(50),
 	vend_telefono nvarchar(50),
