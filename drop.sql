@@ -3,12 +3,12 @@
 ------------------------------------------------------
 
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('FK_clientes_tipo_dni') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE Clientes DROP CONSTRAINT FK_clientes_tipo_dni
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('FK_cliente_tipo_dni') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+ALTER TABLE Cliente DROP CONSTRAINT FK_cliente_tipo_dni
 ;
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('FK_clientes_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE Clientes DROP CONSTRAINT FK_clientes_vendedor
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('FK_cliente_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+ALTER TABLE Cliente DROP CONSTRAINT FK_cliente_vendedor
 ;
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('FK_empresa_rubro') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
@@ -69,8 +69,8 @@ IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('Calificacion') AND
 DROP TABLE Calificacion
 ;
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('Clientes') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE Clientes
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('Cliente') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE Cliente
 ;
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('Compra') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
@@ -139,4 +139,14 @@ DROP TABLE Vendedor
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('Visibilidad') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE Visibilidad
+;
+
+
+
+------------------------------------------------------
+--     SE REALIZA DROP DEL SCRIPT DE MIGRACION      --
+------------------------------------------------------
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('LaPeterMachine'))
+DROP PROCEDURE LaPeterMachine
 ;

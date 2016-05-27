@@ -10,7 +10,7 @@ CREATE TABLE calificacion (
 )
 ;
 
-CREATE TABLE clientes ( 
+CREATE TABLE cliente ( 
 	clie_apellido nvarchar(255) NOT NULL,
 	clie_nombre nvarchar(255) NOT NULL,
 	clie_dni numeric(18) NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE empresa (
 ;
 
 CREATE TABLE estado ( 
-	estado_id numeric(18) NOT NULL IDENTITY(1,1) IDENTITY(1,1),
+	estado_id numeric(18) NOT NULL IDENTITY(1,1),
 	esta_descripcion varchar(30)
 )
 ;
@@ -85,7 +85,7 @@ CREATE TABLE oferta (
 ;
 
 CREATE TABLE publicacion ( 
-	publicacion_id numeric(18) identity(1,1)  NOT NULL,
+	publicacion_id numeric(18)  NOT NULL,
 	publ_descripcion nvarchar(255),
 	publ_precio numeric(18,2),
 	publ_costo numeric(18,2),
@@ -115,7 +115,7 @@ CREATE TABLE roles_usuario (
 ;
 
 CREATE TABLE rubro ( 
-	rubr_cod numeric(18) NOT NULL,
+	rubr_cod numeric(18) NOT NULL IDENTITY(1,1),
 	rubr_descripcion_corta nvarchar(125),
 	rubr_descripcion_larga nvarchar(255)
 )
@@ -175,7 +175,7 @@ ALTER TABLE calificacion ADD CONSTRAINT PK_calificacion
 	PRIMARY KEY CLUSTERED (calificacion_id)
 ;
 
-ALTER TABLE clientes ADD CONSTRAINT PK_clientes 
+ALTER TABLE cliente ADD CONSTRAINT PK_cliente
 	PRIMARY KEY CLUSTERED (clie_dni, clie_id_tipo_doc)
 ;
 
@@ -249,11 +249,11 @@ ALTER TABLE visibilidad ADD CONSTRAINT PK_visibilidad
 
 
 
-ALTER TABLE clientes ADD CONSTRAINT FK_clientes_tipo_dni 
+ALTER TABLE cliente ADD CONSTRAINT FK_cliente_tipo_dni 
 	FOREIGN KEY (clie_id_tipo_doc) REFERENCES document_type (type_id)
 ;
 
-ALTER TABLE clientes ADD CONSTRAINT FK_clientes_vendedor 
+ALTER TABLE cliente ADD CONSTRAINT FK_cliente_vendedor 
 	FOREIGN KEY (clie_id_vendedor) REFERENCES vendedor (vendedor_id)
 ;
 
