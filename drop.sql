@@ -151,8 +151,8 @@ DROP TABLE LA_PETER_MACHINE.visibilidad
 --     SE REALIZA DROP DEL SCRIPT DE MIGRACION      --
 ------------------------------------------------------
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('LaPeterMachine'))
-DROP PROCEDURE LaPeterMachine
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.LaPeterMachine'))
+DROP PROCEDURE LA_PETER_MACHINE.LaPeterMachine
 ;
 
 DROP SCHEMA LA_PETER_MACHINE
