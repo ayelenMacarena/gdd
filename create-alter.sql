@@ -10,7 +10,7 @@ CREATE TABLE calificacion (
 	cali_detalle nvarchar(100)
 )
 
-CREATE TABLE clientes ( 
+CREATE TABLE cliente ( 
 	clie_apellido nvarchar(255) NOT NULL,
 	clie_nombre nvarchar(255) NOT NULL,
 	clie_dni numeric(18) NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE oferta (
 )
 
 CREATE TABLE publicacion ( 
-	publicacion_id numeric(18) identity(1,1)  NOT NULL,
+	publicacion_id numeric(18)  NOT NULL,
 	publ_descripcion nvarchar(255),
 	publ_precio numeric(18,2),
 	publ_costo numeric(18,2),
@@ -114,7 +114,7 @@ CREATE TABLE roles_usuario (
 
 
 CREATE TABLE rubro ( 
-	rubr_cod numeric(18) NOT NULL,
+	rubr_cod numeric(18) NOT NULL IDENTITY(1,1),
 	rubr_descripcion_corta nvarchar(125),
 	rubr_descripcion_larga nvarchar(255)
 )
@@ -174,8 +174,7 @@ GO
 ALTER TABLE LA_PETER_MACHINE.calificacion ADD CONSTRAINT PK_calificacion 
 	PRIMARY KEY CLUSTERED (calificacion_id)
 
-
-ALTER TABLE LA_PETER_MACHINE.clientes ADD CONSTRAINT PK_clientes 
+ALTER TABLE LA_PETER_MACHINE.cliente ADD CONSTRAINT PK_cliente 
 	PRIMARY KEY CLUSTERED (clie_dni, clie_id_tipo_doc)
 
 
@@ -248,12 +247,11 @@ ALTER TABLE LA_PETER_MACHINE.visibilidad ADD CONSTRAINT PK_visibilidad
 
 
 
-
-ALTER TABLE LA_PETER_MACHINE.clientes ADD CONSTRAINT FK_clientes_tipo_dni 
+ALTER TABLE LA_PETER_MACHINE.cliente ADD CONSTRAINT FK_cliente_tipo_dni 
 	FOREIGN KEY (clie_id_tipo_doc) REFERENCES document_type (type_id)
 
 
-ALTER TABLE LA_PETER_MACHINE.clientes ADD CONSTRAINT FK_clientes_vendedor 
+ALTER TABLE LA_PETER_MACHINE.cliente ADD CONSTRAINT FK_cliente_vendedor 
 	FOREIGN KEY (clie_id_vendedor) REFERENCES vendedor (vendedor_id)
 
 

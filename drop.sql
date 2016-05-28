@@ -3,12 +3,16 @@
 ------------------------------------------------------
 
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_clientes_tipo_dni') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.Clientes DROP CONSTRAINT FK_clientes_tipo_dni
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_cliente_tipo_dni') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+ALTER TABLE LA_PETER_MACHINE.cliente DROP CONSTRAINT FK_cliente_tipo_dni
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_clientes_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.Clientes DROP CONSTRAINT FK_clientes_vendedor
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_cliente_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+ALTER TABLE LA_PETER_MACHINE.cliente DROP CONSTRAINT FK_cliente_vendedor
+;
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('FK_cliente_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+ALTER TABLE Cliente DROP CONSTRAINT FK_cliente_vendedor
 ;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_empresa_rubro') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
@@ -69,8 +73,8 @@ IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('calificacion') AND  OB
 DROP TABLE LA_PETER_MACHINE.calificacion
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('clientes') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.clientes
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('cliente') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE LA_PETER_MACHINE.cliente
 ;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('Compra') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
@@ -139,6 +143,16 @@ DROP TABLE LA_PETER_MACHINE.vendedor
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.visibilidad') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE LA_PETER_MACHINE.visibilidad
+;
+
+
+
+------------------------------------------------------
+--     SE REALIZA DROP DEL SCRIPT DE MIGRACION      --
+------------------------------------------------------
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('LaPeterMachine'))
+DROP PROCEDURE LaPeterMachine
 ;
 
 DROP SCHEMA LA_PETER_MACHINE
