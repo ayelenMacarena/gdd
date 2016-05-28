@@ -69,31 +69,31 @@ ALTER TABLE LA_PETER_MACHINE.vendedor DROP CONSTRAINT FK_vendedor_usuario
 ------------------------------------------------------
 
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('calificacion') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.calificacion') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE LA_PETER_MACHINE.calificacion
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('cliente') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.cliente') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE LA_PETER_MACHINE.cliente
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('Compra') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.compra') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE LA_PETER_MACHINE.Compra
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('Empresa') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.empresa') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE LA_PETER_MACHINE.Empresa
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('Estado') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.estado') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE LA_PETER_MACHINE.Estado
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('Factura') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.factura') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE LA_PETER_MACHINE.Factura
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('Funcionalidad') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.funcionalidad') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE LA_PETER_MACHINE.Funcionalidad
 ;
 
