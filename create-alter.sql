@@ -246,60 +246,59 @@ ALTER TABLE LA_PETER_MACHINE.visibilidad ADD CONSTRAINT PK_visibilidad
 	PRIMARY KEY CLUSTERED (visi_cod)
 
 
-
 ALTER TABLE LA_PETER_MACHINE.cliente ADD CONSTRAINT FK_cliente_tipo_dni 
-	FOREIGN KEY (clie_id_tipo_doc) REFERENCES document_type (type_id)
+	FOREIGN KEY (clie_id_tipo_doc) REFERENCES LA_PETER_MACHINE.document_type (type_id)
 
 
 ALTER TABLE LA_PETER_MACHINE.cliente ADD CONSTRAINT FK_cliente_vendedor 
-	FOREIGN KEY (clie_id_vendedor) REFERENCES vendedor (vendedor_id)
+	FOREIGN KEY (clie_id_vendedor) REFERENCES LA_PETER_MACHINE.vendedor (vendedor_id)
 
 
 ALTER TABLE LA_PETER_MACHINE.empresa ADD CONSTRAINT FK_empresa_rubro 
-	FOREIGN KEY (empr_cod_rubro) REFERENCES rubro (rubr_cod)
+	FOREIGN KEY (empr_cod_rubro) REFERENCES LA_PETER_MACHINE.rubro (rubr_cod)
 
 
 ALTER TABLE LA_PETER_MACHINE.factura ADD CONSTRAINT FK_factura_vendedor 
-	FOREIGN KEY (fact_id_vendedor) REFERENCES vendedor (vendedor_id)
+	FOREIGN KEY (fact_id_vendedor) REFERENCES LA_PETER_MACHINE.vendedor (vendedor_id)
 
 
 ALTER TABLE LA_PETER_MACHINE.funcionalidad_rol ADD CONSTRAINT FK_funcionalidad_rol_funcionalidad 
-	FOREIGN KEY (furo_id_funcionalidad) REFERENCES funcionalidad (funcionalidad_id)
+	FOREIGN KEY (furo_id_funcionalidad) REFERENCES LA_PETER_MACHINE.funcionalidad (funcionalidad_id)
 
 
 ALTER TABLE LA_PETER_MACHINE.funcionalidad_rol ADD CONSTRAINT FK_funcionalidad_rol_rol
-	FOREIGN KEY (furo_id_rol) REFERENCES rol (rol_id)
+	FOREIGN KEY (furo_id_rol) REFERENCES LA_PETER_MACHINE.rol (rol_id)
 
 
 ALTER TABLE LA_PETER_MACHINE.publicacion ADD CONSTRAINT FK_publicacion_estado 
-	FOREIGN KEY (publ_id_estado) REFERENCES estado (estado_id)
+	FOREIGN KEY (publ_id_estado) REFERENCES LA_PETER_MACHINE.estado (estado_id)
 
 
 ALTER TABLE LA_PETER_MACHINE.publicacion ADD CONSTRAINT FK_publicacion_rubro 
-	FOREIGN KEY (publ_cod_rubro) REFERENCES rubro (rubr_cod)
+	FOREIGN KEY (publ_cod_rubro) REFERENCES LA_PETER_MACHINE.rubro (rubr_cod)
 
 
 ALTER TABLE LA_PETER_MACHINE.publicacion ADD CONSTRAINT FK_publicacion_tipo 
-	FOREIGN KEY (publ_id_tipo) REFERENCES tipo (tipo_id)
+	FOREIGN KEY (publ_id_tipo) REFERENCES LA_PETER_MACHINE.tipo (tipo_id)
 
 
 ALTER TABLE LA_PETER_MACHINE.publicacion ADD CONSTRAINT FK_publicacion_vendedor 
-	FOREIGN KEY (publ_id_vendedor) REFERENCES vendedor (vendedor_id)
+	FOREIGN KEY (publ_id_vendedor) REFERENCES LA_PETER_MACHINE.vendedor (vendedor_id)
 
 
 ALTER TABLE LA_PETER_MACHINE.publicacion ADD CONSTRAINT FK_publicacion_visibilidad 
-	FOREIGN KEY (publ_cod_visibilidad) REFERENCES visibilidad (visi_cod)
+	FOREIGN KEY (publ_cod_visibilidad) REFERENCES LA_PETER_MACHINE.visibilidad (visi_cod)
 
 
 ALTER TABLE LA_PETER_MACHINE.roles_usuario ADD CONSTRAINT FK_roles_usuario_rol
-	FOREIGN KEY (rolu_id_rol) REFERENCES rol (rol_id)
+	FOREIGN KEY (rolu_id_rol) REFERENCES LA_PETER_MACHINE.rol (rol_id)
 
 
 ALTER TABLE LA_PETER_MACHINE.roles_usuario ADD CONSTRAINT FK_roles_usuario_usuario 
-	FOREIGN KEY (rolu_username) REFERENCES usuario (usua_username)
+	FOREIGN KEY (rolu_username) REFERENCES LA_PETER_MACHINE.usuario (usua_username)
 
 
 ALTER TABLE LA_PETER_MACHINE.vendedor ADD CONSTRAINT FK_vendedor_usuario 
-	FOREIGN KEY (vend_username) REFERENCES usuario (usua_username)
+	FOREIGN KEY (vend_username) REFERENCES LA_PETER_MACHINE.usuario (usua_username)
 
 GO
