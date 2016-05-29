@@ -145,55 +145,55 @@ fetch next from C into  @dni ,
 
 --FUNCIONALIDAD_ROL
 		-- Rol Admin
-		insert into LA_PETER_MACHINE.funcionalidad_Rol(furo_id_funcionalidad,furo_id_rol) 
+		insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad,furo_id_rol) 
 		values((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'administrar_usuario'),
-				(select rol_id from Rol where rol_descripcion = 'administrativo'))
+				(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'administrativo'))
 
 		insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad, furo_id_rol)
 		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'administrar_rubro'),
-			(select rol_id from rol where rol_descripcion = 'administrativo'))
+			(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'administrativo'))
 
 		insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad, furo_id_rol)
 		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'administrar_rol'),
-		(select rol_id from rol where rol_descripcion = 'administrativo'))
+		(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'administrativo'))
 
 
 			
 		-- Rol Cliente
-		insert into LA_PETER_MACHINE.funcionalidad_Rol(furo_id_funcionalidad, furo_id_rol) 
+		insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad, furo_id_rol) 
 		values((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'comprar_ofertar'),
-				(select rol_id from Rol where rol_descripcion = 'cliente'))
+				(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'cliente'))
 
 		insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad, furo_id_rol)
 			values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'publicar'),
-			(select rol_id from rol where rol_descripcion = 'cliente'))
+			(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'cliente'))
 
 		insert into LA_PETER_MACHINE.funcionalidad_rol (furo_id_funcionalidad, furo_id_rol)
 		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'calificar'),
-		(select rol_id from rol where rol_descripcion = 'cliente'))
+		(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'cliente'))
 
 		insert into LA_PETER_MACHINE.funcionalidad_rol (furo_id_funcionalidad, furo_id_rol)
 		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'visibilidad'),
-		(select rol_id from rol where rol_descripcion = 'cliente'))
+		(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'cliente'))
 
 		insert into LA_PETER_MACHINE.funcionalidad_rol (furo_id_funcionalidad, furo_id_rol)
 		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'historial_cliente'),
-		(select rol_id from rol where rol_descripcion = 'cliente'))
+		(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'cliente'))
 		
 		-- Rol Empresa
 		
-		insert into LA_PETER_MACHINE.funcionalidad_Rol(furo_id_funcionalidad, furo_id_rol) 
+		insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad, furo_id_rol) 
 		values((select funcionalidad_id from LA_PETER_MACHINE.Funcionalidad where func_descripcion = 'publicar'),
-				(select rol_id from Rol where rol_descripcion = 'empresa'))
+				(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'empresa'))
 
 		insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad, furo_id_rol)
 		values (( select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'visibilidad'),
-		(select rol_id from rol where rol_descripcion = 'empresa'))
+		(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'empresa'))
 
 while @@FETCH_STATUS=0 begin
 
 --RUBRO
-	if @rubr_descr is not NULL and not exists (select * from LA_PETER_MACHINE.Rubro where rubr_descripcion_corta = @rubr_descr)
+	if @rubr_descr is not NULL and not exists (select * from LA_PETER_MACHINE.rubro where rubr_descripcion_corta = @rubr_descr)
 		BEGIN
 			insert into LA_PETER_MACHINE.rubro (rubr_descripcion_corta) 
 			values (@rubr_descr)
@@ -212,7 +212,7 @@ while @@FETCH_STATUS=0 begin
 			BEGIN
 	 			insert into LA_PETER_MACHINE.usuario (usua_username, usua_password, usua_habilitado) 
 				values (SUBSTRING(@mail,0,19), '12345', 1)
-	 			insert into LA_PETER_MACHINE.roles_Usuario (rolu_id_rol, rolu_username) 
+	 			insert into LA_PETER_MACHINE.roles_usuario (rolu_id_rol, rolu_username) 
 				values (2, SUBSTRING(@mail,0,19))
 	 		END
 	
@@ -232,7 +232,7 @@ while @@FETCH_STATUS=0 begin
 			BEGIN
 	 			insert into LA_PETER_MACHINE.usuario (usua_username, usua_password, usua_habilitado) 
 				values (SUBSTRING(@empr_mail,0,19), '12345', 1)
-	 			insert into LA_PETER_MACHINE.roles_Usuario (rolu_id_rol, rolu_username) 
+	 			insert into LA_PETER_MACHINE.roles_usuario (rolu_id_rol, rolu_username) 
 				values (3, SUBSTRING(@empr_mail,0,19))
 	 		END
 
@@ -248,7 +248,7 @@ while @@FETCH_STATUS=0 begin
 		if @empr_razon_social is not NULL and not exists (select * from LA_PETER_MACHINE.empresa where empr_razon_social = @empr_razon_social)
 			BEGIN
 				insert into LA_PETER_MACHINE.empresa (empr_razon_social, empr_cuit, empr_cod_rubro, empr_id_vendedor) 
-				values (@empr_razon_social, @empr_cuit, (select r.rubr_cod from Rubro r where r.rubr_descripcion_corta = @rubr_descr), (select v.vendedor_id from Vendedor v where v.vend_mail = @empr_mail OR v.vend_mail = @mail))
+				values (@empr_razon_social, @empr_cuit, (select r.rubr_cod from LA_PETER_MACHINE.rubro r where r.rubr_descripcion_corta = @rubr_descr), (select v.vendedor_id from LA_PETER_MACHINE.vendedor v where v.vend_mail = @empr_mail OR v.vend_mail = @mail))
 			END
 
 --ESTADO
@@ -277,7 +277,7 @@ while @@FETCH_STATUS=0 begin
 	if @publ_cod is not NULL and not exists (select * from LA_PETER_MACHINE.publicacion where publicacion_id = @publ_cod)
 		BEGIN
 			insert into LA_PETER_MACHINE.publicacion (publicacion_id, publ_cantidad, publ_cod_rubro, publ_cod_visibilidad, publ_costo, publ_descripcion, publ_fecha_fin, publ_fecha_inicio, publ_id_estado, publ_id_tipo, publ_id_vendedor, publ_precio, publ_preguntas)
-			values (@publ_cod, @publ_stock, (select r.rubr_cod from Rubro r where r.rubr_descripcion_corta = @rubr_descr), @visi_cod, @publ_precio, @publ_descripcion, @publ_fecha_venc, @publ_fecha, (select e.estado_id from Estado e where e.esta_descripcion = @publ_estado), (select t.tipo_id from Tipo t where t.tipo_descripcion = @publ_tipo), (select v.vendedor_id from Vendedor v where v.vend_mail = @empr_mail OR v.vend_mail = @mail), @publ_precio, 0)
+			values (@publ_cod, @publ_stock, (select r.rubr_cod from LA_PETER_MACHINE.rubro r where r.rubr_descripcion_corta = @rubr_descr), @visi_cod, @publ_precio, @publ_descripcion, @publ_fecha_venc, @publ_fecha, (select e.estado_id from LA_PETER_MACHINE.estado e where e.esta_descripcion = @publ_estado), (select t.tipo_id from LA_PETER_MACHINE.tipo t where t.tipo_descripcion = @publ_tipo), (select v.vendedor_id from LA_PETER_MACHINE.vendedor v where v.vend_mail = @empr_mail OR v.vend_mail = @mail), @publ_precio, 0)
 		END
 
 --COMPRA
@@ -285,7 +285,7 @@ while @@FETCH_STATUS=0 begin
 	if @comp_cantidad is not NULL and not exists (select * from LA_PETER_MACHINE.compra where comp_id_publicacion = @publ_cod)
 		BEGIN
 			insert into LA_PETER_MACHINE.compra (comp_id_publicacion, comp_id_vendedor, comp_id_comprador, comp_num_factura, comp_username)
-			values (@publ_cod, (select v.vendedor_id from Vendedor v where v.vend_mail = @empr_mail OR v.vend_mail = @mail), (select v.vendedor_id from Vendedor v join Cliente c on c.clie_id_vendedor = vendedor_id where c.clie_dni = @clie_dni), (select f.fact_num from Factura f where f.fact_id_publicacion = @publ_cod), (select v.vend_username from Vendedor v join Cliente c on c.clie_id_vendedor = vendedor_id where c.clie_dni = @clie_dni))
+			values (@publ_cod, (select v.vendedor_id from LA_PETER_MACHINE.vendedor v where v.vend_mail = @empr_mail OR v.vend_mail = @mail), (select v.vendedor_id from LA_PETER_MACHINE.vendedor v join LA_PETER_MACHINE.cliente c on c.clie_id_vendedor = vendedor_id where c.clie_dni = @clie_dni), (select f.fact_num from LA_PETER_MACHINE.factura f where f.fact_id_publicacion = @publ_cod), (select v.vend_username from LA_PETER_MACHINE.vendedor v join LA_PETER_MACHINE.cliente c on c.clie_id_vendedor = vendedor_id where c.clie_dni = @clie_dni))
 		END
 
 --OFERTA
@@ -293,7 +293,7 @@ while @@FETCH_STATUS=0 begin
 	if @ofer_monto is not NULL and not exists (select * from LA_PETER_MACHINE.oferta where ofer_valor = @ofer_monto)
 		BEGIN
 			insert into LA_PETER_MACHINE.oferta (ofer_id_publicacion, ofer_valor, ofer_username)
-			values (@publ_cod, @ofer_monto, (select v.vend_username from Vendedor v join Cliente c on c.clie_id_vendedor = vendedor_id where c.clie_dni = @clie_dni))
+			values (@publ_cod, @ofer_monto, (select v.vend_username from LA_PETER_MACHINE.vendedor v join LA_PETER_MACHINE.cliente c on c.clie_id_vendedor = vendedor_id where c.clie_dni = @clie_dni))
 		END
 
 
