@@ -114,6 +114,55 @@ fetch next into  @dni ,
 			start with 0
 			increment by 1;
 			go
+		create sequence cont_rol
+			as int
+			start with 0
+			increment by 1;
+			go
+		create sequence cont_funcionalidad
+			as int
+			start with 0
+			increment by 1;
+			go
+		insert into rol(rol_id,rol_descripcion,rol_habilitado) values(next value for cont_rol,"empresa",1)
+		insert into rol(rol_id,rol_descripcion,rol_habilitado) values(next value for cont_rol,"cliente",1)
+		insert into rol(rol_id,rol_descripcion,rol_habilitado) values(next value for cont_rol,"administrativo",1)
+		
+		-- Cargado de datos de funcionalidades
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"publicar")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"categorizar_publicacion")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"visibilidad")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"comprar_ofertar")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"historial_cliente")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"calificar")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"facturas_realizadas")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"listado_estadistico")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"administrar_usuario")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"administrar_rol")
+		insert into funcionalidad(funcionalidad_id,func_descripcion) values(next value for cont_funcionalidad,"administrar_rubro")
+
+		-- Inserto sus funcionalidades al rol admin
+		insert into funcionalidad_rol(furo_id_funcionalidad,furo_id_rol) values(
+			(select funcionalidad_id from funcionalidad where func_descripcion = "administrar_usuario" or 
+									  func_descripcion = "administrar_rol" or
+									  func_descripcion = "administrar_rubro"),
+			(select rol_id from rol where rol_descripcion = "administrativo"))
+			
+		-- Inserto sus funcionalidades al rol cliente
+		insert into funcionalidad_rol(furo_id_funcionalidad, furo_id_rol) values(
+			(select funcionalidad_id from funcionalidad where func_descripcion = "comprar_ofertar" or
+									  func_descripcion = "publicar" or
+									  func_descripcion = "calificar" or 
+									  func_descripcion = "visibilidad" or
+									  func_descripcion = "historial_cliente"),
+			(select rol_id from rol where rol_descripcion = "cliente"))
+
+		-- Inserto sus funcionalidades al rol empresa
+		insert into funcionalidad_rol(furo_id_funcionalidad, furo_id_rol) values(
+			(select funcionalidad_id from funcionalidad where func_descripcion = "publicar" or
+									  func_descripcion = "visibilidad"),
+			(select rol_id from rol where rol_descripcion = "empresa"))
+
 
 while @@FETCH_STATUS=0 begin
 	--corrobora que no exista la empresa
@@ -140,5 +189,6 @@ while @@FETCH_STATUS=0 begin
 	 		where usua_username=@empr_mail)
 	 		begin
 	 		insert into Usuario(usua_username,usua_password) values(@empr_mail,"12345")
+	 		insert into roles_usuario(rolu_id_rol,rolu_username) values(0,@empr_mail)
 	 		end
 	 end
