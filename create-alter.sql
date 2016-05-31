@@ -28,7 +28,7 @@ CREATE TABLE compra (
 	comp_id_vendedor numeric(18) NOT NULL,
 	comp_id_comprador numeric(18) NOT NULL,
 	comp_num_factura numeric(18) NOT NULL,
-	comp_username nvarchar(20) NOT NULL,
+	comp_username nvarchar(255) NOT NULL,
 	comp_id_calificacion numeric(18) NOT NULL
 )
 
@@ -82,7 +82,7 @@ CREATE TABLE oferta (
 	oferta_id numeric(18) NOT NULL IDENTITY(1,1),
 	ofer_id_publicacion numeric(18) NOT NULL,
 	ofer_valor numeric(18) NOT NULL,
-	ofer_username nvarchar(20) NOT NULL
+	ofer_username nvarchar(255) NOT NULL
 )
 
 CREATE TABLE publicacion ( 
@@ -111,7 +111,7 @@ CREATE TABLE rol (
 
 CREATE TABLE roles_usuario ( 
 	rolu_id_rol numeric(18) NOT NULL,
-	rolu_username nvarchar(20) NOT NULL
+	rolu_username nvarchar(255) NOT NULL
 )
 
 
@@ -135,7 +135,7 @@ CREATE TABLE document_type (
 
 
 CREATE TABLE usuario ( 
-	usua_username nvarchar(20) NOT NULL,
+	usua_username nvarchar(255) NOT NULL,
 	usua_password nvarchar(20) NOT NULL,
 	usua_habilitado bit NOT NULL
 )
@@ -143,7 +143,7 @@ CREATE TABLE usuario (
 
 CREATE TABLE vendedor ( 
 	vendedor_id numeric(18) NOT NULL IDENTITY(1,1),
-	vend_username nvarchar(20) NOT NULL,
+	vend_username nvarchar(255) NOT NULL,
 	vend_mail nvarchar(50),
 	vend_telefono nvarchar(50),
 	vend_domicilio_calle nvarchar(255),

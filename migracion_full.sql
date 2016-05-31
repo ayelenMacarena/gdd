@@ -216,19 +216,19 @@ while @@FETCH_STATUS=0 begin
 
 --CLIENTES (Usuario - Vendedor - Cliente)
 	--USUARIO CLIENTE
-		if @mail is not NULL and not exists (select * from LA_PETER_MACHINE.usuario where usua_username = SUBSTRING(@mail,0,19))
+		if @mail is not NULL and not exists (select * from LA_PETER_MACHINE.usuario where usua_username = @mail)
 			BEGIN
 	 			insert into LA_PETER_MACHINE.usuario (usua_username, usua_password, usua_habilitado) 
-				values (SUBSTRING(@mail,0,19), '12345', 1)
+				values (@mail, '12345', 1)
 	 			insert into LA_PETER_MACHINE.roles_usuario (rolu_id_rol, rolu_username) 
-				values (2, SUBSTRING(@mail,0,19))
+				values (2, @mail)
 	 		END
 
 	--VENDEDOR CLIENTE
 		if @mail is not NULL and not exists (select * from LA_PETER_MACHINE.vendedor where vend_mail = @mail)
 			BEGIN
 				insert into LA_PETER_MACHINE.vendedor (vend_username, vend_mail, vend_domicilio_calle, vend_cod_postal, vend_habilitado, vend_numero_calle, vend_piso, vend_depto) 
-				values (SUBSTRING(@mail,0,19), @mail, @calle, @cod_postal, 1, @calle_numero, @piso, @depto)
+				values (@mail, @mail, @calle, @cod_postal, 1, @calle_numero, @piso, @depto)
 			END
 
 	--CLIENTE
@@ -242,19 +242,19 @@ while @@FETCH_STATUS=0 begin
 
 --EMPRESAS (Usuario - Vendedor - Empresa)
 	--USUARIO EMPRESA
-		if @empr_mail is not NULL and not exists (select * from LA_PETER_MACHINE.usuario where usua_username = SUBSTRING(@empr_mail,0,19))
+		if @empr_mail is not NULL and not exists (select * from LA_PETER_MACHINE.usuario where usua_username = @empr_mail)
 			BEGIN
 	 			insert into LA_PETER_MACHINE.usuario (usua_username, usua_password, usua_habilitado) 
-				values (SUBSTRING(@empr_mail,0,19), '12345', 1)
+				values (@empr_mail, '12345', 1)
 	 			insert into LA_PETER_MACHINE.roles_usuario (rolu_id_rol, rolu_username) 
-				values (3, SUBSTRING(@empr_mail,0,19))
+				values (3, @empr_mail)
 	 		END
 
 	--VENDEDOR EMPRESA
 		if @empr_mail is not NULL and not exists (select * from LA_PETER_MACHINE.vendedor where vend_mail = @empr_mail)
 			BEGIN
 				insert into LA_PETER_MACHINE.vendedor (vend_username, vend_mail, vend_domicilio_calle, vend_cod_postal, vend_habilitado, vend_numero_calle, vend_piso, vend_depto) 
-				values (SUBSTRING(@empr_mail,0,19), @empr_mail, @empr_calle, @empr_cod_postal, 1, @empr_calle_numero, @empr_piso, @empr_dpto)
+				values (@empr_mail, @empr_mail, @empr_calle, @empr_cod_postal, 1, @empr_calle_numero, @empr_piso, @empr_dpto)
 			END
 
 	--EMPRESA
