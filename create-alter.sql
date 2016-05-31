@@ -27,10 +27,9 @@ CREATE TABLE compra (
 	comp_id_publicacion numeric(18) NOT NULL,
 	comp_id_vendedor numeric(18) NOT NULL,
 	comp_id_comprador numeric(18) NOT NULL,
-	comp_num_factura numeric(18) NOT NULL,
+	comp_num_factura numeric(18),
 	comp_username nvarchar(255) NOT NULL,
-	comp_id_calificacion numeric(18) NOT NULL
-)
+	comp_id_calificacion numeric(18))
 
 
 CREATE TABLE empresa ( 
