@@ -7,7 +7,8 @@ CREATE SCHEMA LA_PETER_MACHINE
 CREATE TABLE calificacion ( 
 	calificacion_id numeric(18) NOT NULL IDENTITY(1,1),
 	cali_valor numeric(5),
-	cali_detalle nvarchar(100)
+	cali_detalle nvarchar(100),
+	cali_id_vendedor numeric(18) NOT NULL
 )
 
 CREATE TABLE cliente ( 
@@ -27,7 +28,8 @@ CREATE TABLE compra (
 	comp_id_vendedor numeric(18) NOT NULL,
 	comp_id_comprador numeric(18) NOT NULL,
 	comp_num_factura numeric(18) NOT NULL,
-	comp_username nvarchar(20) NOT NULL
+	comp_username nvarchar(20) NOT NULL,
+	comp_id_calificacion numeric(18) NOT NULL
 )
 
 
@@ -51,8 +53,8 @@ CREATE TABLE factura (
 	fact_num numeric(18) NOT NULL,
 	fact_fecha datetime,
 	fact_total numeric(18,2),
-	fact_id_vendedor numeric(18),
-	fact_id_publicacion numeric(18)
+	fact_forma_pago nvarchar(255),
+	fact_id_vendedor numeric(18)
 )
 
 

@@ -3,63 +3,63 @@
 ------------------------------------------------------
 
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_cliente_tipo_dni') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_cliente_tipo_dni') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.cliente DROP CONSTRAINT FK_cliente_tipo_dni
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_cliente_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_cliente_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.cliente DROP CONSTRAINT FK_cliente_vendedor
 ;
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('FK_cliente_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE Cliente DROP CONSTRAINT FK_cliente_vendedor
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE name = ('FK_cliente_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+ALTER TABLE LA_PETER_MACHINE.Cliente DROP CONSTRAINT FK_cliente_vendedor
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_empresa_rubro') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_empresa_rubro') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.Empresa DROP CONSTRAINT FK_empresa_rubro
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_factura_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_factura_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.Factura DROP CONSTRAINT FK_factura_vendedor
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_funcionalidad_rol_funcionalidad') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_funcionalidad_rol_funcionalidad') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.Funcionalidad_Rol DROP CONSTRAINT FK_funcionalidad_rol_funcionalidad
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_funcionalidad_rol_rol') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_funcionalidad_rol_rol') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.Funcionalidad_Rol DROP CONSTRAINT FK_funcionalidad_rol_rol
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_publicacion_estado') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_publicacion_estado') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.Publicacion DROP CONSTRAINT FK_publicacion_estado
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_publicacion_rubro') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_publicacion_rubro') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.Publicacion DROP CONSTRAINT FK_publicacion_rubro
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_publicacion_tipo') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_publicacion_tipo') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.Publicacion DROP CONSTRAINT FK_publicacion_tipo
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_publicacion_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_publicacion_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.Publicacion DROP CONSTRAINT FK_publicacion_vendedor
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_publicacion_visibilidad') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_publicacion_visibilidad') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.Publicacion DROP CONSTRAINT FK_publicacion_visibilidad
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_roles_usuario_rol') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_roles_usuario_rol') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.roles_Usuario DROP CONSTRAINT FK_roles_usuario_rol
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_roles_usuario_usuario') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_roles_usuario_usuario') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.roles_Usuario DROP CONSTRAINT FK_roles_usuario_usuario
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('FK_vendedor_usuario') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_vendedor_usuario') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.vendedor DROP CONSTRAINT FK_vendedor_usuario
 ;
 
@@ -85,6 +85,10 @@ IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.empre
 DROP TABLE LA_PETER_MACHINE.Empresa
 ;
 
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.publicacion') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE LA_PETER_MACHINE.publicacion
+;
+
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.estado') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE LA_PETER_MACHINE.Estado
 ;
@@ -93,12 +97,12 @@ IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.factu
 DROP TABLE LA_PETER_MACHINE.Factura
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.funcionalidad') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.Funcionalidad
-;
-
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.funcionalidad_Rol') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE LA_PETER_MACHINE.funcionalidad_Rol
+;
+
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.funcionalidad') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE LA_PETER_MACHINE.Funcionalidad
 ;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.item_Factura') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
@@ -109,16 +113,12 @@ IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.ofert
 DROP TABLE LA_PETER_MACHINE.oferta
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.publicacion') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.publicacion
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.roles_Usuario') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE LA_PETER_MACHINE.roles_Usuario
 ;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.rol') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE LA_PETER_MACHINE.rol
-;
-
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.roles_Usuario') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.roles_Usuario
 ;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.rubro') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)

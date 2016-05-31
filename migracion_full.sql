@@ -55,7 +55,7 @@ declare @dni numeric(18),
 		@fact_nro numeric(18),
 		@fact_fecha datetime,
 		@fact_total numeric(18,2),
-		@fact_pago_desc nvarchar(255)
+		@fact_forma_pago nvarchar(255)
 		
 		
 
@@ -118,7 +118,7 @@ fetch next from C into  @dni ,
 		@fact_nro ,
 		@fact_fecha ,
 		@fact_total ,
-		@fact_pago_desc
+		@fact_forma_pago
 
 --DOCUMENT-TYPE
 		insert into LA_PETER_MACHINE.document_type(type_descripcion) values('DNI')
@@ -200,10 +200,18 @@ while @@FETCH_STATUS=0 begin
 		END
 
 --CALIFICACION
-	if @cali_codigo is not NULL and not exists (select * from LA_PETER_MACHINE.calificacion where calificacion_id = @cali_codigo)
+	if @cali_codigo IS NOT NULL
 		BEGIN
-			insert into LA_PETER_MACHINE.calificacion (calificacion_id,cali_valor,cali_detalle) 
-			values (@cali_codigo,@cali_cant_estrellas,@cali_desc)
+			if @empr_cuit IS NOT NULL
+				BEGIN
+				insert into LA_PETER_MACHINE.calificacion (calificacion_id,cali_valor,cali_detalle,cali_id_vendedor) 
+				values (@cali_codigo,@cali_cant_estrellas,@cali_desc,@empr_cuit)
+				END
+			else
+				BEGIN
+				insert into LA_PETER_MACHINE.calificacion (calificacion_id,cali_valor,cali_detalle,cali_id_vendedor) 
+				values (@cali_codigo,@cali_cant_estrellas,@cali_desc,@clie_dni)
+				END
 		END
 
 --CLIENTES (Usuario - Vendedor - Cliente)
@@ -215,7 +223,7 @@ while @@FETCH_STATUS=0 begin
 	 			insert into LA_PETER_MACHINE.roles_usuario (rolu_id_rol, rolu_username) 
 				values (2, SUBSTRING(@mail,0,19))
 	 		END
-	
+
 	--VENDEDOR CLIENTE
 		if @mail is not NULL and not exists (select * from LA_PETER_MACHINE.vendedor where vend_mail = @mail)
 			BEGIN
@@ -224,7 +232,13 @@ while @@FETCH_STATUS=0 begin
 			END
 
 	--CLIENTE
-		-- ?????????????????????????????????????????????????????????????????????????????????
+		if @clie_dni is not NULL and not exists (select * from LA_PETER_MACHINE.cliente where clie_dni = @clie_dni)
+			BEGIN
+				insert into LA_PETER_MACHINE.cliente(clie_apellido, clie_nombre, clie_dni, clie_id_tipo_doc, clie_fecha_nac, clie_fecha_creacion,clie_id_vendedor) 
+				values (@clie_apellido, @clie_nombre, @clie_dni, 
+				(select type_id from LA_PETER_MACHINE.document_type where type_descripcion = 'DNI'), @clie_fecha_nac, GETDATE(),
+				(select MAX(vendedor_id) FROM LA_PETER_MACHINE.vendedor))
+			END		
 
 --EMPRESAS (Usuario - Vendedor - Empresa)
 	--USUARIO EMPRESA
@@ -248,8 +262,19 @@ while @@FETCH_STATUS=0 begin
 		if @empr_razon_social is not NULL and not exists (select * from LA_PETER_MACHINE.empresa where empr_razon_social = @empr_razon_social)
 			BEGIN
 				insert into LA_PETER_MACHINE.empresa (empr_razon_social, empr_cuit, empr_cod_rubro, empr_id_vendedor) 
-				values (@empr_razon_social, @empr_cuit, (select r.rubr_cod from LA_PETER_MACHINE.rubro r where r.rubr_descripcion_corta = @rubr_descr), (select v.vendedor_id from LA_PETER_MACHINE.vendedor v where v.vend_mail = @empr_mail OR v.vend_mail = @mail))
+				values (@empr_razon_social, @empr_cuit, 
+					(select r.rubr_cod from LA_PETER_MACHINE.rubro r where r.rubr_descripcion_corta = @rubr_descr),
+					(select MAX(vendedor_id) FROM LA_PETER_MACHINE.vendedor))
+					--(select v.vendedor_id from LA_PETER_MACHINE.vendedor v where v.vend_mail = @empr_mail OR v.vend_mail = @mail))
 			END
+
+--FACTURA
+	if @fact_nro is not NULL and not exists (select fact_num from LA_PETER_MACHINE.factura where fact_num = @fact_nro)
+		BEGIN
+			insert into LA_PETER_MACHINE.factura (fact_num, fact_fecha, fact_total, fact_forma_pago)
+			values (@fact_nro, @fact_fecha, @fact_total, @fact_forma_pago)
+		END
+
 
 --ESTADO
 	if @publ_estado is not NULL and not exists (select * from LA_PETER_MACHINE.estado where esta_descripcion = @publ_estado)
@@ -285,7 +310,13 @@ while @@FETCH_STATUS=0 begin
 	if @comp_cantidad is not NULL and not exists (select * from LA_PETER_MACHINE.compra where comp_id_publicacion = @publ_cod)
 		BEGIN
 			insert into LA_PETER_MACHINE.compra (comp_id_publicacion, comp_id_vendedor, comp_id_comprador, comp_num_factura, comp_username)
-			values (@publ_cod, (select v.vendedor_id from LA_PETER_MACHINE.vendedor v where v.vend_mail = @empr_mail OR v.vend_mail = @mail), (select v.vendedor_id from LA_PETER_MACHINE.vendedor v join LA_PETER_MACHINE.cliente c on c.clie_id_vendedor = vendedor_id where c.clie_dni = @clie_dni), (select f.fact_num from LA_PETER_MACHINE.factura f where f.fact_id_publicacion = @publ_cod), (select v.vend_username from LA_PETER_MACHINE.vendedor v join LA_PETER_MACHINE.cliente c on c.clie_id_vendedor = vendedor_id where c.clie_dni = @clie_dni))
+			values (@publ_cod, 
+					(select v.vendedor_id from LA_PETER_MACHINE.vendedor v where v.vend_mail = @empr_mail OR v.vend_mail = @mail),
+					(select v.vendedor_id from LA_PETER_MACHINE.vendedor v join LA_PETER_MACHINE.cliente c on c.clie_id_vendedor = vendedor_id
+						 where c.clie_dni = @clie_dni),
+					(select i.item_num_factura from LA_PETER_MACHINE.item_factura i where i.item_id_publicacion = @publ_cod group by i.item_num_factura),
+					(select v.vend_username from LA_PETER_MACHINE.vendedor v join LA_PETER_MACHINE.cliente c on c.clie_id_vendedor = vendedor_id
+						 where c.clie_dni = @clie_dni))
 		END
 
 --OFERTA
@@ -351,7 +382,7 @@ while @@FETCH_STATUS=0 begin
 		@fact_nro ,
 		@fact_fecha ,
 		@fact_total ,
-		@fact_pago_desc
+		@fact_forma_pago
 end
 close C
 deallocate C
