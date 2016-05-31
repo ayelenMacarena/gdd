@@ -268,6 +268,16 @@ while @@FETCH_STATUS=0 begin
 					--(select v.vendedor_id from LA_PETER_MACHINE.vendedor v where v.vend_mail = @empr_mail OR v.vend_mail = @mail))
 			END
 
+select * from LA_PETER_MACHINE.item_factura
+
+--ITEM_FACTURA
+	if @fact_nro is not NULL
+		BEGIN
+			insert into LA_PETER_MACHINE.item_factura (item_num_factura, item_id_publicacion, item_cantidad, item_precio_unitario)
+			values (@fact_nro, @publ_cod, @ifac_monto, @ifac_cant)
+		END
+
+
 --FACTURA
 	if @fact_nro is not NULL and not exists (select fact_num from LA_PETER_MACHINE.factura where fact_num = @fact_nro)
 		BEGIN
