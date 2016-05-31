@@ -268,7 +268,6 @@ while @@FETCH_STATUS=0 begin
 					--(select v.vendedor_id from LA_PETER_MACHINE.vendedor v where v.vend_mail = @empr_mail OR v.vend_mail = @mail))
 			END
 
-select * from LA_PETER_MACHINE.item_factura
 
 --ITEM_FACTURA
 	if @fact_nro is not NULL
