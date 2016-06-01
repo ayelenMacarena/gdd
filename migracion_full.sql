@@ -216,19 +216,19 @@ while @@FETCH_STATUS=0 begin
 
 --CLIENTES (Usuario - Vendedor - Cliente)
 	--USUARIO CLIENTE
-		if @mail is not NULL and not exists (select * from LA_PETER_MACHINE.usuario where usua_username = @mail)
+		if @clie_mail is not NULL and not exists (select * from LA_PETER_MACHINE.usuario where usua_username = @clie_mail)
 			BEGIN
 	 			insert into LA_PETER_MACHINE.usuario (usua_username, usua_password, usua_habilitado) 
-				values (@mail, '12345', 1)
+				values (@clie_mail, '12345', 1)
 	 			insert into LA_PETER_MACHINE.roles_usuario (rolu_id_rol, rolu_username) 
-				values (2, @mail)
+				values (2, @clie_mail)
 	 		END
 
 	--VENDEDOR CLIENTE
-		if @mail is not NULL and not exists (select * from LA_PETER_MACHINE.vendedor where vend_mail = @mail)
+		if @clie_mail is not NULL and not exists (select * from LA_PETER_MACHINE.vendedor where vend_mail = @clie_mail)
 			BEGIN
 				insert into LA_PETER_MACHINE.vendedor (vend_username, vend_mail, vend_domicilio_calle, vend_cod_postal, vend_habilitado, vend_numero_calle, vend_piso, vend_depto) 
-				values (@mail, @mail, @calle, @cod_postal, 1, @calle_numero, @piso, @depto)
+				values (@clie_mail, @clie_mail, @clie_calle, @clie_cod_postal, 1, @clie_calle_numero, @clie_piso, @clie_dpto)
 			END
 
 	--CLIENTE
