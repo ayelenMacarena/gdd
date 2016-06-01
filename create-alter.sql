@@ -5,7 +5,7 @@
 CREATE SCHEMA LA_PETER_MACHINE
 
 CREATE TABLE calificacion ( 
-	calificacion_id numeric(18) NOT NULL IDENTITY(1,1),
+	calificacion_id numeric(18) NOT NULL,
 	cali_valor numeric(5),
 	cali_detalle nvarchar(100),
 	cali_id_vendedor numeric(18) NOT NULL
@@ -70,6 +70,7 @@ CREATE TABLE funcionalidad_rol (
 
 
 CREATE TABLE item_factura ( 
+	item_id numeric(18) NOT NULL IDENTITY(1,1),
 	item_num_factura numeric(18) NOT NULL,
 	item_id_publicacion numeric(18) NOT NULL,
 	item_cantidad numeric(18),
@@ -204,7 +205,7 @@ ALTER TABLE LA_PETER_MACHINE.funcionalidad_rol ADD CONSTRAINT PK_funcionalidad_r
 
 
 ALTER TABLE LA_PETER_MACHINE.item_factura ADD CONSTRAINT PK_item_factura 
-	PRIMARY KEY CLUSTERED (item_num_factura, item_id_publicacion)
+	PRIMARY KEY CLUSTERED (item_id)
 
 
 ALTER TABLE LA_PETER_MACHINE.oferta ADD CONSTRAINT PK_oferta 
