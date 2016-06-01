@@ -199,21 +199,6 @@ while @@FETCH_STATUS=0 begin
 			values (@rubr_descr)
 		END
 
---CALIFICACION
-	if @cali_codigo IS NOT NULL
-		BEGIN
-			if @empr_cuit IS NOT NULL
-				BEGIN
-				insert into LA_PETER_MACHINE.calificacion (calificacion_id,cali_valor,cali_detalle,cali_id_vendedor) 
-				values (@cali_codigo,@cali_cant_estrellas,@cali_desc,@empr_cuit)
-				END
-			else
-				BEGIN
-				insert into LA_PETER_MACHINE.calificacion (calificacion_id,cali_valor,cali_detalle,cali_id_vendedor) 
-				values (@cali_codigo,@cali_cant_estrellas,@cali_desc,@clie_dni)
-				END
-		END
-
 --CLIENTES (Usuario - Vendedor - Cliente)
 	--USUARIO CLIENTE
 		if @clie_mail is not NULL and not exists (select * from LA_PETER_MACHINE.usuario where usua_username = @clie_mail)
@@ -268,6 +253,21 @@ while @@FETCH_STATUS=0 begin
 					--(select v.vendedor_id from LA_PETER_MACHINE.vendedor v where v.vend_mail = @empr_mail OR v.vend_mail = @mail))
 			END
 
+--CALIFICACION
+	-- Esta tabla debe migrarse una vez esten migradas Vendedor
+	if @cali_codigo IS NOT NULL
+		BEGIN
+			if @empr_cuit IS NOT NULL
+				BEGIN
+				insert into LA_PETER_MACHINE.calificacion (calificacion_id,cali_valor,cali_detalle,cali_id_vendedor) 
+				values (@cali_codigo,@cali_cant_estrellas,@cali_desc,(select v.vendedor_id from LA_PETER_MACHINE.vendedor v where v.vend_mail = @empr_mail))
+				END
+			else
+				BEGIN
+				insert into LA_PETER_MACHINE.calificacion (calificacion_id,cali_valor,cali_detalle,cali_id_vendedor) 
+				values (@cali_codigo,@cali_cant_estrellas,@cali_desc,(select v.vendedor_id from LA_PETER_MACHINE.vendedor v where v.vend_mail = @clie_mail))
+				END
+		END
 
 --ITEM_FACTURA
 	if @fact_nro is not NULL
