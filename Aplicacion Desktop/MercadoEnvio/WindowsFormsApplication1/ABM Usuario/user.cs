@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient; //Para conectar con la base
 
 namespace WindowsFormsApplication1.ABM_Usuario
 {
@@ -46,14 +47,38 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button1_Click(object sender, EventArgs e)
         {
+            SqlConnection conexion = new SqlConnection("server=USUARIO-PC\\SQLSERVER2012 ; database=GD1C2016; integrated security = false; user ID=gd ; password=gd2016");
+            conexion.Open();
+            SqlCommand loginProcedure = new SqlCommand("LA_PETER_MACHINE.login", conexion);
+            string username = ingresoUser.Text;
+            loginProcedure.CommandType = CommandType.StoredProcedure;
+            //Paso los parámetros al SP
+            loginProcedure.Parameters.Add("@username", SqlDbType.NVarChar);
+            loginProcedure.Parameters["@username"].Value = username;
 
-            if (ingresoUser.Text == "a" && ingresoPass.Text == "a") // TODO: Hay que hacer un SP 
+            loginProcedure.Parameters.Add("@pass", SqlDbType.NVarChar);
+            loginProcedure.Parameters["@pass"].Value = ingresoPass.Text;
+            SqlDataReader usuario = loginProcedure.ExecuteReader();
+            if (usuario.HasRows)
+
             {
                 MessageBox.Show("BIENVENIDO");
-                fails = 0;
+                fails = 0; // Hacer sp que restartee, hay que persistirlo!
+                SqlCommand selectRol = new SqlCommand("LA_PETER_MACHINE.selectRol", conexion);
+                selectRol.CommandType = CommandType.StoredProcedure;
+                selectRol.Parameters.AddWithValue("@username", username);
+                SqlDataReader roles = selectRol.ExecuteReader(); //Aca rompe
+                while (roles.Read())
+                {
+
+                    roles.GetString(0);
+                }
+                //Hacer sp funcionalidades
+
             }
             else
             {
+                conexion.Close();
                 if (fails < 3)
                 {
                     fails++;

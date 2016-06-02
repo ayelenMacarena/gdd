@@ -41,13 +41,5 @@ namespace WindowsFormsApplication1
             
             
         }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            ABM_Usuario.altaUser newUser = new ABM_Usuario.altaUser();
-            this.Hide();
-            newUser.ShowDialog();
-            this.Close();
-        }
     }
 }

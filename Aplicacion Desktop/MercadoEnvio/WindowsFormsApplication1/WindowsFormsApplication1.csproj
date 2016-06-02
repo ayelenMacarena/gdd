@@ -48,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ABM Rol\selectRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Rol\selectRol.Designer.cs">
+      <DependentUpon>selectRol.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Rubro\Selección.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +140,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ABM Rol\selectRol.resx">
+      <DependentUpon>selectRol.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM Rubro\Selección.resx">
       <DependentUpon>Selección.cs</DependentUpon>
     </EmbeddedResource>
