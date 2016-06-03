@@ -168,7 +168,7 @@ CREATE TABLE visibilidad (
 CREATE TABLE costo_envio(
 	cost_id numeric(18) not null IDENTITY(1,1),
 	cost_costo numeric(18,2),
-	cost_visibilidad_id numeric(18)
+	cost_visi_cod numeric(18)
 	)
 --declare @costo_de_envio numeric(18,2)
 --set @costo_de_envio = 100
@@ -262,7 +262,7 @@ ALTER TABLE LA_PETER_MACHINE.costo_envio ADD CONSTRAINT PK_costo_envio
 
 
 ALTER TABLE LA_PETER_MACHINE.costo_envio ADD CONSTRAINT FK_costo_envio_visibilidad
-	FOREIGN KEY (cost_visibilidad_id) REFERENCES LA_PETER_MACHINE.visibilidad (visibilidad_id)
+	FOREIGN KEY (cost_visi_cod) REFERENCES LA_PETER_MACHINE.visibilidad (visi_cod)
 
 
 ALTER TABLE LA_PETER_MACHINE.cliente ADD CONSTRAINT FK_cliente_tipo_dni 

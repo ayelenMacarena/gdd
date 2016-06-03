@@ -59,6 +59,10 @@ IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_vendedor_usuario') AND OBJ
 ALTER TABLE LA_PETER_MACHINE.persona DROP CONSTRAINT FK_vendedor_usuario
 ;
 
+IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_costo_envio_visibilidad') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+ALTER TABLE LA_PETER_MACHINE.costo_envio DROP CONSTRAINT FK_costo_envio_visibilidad
+;
+
 
 ------------------------------------------------------
 --        SE REALIZAN LOS DROP DE LAS TABLAS        --
@@ -139,6 +143,10 @@ DROP TABLE LA_PETER_MACHINE.persona
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.visibilidad') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE LA_PETER_MACHINE.visibilidad
+;
+
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.costo_envio') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE LA_PETER_MACHINE.costo_envio
 ;
 
 
