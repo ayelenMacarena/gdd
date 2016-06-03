@@ -37,7 +37,6 @@ CREATE TABLE empresa (
 	empr_ciudad nvarchar(255),
 	empr_cuit nvarchar(50) NOT NULL,
 	empr_nombre_contacto nvarchar(255),
-	empr_cod_rubro numeric(18) NOT NULL,
 	empr_id_vendedor numeric(18) NOT NULL
 )
 
@@ -49,7 +48,7 @@ CREATE TABLE estado (
 
 
 CREATE TABLE factura ( 
-	fact_num numeric(18) NOT NULL,
+	fact_num numeric(18) NOT NULL IDENTITY(1,1),
 	fact_fecha datetime,
 	fact_total numeric(18,2),
 	fact_forma_pago nvarchar(255),
@@ -86,7 +85,7 @@ CREATE TABLE oferta (
 )
 
 CREATE TABLE publicacion ( 
-	publicacion_id numeric(18)  NOT NULL,
+	publicacion_id numeric(18)  NOT NULL IDENTITY(1,1),
 	publ_descripcion nvarchar(255),
 	publ_precio numeric(18,2),
 	publ_costo numeric(18,2),
@@ -98,9 +97,9 @@ CREATE TABLE publicacion (
 	publ_fecha_fin datetime,
 	publ_preguntas bit,
 	publ_cantidad numeric(18),
-	publ_id_tipo numeric(18) NOT NULL
+	publ_id_tipo numeric(18) NOT NULL,
+	publ_envio_habilitado bit
 )
-
 
 CREATE TABLE rol ( 
 	rol_id numeric(18) NOT NULL IDENTITY(1,1),
@@ -136,34 +135,44 @@ CREATE TABLE document_type (
 
 CREATE TABLE usuario ( 
 	usua_username nvarchar(255) NOT NULL,
-	usua_password nvarchar(20) NOT NULL,
-	usua_habilitado bit NOT NULL
+	usua_password varbinary(20) NOT NULL,
+	usua_habilitado bit NOT NULL,
+	usua_intentos_login numeric (1)
 )
 
 
-CREATE TABLE vendedor ( 
-	vendedor_id numeric(18) NOT NULL IDENTITY(1,1),
-	vend_username nvarchar(255) NOT NULL,
-	vend_mail nvarchar(50),
-	vend_telefono nvarchar(50),
-	vend_domicilio_calle nvarchar(255),
-	vend_cod_postal nvarchar(50),
-	vend_ciudad nvarchar(255),
-	vend_habilitado bit NOT NULL,
-	vend_calificacion numeric(18,2),
-	vend_numero_calle numeric(18),
-	vend_piso numeric(18),
-	vend_depto nvarchar(50)
+CREATE TABLE persona ( 
+	pers_id numeric(18) NOT NULL IDENTITY(1,1),
+	pers_username nvarchar(255) NOT NULL,
+	pers_mail nvarchar(50),
+	pers_telefono nvarchar(50),
+	pers_domicilio_calle nvarchar(255),
+	pers_cod_postal nvarchar(50),
+	pers_ciudad nvarchar(255),
+	pers_habilitado bit NOT NULL,
+	pers_calificacion numeric(18,2),
+	pers_numero_calle numeric(18),
+	pers_piso numeric(18),
+	pers_depto nvarchar(50)
 )
 
 
 CREATE TABLE visibilidad ( 
-	visi_cod numeric(18) NOT NULL,
+	visi_cod numeric(18) NOT NULL IDENTITY(1,1),
 	visi_precio numeric(18,2),
 	visi_porcentaje numeric(18,2),
 	visi_envio bit,
 	visi_descripcion nvarchar(255)
 )
+
+CREATE TABLE costo_envio(
+	cost_id numeric(18) not null IDENTITY(1,1),
+	cost_costo numeric(18,2),
+	cost_visibilidad_id numeric(18)
+	)
+--declare @costo_de_envio numeric(18,2)
+--set @costo_de_envio = 100
+
 
 GO
 
@@ -240,12 +249,20 @@ ALTER TABLE LA_PETER_MACHINE.usuario ADD CONSTRAINT PK_usuario
 	PRIMARY KEY CLUSTERED (usua_username)
 
 
-ALTER TABLE LA_PETER_MACHINE.vendedor ADD CONSTRAINT PK_vendedor 
-	PRIMARY KEY CLUSTERED (vendedor_id)
+ALTER TABLE LA_PETER_MACHINE.persona ADD CONSTRAINT PK_vendedor 
+	PRIMARY KEY CLUSTERED (pers_id)
 
 
 ALTER TABLE LA_PETER_MACHINE.visibilidad ADD CONSTRAINT PK_visibilidad 
 	PRIMARY KEY CLUSTERED (visi_cod)
+
+
+ALTER TABLE LA_PETER_MACHINE.costo_envio ADD CONSTRAINT PK_costo_envio 
+	PRIMARY KEY CLUSTERED (cost_id)
+
+
+ALTER TABLE LA_PETER_MACHINE.costo_envio ADD CONSTRAINT FK_costo_envio_visibilidad
+	FOREIGN KEY (cost_visibilidad_id) REFERENCES LA_PETER_MACHINE.visibilidad (visibilidad_id)
 
 
 ALTER TABLE LA_PETER_MACHINE.cliente ADD CONSTRAINT FK_cliente_tipo_dni 
@@ -253,15 +270,11 @@ ALTER TABLE LA_PETER_MACHINE.cliente ADD CONSTRAINT FK_cliente_tipo_dni
 
 
 ALTER TABLE LA_PETER_MACHINE.cliente ADD CONSTRAINT FK_cliente_vendedor 
-	FOREIGN KEY (clie_id_vendedor) REFERENCES LA_PETER_MACHINE.vendedor (vendedor_id)
-
-
-ALTER TABLE LA_PETER_MACHINE.empresa ADD CONSTRAINT FK_empresa_rubro 
-	FOREIGN KEY (empr_cod_rubro) REFERENCES LA_PETER_MACHINE.rubro (rubr_cod)
+	FOREIGN KEY (clie_id_vendedor) REFERENCES LA_PETER_MACHINE.persona (pers_id)
 
 
 ALTER TABLE LA_PETER_MACHINE.factura ADD CONSTRAINT FK_factura_vendedor 
-	FOREIGN KEY (fact_id_vendedor) REFERENCES LA_PETER_MACHINE.vendedor (vendedor_id)
+	FOREIGN KEY (fact_id_vendedor) REFERENCES LA_PETER_MACHINE.persona (pers_id)
 
 
 ALTER TABLE LA_PETER_MACHINE.funcionalidad_rol ADD CONSTRAINT FK_funcionalidad_rol_funcionalidad 
@@ -285,7 +298,7 @@ ALTER TABLE LA_PETER_MACHINE.publicacion ADD CONSTRAINT FK_publicacion_tipo
 
 
 ALTER TABLE LA_PETER_MACHINE.publicacion ADD CONSTRAINT FK_publicacion_vendedor 
-	FOREIGN KEY (publ_id_vendedor) REFERENCES LA_PETER_MACHINE.vendedor (vendedor_id)
+	FOREIGN KEY (publ_id_vendedor) REFERENCES LA_PETER_MACHINE.persona (pers_id)
 
 
 ALTER TABLE LA_PETER_MACHINE.publicacion ADD CONSTRAINT FK_publicacion_visibilidad 
@@ -300,7 +313,7 @@ ALTER TABLE LA_PETER_MACHINE.roles_usuario ADD CONSTRAINT FK_roles_usuario_usuar
 	FOREIGN KEY (rolu_username) REFERENCES LA_PETER_MACHINE.usuario (usua_username)
 
 
-ALTER TABLE LA_PETER_MACHINE.vendedor ADD CONSTRAINT FK_vendedor_usuario 
-	FOREIGN KEY (vend_username) REFERENCES LA_PETER_MACHINE.usuario (usua_username)
+ALTER TABLE LA_PETER_MACHINE.persona ADD CONSTRAINT FK_vendedor_usuario 
+	FOREIGN KEY (pers_username) REFERENCES LA_PETER_MACHINE.usuario (usua_username)
 
 GO

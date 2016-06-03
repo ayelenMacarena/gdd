@@ -15,10 +15,6 @@ IF EXISTS (SELECT * FROM dbo.sysobjects WHERE name = ('FK_cliente_vendedor') AND
 ALTER TABLE LA_PETER_MACHINE.Cliente DROP CONSTRAINT FK_cliente_vendedor
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_empresa_rubro') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.Empresa DROP CONSTRAINT FK_empresa_rubro
-;
-
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_factura_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.Factura DROP CONSTRAINT FK_factura_vendedor
 ;
@@ -60,7 +56,7 @@ ALTER TABLE LA_PETER_MACHINE.roles_Usuario DROP CONSTRAINT FK_roles_usuario_usua
 ;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_vendedor_usuario') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.vendedor DROP CONSTRAINT FK_vendedor_usuario
+ALTER TABLE LA_PETER_MACHINE.persona DROP CONSTRAINT FK_vendedor_usuario
 ;
 
 
@@ -137,8 +133,8 @@ IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.usuar
 DROP TABLE LA_PETER_MACHINE.Usuario
 ;
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.vendedor') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.vendedor
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.persona') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE LA_PETER_MACHINE.persona
 ;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.visibilidad') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
