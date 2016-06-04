@@ -58,7 +58,8 @@ CREATE TABLE factura (
 
 CREATE TABLE funcionalidad ( 
 	funcionalidad_id numeric(18) NOT NULL IDENTITY(1,1),
-	func_descripcion nvarchar(255)
+	func_descripcion nvarchar(255),
+	func_procedure nvarchar(255)
 )
 
 
@@ -137,7 +138,7 @@ CREATE TABLE usuario (
 	usua_username nvarchar(255) NOT NULL,
 	usua_password varbinary(20) NOT NULL,
 	usua_habilitado bit NOT NULL,
-	usua_intentos_login numeric (1)
+	usua_intentos_login numeric (1) DEFAULT 0
 )
 
 

@@ -155,8 +155,8 @@ DROP TABLE LA_PETER_MACHINE.costo_envio
 --     SE REALIZA DROP DEL SCRIPT DE MIGRACION      --
 ------------------------------------------------------
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.LaPeterMachine'))
-DROP PROCEDURE LA_PETER_MACHINE.LaPeterMachine
+IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.SP_Migracion'))
+DROP PROCEDURE LA_PETER_MACHINE.SP_Migracion
 ;
 
 DROP SCHEMA LA_PETER_MACHINE

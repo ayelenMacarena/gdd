@@ -1,15 +1,3 @@
-select * from gd_esquema.Maestra
-
-exec LA_PETER_MACHINE.SP_Migracion
-
-drop procedure LA_PETER_MACHINE.SP_Migracion
-
-select * from LA_PETER_MACHINE.cliente
-select * from LA_PETER_MACHINE.calificacion
-
-GO
-
-
 
 create PROCEDURE LA_PETER_MACHINE.SP_Migracion
 AS
@@ -26,17 +14,17 @@ AS
 		insert into LA_PETER_MACHINE.rol(rol_descripcion,rol_habilitado) values('administrativo',1)
 		
 --FUNCIONALIDAD
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion) values('publicar')
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion) values('categorizar_publicacion')
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion) values('visibilidad')
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion) values('comprar_ofertar')
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion) values('historial_cliente')
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion) values('calificar')
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion) values('facturas_realizadas')
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion) values('listado_estadistico')
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion) values('administrar_usuario')
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion) values('administrar_rol')
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion) values('administrar_rubro')
+		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('publicar',					'STORE_publicar')
+		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('categorizar_publicacion',	'STORE_categorizar_publicacion')
+		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('visibilidad',				'STORE_visibilidad')
+		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('comprar_ofertar',			'STORE_comprar_ofertar')
+		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('historial_cliente',		'STORE_historial_cliente')
+		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('calificar',				'STORE_calificar')
+		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('facturas_realizadas',		'STORE_facturas_realizadas')
+		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('listado_estadistico',		'STORE_listado_estadistico')
+		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('administrar_usuario',		'STORE_administrar_usuario')
+		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('administrar_rol',			'STORE_administrar_rol')
+		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('administrar_rubro',		'STORE_administrar_rubro')
 
 --FUNCIONALIDAD_ROL
 		-- Rol Admin
@@ -53,7 +41,7 @@ AS
 		(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'administrativo'))
 
 
-			
+		
 -- Rol Cliente
 		insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad, furo_id_rol) 
 		values((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'comprar_ofertar'),
@@ -88,10 +76,10 @@ AS
 
 --USUARIO (Empresa)
 	declare @hash varbinary(20)
-	select @hash = hashbytes('sha256','12345');
+	set @hash = hashbytes('sha2_256','12345');
 
-	insert into LA_PETER_MACHINE.usuario(usua_username, usua_password, usua_habilitado)
-	select distinct Publ_Empresa_Mail, @hash, 1 from gd_esquema.Maestra
+	insert into LA_PETER_MACHINE.usuario(usua_username, usua_password, usua_habilitado, usua_intentos_login)
+	select distinct Publ_Empresa_Mail, @hash, 1, 0 from gd_esquema.Maestra
 		where Publ_Empresa_Mail is not null
 		group by Publ_Empresa_Mail
 
@@ -100,6 +88,20 @@ AS
 	select distinct Cli_Mail,@hash,1,0 from gd_esquema.Maestra
 	where Cli_Mail is not null
 	group by Cli_Mail
+
+
+--ROLES_USUARIO (Empresa)
+	insert into LA_PETER_MACHINE.roles_usuario(rolu_username, rolu_id_rol)
+	select DISTINCT u.usua_username, r.rol_id from LA_PETER_MACHINE.rol r, LA_PETER_MACHINE.usuario u, LA_PETER_MACHINE.Persona p, gd_esquema.Maestra
+	where p.pers_mail = Publ_Empresa_Mail and p.pers_username = u.usua_username
+	and r.rol_descripcion = 'empresa'
+
+--ROLES_USUARIO (Cliente)
+	insert into LA_PETER_MACHINE.roles_usuario(rolu_username, rolu_id_rol)
+	select DISTINCT u.usua_username, r.rol_id from LA_PETER_MACHINE.rol r, LA_PETER_MACHINE.usuario u, LA_PETER_MACHINE.Persona p, gd_esquema.Maestra
+	where p.pers_mail = Cli_Mail and p.pers_username = u.usua_username
+	and r.rol_descripcion = 'cliente'
+
 
 --PERSONA (Cliente)
 	insert into LA_PETER_MACHINE.persona(pers_username, pers_mail, pers_domicilio_calle, pers_cod_postal, pers_habilitado,
@@ -186,24 +188,26 @@ insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_vendedo
 	insert into LA_PETER_MACHINE.tipo(tipo_descripcion) values ('Subasta')
 
 --COSTO_ENVIO		
-	insert into LA_PETER_MACHINE.costo_envio (cost_visibilidad_id)
+	insert into LA_PETER_MACHINE.costo_envio (cost_visi_cod)
 	select distinct visi_cod from LA_PETER_MACHINE.visibilidad 
-	update LA_PETER_MACHINE.costo_envio set cost_costo=100 where (select visi_cod from visibilidad where visi_descripcion='Oro')
-	update LA_PETER_MACHINE.costo_envio set cost_costo=150 where (select visi_cod from visibilidad where visi_descripcion='Plata')
-	update LA_PETER_MACHINE.costo_envio set cost_costo=180 where (select visi_cod from visibilidad where visi_descripcion='Bronce')
-	update LA_PETER_MACHINE.costo_envio set cost_costo=70 where (select visi_cod from visibilidad where visi_descripcion='Platino')
+	update LA_PETER_MACHINE.costo_envio set cost_costo=70 where (select visi_cod from LA_PETER_MACHINE.visibilidad where visi_descripcion='Platino') = cost_visi_cod
+	update LA_PETER_MACHINE.costo_envio set cost_costo=100 where (select visi_cod from LA_PETER_MACHINE.visibilidad where visi_descripcion='Oro') = cost_visi_cod
+	update LA_PETER_MACHINE.costo_envio set cost_costo=150 where (select visi_cod from LA_PETER_MACHINE.visibilidad where visi_descripcion='Plata') = cost_visi_cod
+	update LA_PETER_MACHINE.costo_envio set cost_costo=180 where (select visi_cod from LA_PETER_MACHINE.visibilidad where visi_descripcion='Bronce') = cost_visi_cod
+	update LA_PETER_MACHINE.costo_envio set cost_costo=300 where (select visi_cod from LA_PETER_MACHINE.visibilidad where visi_descripcion='Gratis') = cost_visi_cod
 
 --PUBLICACION
 
 	set identity_insert LA_PETER_MACHINE.publicacion ON
 
-	insert into LA_PETER_MACHINE.publicacion (publicacion_id, publ_descripcion, publ_precio, publ_cod_rubro,
+	insert into LA_PETER_MACHINE.publicacion (publicacion_id, publ_descripcion, publ_precio, publ_cod_rubro, publ_cod_visibilidad,
 		publ_id_vendedor, publ_id_estado, publ_fecha_inicio, publ_fecha_fin, publ_preguntas, publ_cantidad, publ_id_tipo,
 		publ_envio_habilitado)
-	select Publicacion_Cod, Publicacion_Descripcion, Publicacion_Precio,
+	select DISTINCT Publicacion_Cod, Publicacion_Descripcion, Publicacion_Precio,
 		(select rubr_cod from LA_PETER_MACHINE.rubro where rubr_descripcion_corta = Publicacion_Rubro_Descripcion),
+		(select visi_cod from LA_PETER_MACHINE.visibilidad where visi_cod = Publicacion_Visibilidad_Cod),
 		(select pers_id from LA_PETER_MACHINE.persona where Publ_Empresa_Mail = pers_mail OR Publ_Cli_Mail = pers_mail),
-		(select estado_id from LA_PETER_MACHINE.estado where Publicacion_Estado = 'Finalizada'),
+		(select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Finalizada'),
 		Publicacion_Fecha, Publicacion_Fecha_Venc, 1, Publicacion_Stock, 
 		(select tipo_id from LA_PETER_MACHINE.tipo where Publicacion_Tipo = tipo_descripcion),0
 		from gd_esquema.Maestra
@@ -213,7 +217,7 @@ insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_vendedo
 	--Poner el costo
 	update LA_PETER_MACHINE.publicacion set publ_costo = 
 		publ_precio*(select visi_porcentaje from LA_PETER_MACHINE.visibilidad where publ_cod_visibilidad = visi_cod)
-		+ (select cost_costo from LA_PETER_MACHINE.costo_envio where publ_cod_visibilidad=cost_visibilidad_id)*publ_envio_hablitado 
+		+ (select cost_costo from LA_PETER_MACHINE.costo_envio where publ_cod_visibilidad=cost_visi_cod)*publ_envio_habilitado 
 		+ (select visi_precio from LA_PETER_MACHINE.visibilidad where publ_cod_visibilidad = visi_cod)
 
 
@@ -226,7 +230,7 @@ insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_vendedo
 		(select pers_id from LA_PETER_MACHINE.persona where Publ_Empresa_Mail = pers_mail OR Publ_Cli_Mail = pers_mail)
 		from gd_esquema.Maestra
 		where Factura_Nro is not null
-		group by Factura_Nro, Factura_Fecha, Factura_Total, Forma_Pago_Desc
+		group by Factura_Nro, Factura_Fecha, Factura_Total, Forma_Pago_Desc, Publ_Empresa_Mail, Publ_Cli_Mail
 		order by Factura_Nro
 
 	set identity_insert LA_PETER_MACHINE.factura OFF
@@ -234,9 +238,22 @@ insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_vendedo
 
 --ITEM_FACTURA
 	insert into LA_PETER_MACHINE.item_factura(item_num_factura, item_cantidad, item_precio_unitario, item_id_publicacion)
-	select Factura_Nro, Item_Factura_Cantidad, Item_Factura_Monto / Item_Factura_Cantidad,
+	select Factura_Nro, Item_Factura_Cantidad, (Item_Factura_Monto / Item_Factura_Cantidad), Publicacion_Cod
 		from gd_esquema.Maestra
 		where Factura_Nro is not null
 		order by Factura_Nro
+
+--OFERTA
+	insert into LA_PETER_MACHINE.oferta(ofer_id_publicacion, ofer_valor, ofer_username)
+	select p.publicacion_id, Oferta_Monto, pe.pers_username
+		from LA_PETER_MACHINE.publicacion p, LA_PETER_MACHINE.persona pe, gd_esquema.Maestra
+		where p.publicacion_id = Publicacion_cod and pe.pers_mail = Cli_mail and Oferta_Monto is not NULL
+
+--COMPRA
+	insert into LA_PETER_MACHINE.compra(comp_id_publicacion, comp_id_vendedor, comp_id_comprador, comp_num_factura, comp_username, comp_id_calificacion)
+	select p.publicacion_id, pe.pers_id, pe2.pers_id, (select DISTINCT m2.Factura_Nro from gd_esquema.Maestra m2 where m2.Publicacion_Cod = p.publicacion_id and m2.Factura_Nro is not null), pe.pers_username, Calificacion_Codigo
+		from LA_PETER_MACHINE.publicacion p, LA_PETER_MACHINE.persona pe, gd_esquema.Maestra
+		join LA_PETER_MACHINE.persona pe2 on pe2.pers_mail = Publ_Cli_Mail or pe2.pers_mail = Publ_Empresa_Mail
+		where p.publicacion_id = Publicacion_cod and pe.pers_mail = Cli_mail and Compra_Cantidad is not NULL
 
 GO
