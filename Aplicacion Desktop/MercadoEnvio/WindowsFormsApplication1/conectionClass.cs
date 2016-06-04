@@ -7,18 +7,11 @@ using System.Collections.Specialized;
 using System.Data.SqlClient;
 using System.Configuration;
 
-
 namespace WindowsFormsApplication1
 {
     public sealed class conectionDB
-
     {
-        //string server = ConfigurationManager.AppSettings["server"].ToString();
-        //string user = ConfigurationManager.AppSettings["user"].ToString();
-        //string password = ConfigurationManager.AppSettings["password"].ToString();
-        //string database= ConfigurationManager.AppSettings["database"].ToString();
-
-        private static readonly conectionDB instance = new conectionDB();
+         private static readonly conectionDB instance= new conectionDB();
 
         private conectionDB() { }
 
@@ -29,9 +22,9 @@ namespace WindowsFormsApplication1
 
         public static SqlConnection getConnection()
         {
-            string stringConection = "server=USUARIO-PC\\SQLSERVER2012 ; database=GD1C2016; integrated security = false; user ID=gd ; password=gd2016";
-
-            SqlConnection conection = new SqlConnection(stringConection);
+            string stringConfig = ConfigurationManager.AppSettings["stringConfig"].ToString();
+        
+            SqlConnection conection = new SqlConnection(stringConfig);
 
             return conection;
         }
