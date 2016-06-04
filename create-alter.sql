@@ -3,7 +3,6 @@
 ------------------------------------------------------
 
 CREATE SCHEMA LA_PETER_MACHINE
-
 CREATE TABLE calificacion ( 
 	calificacion_id numeric(18) NOT NULL,
 	cali_valor numeric(5),

@@ -11,7 +11,7 @@ using System.Data.SqlClient; //Para conectar con la base
 
 namespace WindowsFormsApplication1.ABM_Usuario
 {
-
+ 
     public partial class user : Form
     {
         int fails = 0;
@@ -75,7 +75,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 }
                 //Hacer sp funcionalidades
 
-            }
+            } 
             else
             {
                 conexion.Close();
@@ -92,7 +92,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 }
             }
         }
-
+        
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             ABM_Usuario.altaUser newUser = new ABM_Usuario.altaUser();
