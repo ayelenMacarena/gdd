@@ -47,7 +47,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SqlConnection conexion = new SqlConnection("server=USUARIO-PC\\SQLSERVER2012 ; database=GD1C2016; integrated security = false; user ID=gd ; password=gd2016");
+            SqlConnection conexion = conectionDB.getConnection();
             conexion.Open();
             SqlCommand loginProcedure = new SqlCommand("LA_PETER_MACHINE.login", conexion);
             string username = ingresoUser.Text;
