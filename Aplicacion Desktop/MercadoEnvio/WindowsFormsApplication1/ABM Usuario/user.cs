@@ -53,38 +53,51 @@ namespace WindowsFormsApplication1.ABM_Usuario
             string username = ingresoUser.Text;
             loginProcedure.CommandType = CommandType.StoredProcedure;
             //Paso los parámetros al SP
-            loginProcedure.Parameters.Add("@username", SqlDbType.NVarChar);
+            loginProcedure.Parameters.AddWithValue("@username", username);
             loginProcedure.Parameters["@username"].Value = username;
-
-            loginProcedure.Parameters.Add("@pass", SqlDbType.NVarChar);
-            loginProcedure.Parameters["@pass"].Value = ingresoPass.Text;
+            string pass = ingresoPass.Text;
+            loginProcedure.Parameters.AddWithValue("@pass", pass);
+            
             SqlDataReader usuario = loginProcedure.ExecuteReader();
+            List<String> listaRoles = new List<String>();
+
             if (usuario.HasRows)
             {
-              
-                while (usuario.Read())
-                {
-                    usuario.GetInt16["usua_habilitado"]
+                
+                
 
-                    usuario.GetString(0);
-                }
+                    while (usuario.Read())
+                    {
+                        if (usuario.GetBoolean(0)) // getBoolean recibe le número de fila que quiero convertir en boolean, en este caso es usua_habilitado la 0.
+                        { //Si el usuario está habilitado
+                                                       
+                            listaRoles.Add(usuario["rol_descripcion"].ToString());
+                        }
+                        else
+                        {
+                            MessageBox.Show("El usuario está inhabilitado, debe contactarse con el administrador del sistema");
+                        }
 
-            } 
+                    }
+
+                
+            }
             else
             {
 
-       
+                MessageBox.Show("El usuario o contraseña especificado, no existe");
             }
             conexion.Close();
+            if (listaRoles.Count() >=1)
+            {
+                //Si se cargo la listaRoles, es porque el usuario se logueo Ok y tiene roles asignados.
+                ABM_Rol.selectRol selectRol = new ABM_Rol.selectRol(listaRoles);
+                this.Hide();
+                selectRol.ShowDialog();
+                this.Close();
+            }
 
         }
         
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            ABM_Usuario.altaUser newUser = new ABM_Usuario.altaUser();
-            this.Hide();
-            newUser.ShowDialog();
-            this.Close();
-        }
     }
 }

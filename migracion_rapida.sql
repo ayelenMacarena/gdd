@@ -76,7 +76,9 @@ AS
 
 --USUARIO (Empresa)
 	declare @hash varbinary(20)
-	set @hash = hashbytes('sha2_256','12345');
+	declare @pass nvarchar(20)
+	set @pass = '12345'
+	set @hash = hashbytes('sha2_256',@pass);
 
 	insert into LA_PETER_MACHINE.usuario(usua_username, usua_password, usua_habilitado, usua_intentos_login)
 	select distinct Publ_Empresa_Mail, @hash, 1, 0 from gd_esquema.Maestra

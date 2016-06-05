@@ -3,13 +3,16 @@ as
 declare @fails numeric(3)
 declare @passEncontrada varbinary(20)
 declare @habilitado bit
+declare @passIngresadaEncript varbinary(20)
+set @passIngresadaEncript = hashbytes('sha2_256',@pass);
+
 
 
 select @fails=usua_intentos_login, @passEncontrada = usua_password, @habilitado = usua_habilitado
 	from LA_PETER_MACHINE.usuario u 
 	where u.usua_username = @username
 
-IF HASHBYTES('SHA2_256', @pass) = @passEncontrada 
+IF @passIngresadaEncript = @passEncontrada 
 	--Caso feliz, se encuentra el usuario y la contraseña es correcta
 	begin
 		if @habilitado = 1-- Verifico que esté habilitado, si lo está le seteo en 0 los intentos.
@@ -17,7 +20,7 @@ IF HASHBYTES('SHA2_256', @pass) = @passEncontrada
 				where usua_username = @username;
 	end
 	
-IF HASHBYTES('SHA2_256', @pass) != @passEncontrada 
+IF @passIngresadaEncript != @passEncontrada 
 --Error de password
 	begin
 		declare @failsFinales numeric(3) = @fails + 1;
@@ -34,12 +37,12 @@ IF HASHBYTES('SHA2_256', @pass) != @passEncontrada
 	
 /* Devuelvo usuario habilitado y roles */
 
+
+
 SELECT usua_habilitado, rol_descripcion
 	FROM LA_PETER_MACHINE.usuario us, LA_PETER_MACHINE.roles_usuario ru , LA_PETER_MACHINE.rol rol
-	WHERE us.usua_username = 'adoración_Méndez@gmail.com'
-	and 'adoración_Méndez@gmail.com' = ru.rolu_username
+	WHERE us.usua_username = @username 
+	and us.usua_username = ru.rolu_username
+	and @passIngresadaEncript =  us.usua_password
 	and ru.rolu_id_rol = rol.rol_id;
-
-
-
 GO
