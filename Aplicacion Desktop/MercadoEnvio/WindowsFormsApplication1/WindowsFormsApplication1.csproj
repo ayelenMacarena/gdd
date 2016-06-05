@@ -61,6 +61,12 @@
     <Compile Include="ABM Rol\EditarFuncionalidades.Designer.cs">
       <DependentUpon>EditarFuncionalidades.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Rol\ListadoDeUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Rol\ListadoDeUsuarios.Designer.cs">
+      <DependentUpon>ListadoDeUsuarios.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Rol\ListadoRol.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,11 +109,29 @@
     <Compile Include="ABM Rubro\Alta.Designer.cs">
       <DependentUpon>Alta.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Usuario\altaUser.cs">
+    <Compile Include="ABM Usuario\AltaCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Usuario\altaUser.Designer.cs">
-      <DependentUpon>altaUser.cs</DependentUpon>
+    <Compile Include="ABM Usuario\AltaCliente.Designer.cs">
+      <DependentUpon>AltaCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\ListadoDeUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\ListadoDeUsuarios.Designer.cs">
+      <DependentUpon>ListadoDeUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\Usuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\Usuario.Designer.cs">
+      <DependentUpon>Usuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\Cliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\Cliente.Designer.cs">
+      <DependentUpon>Cliente.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Usuario\user.cs">
       <SubType>Form</SubType>
@@ -172,6 +196,9 @@
     <EmbeddedResource Include="ABM Rol\EditarFuncionalidades.resx">
       <DependentUpon>EditarFuncionalidades.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM Rol\ListadoDeUsuarios.resx">
+      <DependentUpon>ListadoDeUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\ListadoRol.resx">
       <DependentUpon>ListadoRol.cs</DependentUpon>
     </EmbeddedResource>
@@ -193,8 +220,17 @@
     <EmbeddedResource Include="ABM Rubro\Alta.resx">
       <DependentUpon>Alta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Usuario\altaUser.resx">
-      <DependentUpon>altaUser.cs</DependentUpon>
+    <EmbeddedResource Include="ABM Usuario\AltaCliente.resx">
+      <DependentUpon>AltaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\ListadoDeUsuarios.resx">
+      <DependentUpon>ListadoDeUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\Usuario.resx">
+      <DependentUpon>Usuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\Cliente.resx">
+      <DependentUpon>Cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\user.resx">
       <DependentUpon>user.cs</DependentUpon>
