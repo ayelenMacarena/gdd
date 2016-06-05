@@ -60,37 +60,22 @@ namespace WindowsFormsApplication1.ABM_Usuario
             loginProcedure.Parameters["@pass"].Value = ingresoPass.Text;
             SqlDataReader usuario = loginProcedure.ExecuteReader();
             if (usuario.HasRows)
-
             {
-                MessageBox.Show("BIENVENIDO");
-                fails = 0; // Hacer sp que restartee, hay que persistirlo!
-                SqlCommand selectRol = new SqlCommand("LA_PETER_MACHINE.selectRol", conexion);
-                selectRol.CommandType = CommandType.StoredProcedure;
-                selectRol.Parameters.AddWithValue("@username", username);
-                SqlDataReader roles = selectRol.ExecuteReader(); //Aca rompe
-                while (roles.Read())
+              
+                while (usuario.Read())
                 {
 
-                    roles.GetString(0);
+                    usuario.GetString(0);
                 }
-                //Hacer sp funcionalidades
 
             } 
             else
             {
-                conexion.Close();
-                if (fails < 3)
-                {
-                    fails++;
-                    MessageBox.Show("Usuario o Contraseña INCORRECTOS");
-                }
-                else
-                {
-                    //TODO: SP que inhabilita el usuario despues de 3 login mal.
-                    MessageBox.Show("Ingreso 3 veces mal la contraseña, su usuario fue inhabilitado");
 
-                }
+       
             }
+            conexion.Close();
+
         }
         
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
