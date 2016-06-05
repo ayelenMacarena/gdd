@@ -40,3 +40,4 @@ end
 --@nombre='pepe',@numero='2162',@pasword='contra',@piso='5',@telefono='42131522',@tipo_DNI='DNI',
 --@rdo=''
 
+select clie_nombre + clie_apellido as Nombre,clie_dni as Identunico,clie  from LA_PETER_MACHINE.cliente, LA_PETER_MACHINE.usuario, LA_PETER_MACHINE.persona
