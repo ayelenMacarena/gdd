@@ -14,7 +14,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
  
     public partial class user : Form
     {
-        int fails = 0;
+ 
         public user()
         {
             InitializeComponent();
@@ -63,16 +63,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
             if (usuario.HasRows)
             {
-<<<<<<< HEAD
-                
-                
-=======
-              
-                while (usuario.Read())
-                {
-                    //usuario.GetInt16["usua_habilitado"]
->>>>>>> 8c24939e1973f2060c7c5a05afc444c313f5404f
 
+              
                     while (usuario.Read())
                     {
                         if (usuario.GetBoolean(0)) // getBoolean recibe le número de fila que quiero convertir en boolean, en este caso es usua_habilitado la 0.
@@ -106,15 +98,5 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         }
         
-<<<<<<< HEAD
-=======
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            ABM_Usuario.Usuario newUser = new ABM_Usuario.Usuario();
-            this.Hide();
-            newUser.ShowDialog();
-            this.Close();
-        }
->>>>>>> 8c24939e1973f2060c7c5a05afc444c313f5404f
     }
 }

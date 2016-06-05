@@ -15,11 +15,24 @@ namespace WindowsFormsApplication1.ABM_Rol
         public selectRol(List<String> listaRoles)
         {
             InitializeComponent();
+            List<String> lista = listaRoles;
+        }
+        private void selectRol_Load(object sender, EventArgs e) 
+        {   comboBox1.Items.Add("weekdays"); 
+            comboBox1.Items.Add("year");
+            
+        }
+        
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
 
         }
+
     }
 }
