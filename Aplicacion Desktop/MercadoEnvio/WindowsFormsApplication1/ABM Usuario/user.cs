@@ -64,6 +64,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
               
                 while (usuario.Read())
                 {
+                    usuario.GetInt16["usua_habilitado"]
 
                     usuario.GetString(0);
                 }
@@ -84,11 +85,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
             this.Hide();
             newUser.ShowDialog();
             this.Close();
-        }
-
-        private void ingresoUser_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
