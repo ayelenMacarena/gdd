@@ -100,5 +100,10 @@ namespace WindowsFormsApplication1.ABM_Usuario
             newUser.ShowDialog();
             this.Close();
         }
+
+        private void ingresoUser_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
