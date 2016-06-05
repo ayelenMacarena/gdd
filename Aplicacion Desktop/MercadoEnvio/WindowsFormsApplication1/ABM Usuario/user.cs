@@ -64,7 +64,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
               
                 while (usuario.Read())
                 {
-                    usuario.GetInt16["usua_habilitado"]
+                    //usuario.GetInt16["usua_habilitado"]
 
                     usuario.GetString(0);
                 }
@@ -81,7 +81,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
         
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ABM_Usuario.altaUser newUser = new ABM_Usuario.altaUser();
+            ABM_Usuario.Usuario newUser = new ABM_Usuario.Usuario();
             this.Hide();
             newUser.ShowDialog();
             this.Close();

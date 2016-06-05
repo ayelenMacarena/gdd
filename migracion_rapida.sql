@@ -2,7 +2,6 @@
 create PROCEDURE LA_PETER_MACHINE.SP_Migracion
 AS
 
-
 --DOCUMENT-TYPE
 		insert into LA_PETER_MACHINE.document_type(type_descripcion) values('DNI')
 		insert into LA_PETER_MACHINE.document_type(type_descripcion) values('CI')
@@ -105,8 +104,8 @@ AS
 
 --PERSONA (Cliente)
 	insert into LA_PETER_MACHINE.persona(pers_username, pers_mail, pers_domicilio_calle, pers_cod_postal, pers_habilitado,
-		 pers_numero_calle, pers_piso, pers_depto)
-	select distinct Cli_Mail, Cli_Mail, Cli_Dom_Calle, Cli_Cod_Postal, 1, Cli_Nro_Calle, Cli_Piso, Cli_Depto
+		 pers_numero_calle, pers_piso, pers_depto,pers_fecha_creacion)
+	select distinct Cli_Mail, Cli_Mail, Cli_Dom_Calle, Cli_Cod_Postal, 1, Cli_Nro_Calle, Cli_Piso, Cli_Depto, SYSDATETIME()
 	from gd_esquema.Maestra
 	where Cli_Mail is not null
 	group by Cli_Mail, Cli_Mail, Cli_Dom_Calle, Cli_Cod_Postal, Cli_Nro_Calle, Cli_Nro_Calle, Cli_Piso, Cli_Depto
@@ -114,9 +113,9 @@ AS
 
 --PERSONA (Empresa)
 	insert into LA_PETER_MACHINE.persona(pers_username, pers_mail, pers_domicilio_calle, pers_cod_postal, pers_habilitado,
-		 pers_numero_calle, pers_piso, pers_depto)
+		 pers_numero_calle, pers_piso, pers_depto,pers_fecha_creacion)
 	select Publ_Empresa_Mail, Publ_Empresa_Mail, Publ_Empresa_Dom_Calle, Publ_Empresa_Cod_Postal, 1, Publ_Empresa_Nro_Calle,
-		Publ_Empresa_Piso, Publ_Empresa_Depto
+		Publ_Empresa_Piso, Publ_Empresa_Depto, SYSDATETIME()
 	from gd_esquema.Maestra
 	where Publ_Empresa_Mail is not null
 	group by Publ_Empresa_Mail, Publ_Empresa_Dom_Calle, Publ_Empresa_Cod_Postal, Publ_Empresa_Nro_Calle,
@@ -128,9 +127,8 @@ DECLARE		@clie_id_tipo_doc numeric(18,0)
 
 set @clie_id_tipo_doc = (select type_id from LA_PETER_MACHINE.document_type where type_descripcion = 'DNI')
 	
-	insert into LA_PETER_MACHINE.cliente (clie_apellido, clie_nombre, clie_dni, clie_id_tipo_doc, clie_fecha_nac,
-		clie_fecha_creacion, clie_id_vendedor)
-	select Cli_Apeliido, Cli_Nombre, Cli_Dni, @clie_id_tipo_doc ,Cli_Fecha_Nac, SYSDATETIME(),
+	insert into LA_PETER_MACHINE.cliente (clie_apellido, clie_nombre, clie_dni, clie_id_tipo_doc, clie_fecha_nac, clie_id_persona)
+	select Cli_Apeliido, Cli_Nombre, Cli_Dni, @clie_id_tipo_doc ,Cli_Fecha_Nac,
 		(select pers_id from LA_PETER_MACHINE.persona where pers_mail = Cli_Mail)
 		from gd_esquema.Maestra
 		where Cli_Dni is not null 
@@ -143,7 +141,7 @@ insert into LA_PETER_MACHINE.rubro(rubr_descripcion_corta)
 
 
 --EMPRESA
-insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_vendedor)
+insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_persona)
 	select distinct Publ_Empresa_Razon_Social, Publ_Empresa_Cuit,
 	(select pers_id from LA_PETER_MACHINE.persona where pers_mail = Publ_Empresa_Mail)
 		from gd_esquema.Maestra
