@@ -48,7 +48,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
             var senderGrid = (DataGridView)sender;
             String usu = senderGrid.Rows[e.RowIndex].Cells[3].FormattedValue.ToString();
-                
+            String tipo = senderGrid.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
             if (enteroABool(String.Compare(senderGrid.Columns[e.ColumnIndex].HeaderText, "Seleccionar")) && e.RowIndex >= 0)
             {
                 SqlConnection conexion = conectionDB.getConnection();
@@ -67,7 +67,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
                 if (String.Compare(rdo.Value.ToString(), "ok") == 0)
                 {
-                    EditarRoles select = new EditarRoles(usu);
+                    EditarRoles select = new EditarRoles(usu,tipo);
                     this.Hide();
                     select.ShowDialog();
                     this.Close();
@@ -155,8 +155,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             cmd.Connection = conexion;
             DataTable table = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            Boolean @hab = checkBox1.Checked;
-            cmd.CommandText = "select * from (select 'cliente' as Tipo, clie_nombre + clie_apellido as Nombre,clie_dni as IdentUnico,usua_username as Usuario,pers_ciudad as Ciudad, pers_domicilio_calle as Calle,pers_numero_calle as Numero, pers_mail as Mail from LA_PETER_MACHINE.cliente, LA_PETER_MACHINE.usuario, LA_PETER_MACHINE.persona where pers_id=clie_id_persona and pers_username=usua_username and (clie_nombre like '%' + @nombre + '%') and (clie_dni like '%' + @doc + '%') and (isnull(pers_ciudad,'') like '%' + @ciudad + '%') and pers_habilitado=@hab and pers_fecha_creacion >= right(@desde,4)+substring(@desde,4,2)+left(@desde,2) and pers_fecha_creacion< right(@hasta,4)+substring(@hasta,4,2)+left(@hasta,2) union select 'empresa' as Tipo,empr_razon_social as Nombre, convert(numeric,left(empr_cuit,2)+substring(empr_cuit,4,8)+right(empr_cuit,2)) as IdentUnico,pers_username as Usuario, pers_ciudad as Ciudad, pers_domicilio_calle as Calle,pers_numero_calle as Numero,pers_mail as Mail  from LA_PETER_MACHINE.empresa, LA_PETER_MACHINE.usuario, LA_PETER_MACHINE.persona  where pers_id=empr_id_persona and pers_username=usua_username and (empr_razon_social like '%' + @nombre + '%') and (empr_cuit like '%' + @doc + '%') and (isnull(pers_ciudad,'') like '%' + @ciudad + '%') and pers_habilitado=@hab and pers_fecha_creacion >= right(@desde,4)+substring(@desde,4,2)+left(@desde,2) and pers_fecha_creacion< right(@hasta,4)+substring(@hasta,4,2)+left(@hasta,2)) as tabla  where (tabla.Tipo like @rol + '%')";
+            cmd.CommandText = "select * from (select 'cliente' as Tipo, clie_nombre + clie_apellido as Nombre,clie_dni as IdentUnico,usua_username as Usuario,pers_ciudad as Ciudad, pers_domicilio_calle as Calle,pers_numero_calle as Numero, pers_mail as Mail from LA_PETER_MACHINE.cliente, LA_PETER_MACHINE.usuario, LA_PETER_MACHINE.persona where pers_id=clie_id_persona and pers_username=usua_username and (clie_nombre like '%' + @nombre + '%') and (clie_dni like '%' + @doc + '%') and (isnull(pers_ciudad,'') like '%' + @ciudad + '%') and usua_habilitado=@hab and pers_fecha_creacion >= right(@desde,4)+substring(@desde,4,2)+left(@desde,2) and pers_fecha_creacion< right(@hasta,4)+substring(@hasta,4,2)+left(@hasta,2) union select 'empresa' as Tipo,empr_razon_social as Nombre, convert(numeric,left(empr_cuit,2)+substring(empr_cuit,4,8)+right(empr_cuit,2)) as IdentUnico,pers_username as Usuario, pers_ciudad as Ciudad, pers_domicilio_calle as Calle,pers_numero_calle as Numero,pers_mail as Mail  from LA_PETER_MACHINE.empresa, LA_PETER_MACHINE.usuario, LA_PETER_MACHINE.persona  where pers_id=empr_id_persona and pers_username=usua_username and (empr_razon_social like '%' + @nombre + '%') and (empr_cuit like '%' + @doc + '%') and (isnull(pers_ciudad,'') like '%' + @ciudad + '%') and usua_habilitado=@hab and pers_fecha_creacion >= right(@desde,4)+substring(@desde,4,2)+left(@desde,2) and pers_fecha_creacion< right(@hasta,4)+substring(@hasta,4,2)+left(@hasta,2)) as tabla  where (tabla.Tipo like @rol + '%')";
             cmd.Parameters.Add("@nombre", SqlDbType.NVarChar);
             cmd.Parameters["@nombre"].Value = textBox1.Text;
             cmd.Parameters.Add("@doc", SqlDbType.NVarChar);
@@ -164,7 +163,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             cmd.Parameters.Add("@ciudad", SqlDbType.NVarChar);
             cmd.Parameters["@ciudad"].Value = textBox3.Text;
             cmd.Parameters.Add("@hab", SqlDbType.NVarChar);
-            cmd.Parameters["@hab"].Value = checkBox1.Checked;
+            cmd.Parameters["@hab"].Value = deBoolABit(checkBox1.Checked);
             cmd.Parameters.Add("@desde", SqlDbType.NVarChar);
             cmd.Parameters["@desde"].Value = checkDesde();
             cmd.Parameters.Add("@hasta", SqlDbType.NVarChar);
@@ -195,8 +194,13 @@ namespace WindowsFormsApplication1.ABM_Usuario
             this.deshabilitar.Name = "Deshabilitar";
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.deshabilitar});
-           
+          
         }
+        
+            private String deBoolABit(Boolean b){
+                if (b) { return "1"; }
+                    else{return "0";}
+            }
         private String checkDesde()
         {
             if (textBox5.Text == "")

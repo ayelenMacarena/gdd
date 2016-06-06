@@ -74,5 +74,15 @@ namespace WindowsFormsApplication1.ABM_Usuario
             clie.ShowDialog();
             this.Close();
         }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

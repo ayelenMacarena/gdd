@@ -133,6 +133,18 @@
     <Compile Include="ABM Usuario\ListadoDeUsuarios.Designer.cs">
       <DependentUpon>ListadoDeUsuarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Usuario\modificarCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\modificarCliente.Designer.cs">
+      <DependentUpon>modificarCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\modificarEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\modificarEmpresa.Designer.cs">
+      <DependentUpon>modificarEmpresa.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Usuario\Usuario.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -243,6 +255,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\ListadoDeUsuarios.resx">
       <DependentUpon>ListadoDeUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\modificarCliente.resx">
+      <DependentUpon>modificarCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\modificarEmpresa.resx">
+      <DependentUpon>modificarEmpresa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\Usuario.resx">
       <DependentUpon>Usuario.cs</DependentUpon>

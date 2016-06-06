@@ -32,7 +32,7 @@ CREATE TABLE compra (
 
 CREATE TABLE empresa ( 
 	empr_razon_social nvarchar(255) NOT NULL,
-	empr_ciudad nvarchar(255),
+	--empr_ciudad nvarchar(255),
 	empr_cuit nvarchar(50) NOT NULL,
 	empr_nombre_contacto nvarchar(255),
 	empr_id_persona numeric(18) NOT NULL
@@ -541,8 +541,6 @@ if  exists(select*
 								else
 								set @rdo='El usuario no tiene ese rol'
 end
-select * from LA_PETER_MACHINE.funcionalidad
-select * from LA_PETER_MACHINE.rol
 GO
 create procedure LA_PETER_MACHINE.Crear_Empresa(@contacto nvarchar(255),
 @usuario nvarchar(255),@pasword nvarchar(20),@nombre nvarchar(255),@cuit nvarchar(255),
@@ -563,8 +561,8 @@ begin try
 	insert into LA_PETER_MACHINE.persona(pers_ciudad,pers_cod_postal,pers_depto,
 	pers_domicilio_calle,pers_mail,pers_numero_calle,pers_piso,pers_telefono,pers_username,pers_habilitado,pers_fecha_creacion)values(
 	@ciudad,@cod_postal,@depto,@calle,@mail,cast(@numero as numeric),cast(@piso as numeric),@telefono,@usuario,1,SYSDATETIME())
-	insert into LA_PETER_MACHINE.empresa(empr_ciudad,empr_cuit,
-	empr_nombre_contacto,empr_razon_social,empr_id_persona)values(@ciudad,@cuit,@contacto,
+	insert into LA_PETER_MACHINE.empresa(empr_cuit,
+	empr_nombre_contacto,empr_razon_social,empr_id_persona)values(@cuit,@contacto,
 	@nombre,
 	(select pers_id from LA_PETER_MACHINE.persona where pers_username=@usuario))
 	insert into LA_PETER_MACHINE.roles_usuario(rolu_username,rolu_id_rol)values(@usuario,
@@ -587,3 +585,64 @@ end catch
 end 
 
 GO
+ create procedure LA_PETER_MACHINE.Modificar_Empresa(@usuario nvarchar(255),@pass nvarchar(20),@ciudad nvarchar(255),
+ @contacto nvarchar(255),@razon nvarchar(255),@mail nvarchar(255),@telefono nvarchar(50),@calle nvarchar(255),@cod_postal nvarchar(50),
+ @numero numeric(18),@dpto nvarchar(50),@piso numeric(18),@rdo nvarchar(255) output)
+ as
+ begin
+ begin try
+	declare @hash varbinary(20)
+	set @hash=HASHBYTES('sha2_256',@pass)
+ if(@pass!='')
+ begin
+ update LA_PETER_MACHINE.usuario 
+ set usua_password=@hash
+ where usua_username=@usuario
+ end
+ update LA_PETER_MACHINE.persona
+ set pers_ciudad=@ciudad,pers_cod_postal=@cod_postal,pers_depto=@dpto,pers_domicilio_calle=@calle,
+ pers_mail=@mail,pers_numero_calle=@numero,pers_piso=@piso,pers_telefono=@telefono
+ where pers_username=@usuario
+ 
+ update LA_PETER_MACHINE.empresa
+ set empr_nombre_contacto=@contacto,empr_razon_social=@razon
+ where empr_id_persona=(select pers_id from LA_PETER_MACHINE.persona where pers_username=@usuario)
+ set @rdo='ok'
+ end try
+ begin catch
+ set @rdo='Error de ingreso'
+ end catch
+ end
+ 
+GO
+ create procedure LA_PETER_MACHINE.Modificar_Cliente(@usuario nvarchar(255),@pass nvarchar(20),@ciudad nvarchar(255),
+ @apellido nvarchar(255),@nombre nvarchar(255),@mail nvarchar(255),@telefono nvarchar(50),@calle nvarchar(255),@cod_postal nvarchar(50),
+ @numero numeric(18),@dpto nvarchar(50),@piso numeric(18),@fecha nvarchar(255),@rdo nvarchar(255) output)
+ as
+ begin
+ begin try
+	declare @fech datetime
+		set @fech=@fecha
+	declare @hash varbinary(20)
+	set @hash=HASHBYTES('sha2_256',@pass)
+ if(@pass!='')
+ begin
+ update LA_PETER_MACHINE.usuario 
+ set usua_password=@hash
+ where usua_username=@usuario
+ end
+ update LA_PETER_MACHINE.persona
+ set pers_ciudad=@ciudad,pers_cod_postal=@cod_postal,pers_depto=@dpto,pers_domicilio_calle=@calle,
+ pers_mail=@mail,pers_numero_calle=@numero,pers_piso=@piso,pers_telefono=@telefono
+ where pers_username=@usuario
+ 
+ update LA_PETER_MACHINE.cliente
+ set clie_apellido=@apellido,clie_fecha_nac=@fech,clie_nombre=@nombre
+ where clie_id_persona=(select pers_id from LA_PETER_MACHINE.persona where pers_username=@usuario)
+ set @rdo='ok'
+ end try
+ begin catch
+ set @rdo='Error de ingreso'
+ end catch
+ end
+ Go

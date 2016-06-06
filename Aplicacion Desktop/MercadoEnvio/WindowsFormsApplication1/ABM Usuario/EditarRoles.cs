@@ -12,10 +12,14 @@ namespace WindowsFormsApplication1.ABM_Usuario
 {
     public partial class EditarRoles : Form
     {
-        public EditarRoles(String usuario)
+        String rol;
+        String usu;
+        public EditarRoles(String usuario, String tipo)
         {
             InitializeComponent();
             label1.Text = usuario;
+            usu = usuario;
+            rol = tipo;
             SqlConnection conexion = conectionDB.getConnection();
             DataTable table = new DataTable();
             SqlCommand cmd = new SqlCommand();
@@ -108,5 +112,27 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public DataGridViewButtonColumn habilitar { get; set; }
 
         public DataGridViewButtonColumn deshabilitar { get; set; }
+
+        private void EditarRoles_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (rol == "empresa") {
+                modificarEmpresa mod = new modificarEmpresa(usu);
+                this.Hide();
+                mod.ShowDialog();
+                this.Close();
+            }
+            if (rol == "cliente") {
+                modificarCliente mod = new modificarCliente(usu);
+                this.Hide();
+                mod.ShowDialog();
+                this.Close();
+            
+            }
+        }
     }
 }
