@@ -10,24 +10,16 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.ABM_Usuario
 {
-    public partial class Cliente : Form
+    public partial class Empresa : Form
     {
-        public Cliente()
+        public Empresa()
         {
             InitializeComponent();
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Usuario usu = new Usuario();
-            this.Hide();
-            usu.ShowDialog();
-            this.Close();
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            AltaCliente alt = new AltaCliente();
+            AltaEmpresa alt = new AltaEmpresa();
             this.Hide();
             alt.ShowDialog();
             this.Close();
@@ -38,6 +30,14 @@ namespace WindowsFormsApplication1.ABM_Usuario
             ListadoDeUsuarios list = new ListadoDeUsuarios();
             this.Hide();
             list.ShowDialog();
+            this.Close();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Usuario usu = new Usuario();
+            this.Hide();
+            usu.ShowDialog();
             this.Close();
         }
     }

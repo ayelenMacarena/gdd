@@ -24,5 +24,13 @@ namespace WindowsFormsApplication1.ABM_Usuario
             clie.ShowDialog();
             this.Close();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Empresa empr = new Empresa();
+            this.Hide();
+            empr.ShowDialog();
+            this.Close();
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1.ABM_Usuario
 {
-    partial class Cliente
+    partial class Empresa
     {
         /// <summary>
         /// Required designer variable.
@@ -35,9 +35,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 95);
+            this.button1.Location = new System.Drawing.Point(31, 102);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(104, 44);
+            this.button1.Size = new System.Drawing.Size(89, 36);
             this.button1.TabIndex = 0;
             this.button1.Text = "Alta";
             this.button1.UseVisualStyleBackColor = true;
@@ -45,9 +45,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(141, 95);
+            this.button2.Location = new System.Drawing.Point(159, 102);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(104, 44);
+            this.button2.Size = new System.Drawing.Size(92, 36);
             this.button2.TabIndex = 1;
             this.button2.Text = "Listado";
             this.button2.UseVisualStyleBackColor = true;
@@ -56,7 +56,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(12, 236);
+            this.linkLabel1.Location = new System.Drawing.Point(13, 236);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(37, 13);
             this.linkLabel1.TabIndex = 2;
@@ -64,7 +64,7 @@
             this.linkLabel1.Text = "Volver";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
-            // Cliente
+            // Empresa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -72,8 +72,8 @@
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Name = "Cliente";
-            this.Text = "Cliente";
+            this.Name = "Empresa";
+            this.Text = "Empresa";
             this.ResumeLayout(false);
             this.PerformLayout();
 

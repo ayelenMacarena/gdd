@@ -421,6 +421,7 @@ select @hab=rol_habilitado from LA_PETER_MACHINE.rol where @rol=rol_descripcion
 	set @rdo='rol deshabilitado'
 end
 GO
+
 create procedure LA_PETER_MACHINE.Crear_Cliente(
 @usuario nvarchar(255),@pasword nvarchar(20),@nombre nvarchar(255),
 @apellido nvarchar(255),@dni nvarchar(255),@fecha_nac nvarchar(255),
@@ -432,18 +433,22 @@ begin
 begin try
 	declare @hash varbinary(20)
 	set @hash=HASHBYTES('sha2_256',@pasword)
+	declare @fecha datetime
+	set @fecha=@fecha_nac
 	if not exists(select * from LA_PETER_MACHINE.cliente where clie_id_tipo_doc=(select type_id from LA_PETER_MACHINE.document_type where @tipo_DNI=type_descripcion) and clie_dni=CAST(@dni AS NUMERIC))
 	begin
 	if not exists(select * from LA_PETER_MACHINE.usuario where usua_username=@usuario)
 	begin
 	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado)values(@usuario,@hash,1)
 	insert into LA_PETER_MACHINE.persona(pers_ciudad,pers_cod_postal,pers_depto,
-	pers_domicilio_calle,pers_mail,pers_numero_calle,pers_piso,pers_telefono,pers_username,pers_habilitado)values(
-	@ciudad,@cod_postal,@depto,@calle,@mail,cast(@numero as numeric),cast(@piso as numeric),@telefono,@usuario,1)
+	pers_domicilio_calle,pers_mail,pers_numero_calle,pers_piso,pers_telefono,pers_username,pers_habilitado,pers_fecha_creacion)values(
+	@ciudad,@cod_postal,@depto,@calle,@mail,cast(@numero as numeric),cast(@piso as numeric),@telefono,@usuario,1,SYSDATETIME())
 	insert into LA_PETER_MACHINE.cliente(clie_apellido,clie_dni,
-	clie_fecha_nac,clie_nombre,clie_id_tipo_doc,clie_id_persona)values(@apellido,cast(@dni as numeric)
-	,@fecha_nac,@nombre,(select type_id from LA_PETER_MACHINE.document_type where type_descripcion=@tipo_DNI),
+	clie_fecha_nac,clie_nombre,clie_id_tipo_doc,clie_id_persona)values(@apellido,cast(@dni as numeric),
+	@fecha,@nombre,(select type_id from LA_PETER_MACHINE.document_type where type_descripcion=@tipo_DNI),
 	(select pers_id from LA_PETER_MACHINE.persona where pers_username=@usuario))
+	insert into LA_PETER_MACHINE.roles_usuario(rolu_username,rolu_id_rol)values(@usuario,
+	(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion='cliente'))
 	set @rdo='ok'
 	end
 	else
@@ -453,10 +458,132 @@ begin try
 	set @rdo='Ya existe el cliente'
  end try
 begin catch
-	set @rdo='Error de ingreso'
-
+	if exists(select * from LA_PETER_MACHINE.usuario where usua_username=@usuario)
+	begin
+	delete from LA_PETER_MACHINE.usuario where usua_username=@usuario
+	end
+	set @rdo='Error de ingreso' 
 end catch
 end 
 
 GO
 
+create procedure LA_PETER_MACHINE.Controlar_Usuario_Habilitado(@Usuario nvarchar(255),@rdo nvarchar(255) output)
+as
+begin
+declare @hab bit
+select @hab=usua_habilitado from LA_PETER_MACHINE.usuario where usua_username=@Usuario
+	if(@hab=1)
+	begin
+	set @rdo='ok'
+	end
+	else
+	
+	set @rdo='usuario deshabilitado'
+end
+GO
+create procedure LA_PETER_MACHINE.Deshabilitar_Usuario(@Usuario nvarchar(255))
+as
+begin
+	
+	if exists (select * from LA_PETER_MACHINE.usuario where usua_username=@Usuario)
+	begin
+	update LA_PETER_MACHINE.usuario
+	set usua_habilitado=0
+	where usua_username=@Usuario
+	end
+end
+GO
+create procedure LA_PETER_MACHINE.Habilitar_Usuario(@Usuario nvarchar(255))
+as
+begin
+	if exists (select * from LA_PETER_MACHINE.usuario where usua_username=@Usuario)
+	begin
+	update LA_PETER_MACHINE.usuario
+	set usua_habilitado=1
+	where usua_username=@Usuario
+	end
+end
+GO
+create procedure LA_PETER_machine.agregar_Usuario_Rol(@usuario nvarchar(255),@rol nvarchar(255), @rdo nvarchar(255) output)
+as
+begin
+declare @rol_id numeric(18)
+set @rol_id=(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion=@rol)
+								
+if not exists(select*
+	from LA_PETER_MACHINE.roles_usuario
+	where rolu_username=@usuario and
+								rolu_id_rol=@rol_id)
+								begin
+								insert into LA_PETER_MACHINE.roles_usuario(rolu_username,rolu_id_rol)
+								values(@usuario,@rol_id)
+								set @rdo='ok'
+								end
+								else
+								set @rdo='rol activo'
+end
+GO
+create procedure LA_PETER_MACHINE.eliminar_usuario_rol(@usuario nvarchar(255),@rol nvarchar(255), @rdo nvarchar(255) output)
+as
+begin
+declare @rol_id numeric(18)
+set @rol_id=(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion=@rol)
+								
+if  exists(select*
+	from LA_PETER_MACHINE.roles_usuario
+	where @usuario=rolu_username and
+								rolu_id_rol=@rol_id)
+								begin
+								delete from LA_PETER_MACHINE.roles_usuario where rolu_username=@usuario and rolu_id_rol=@rol_id
+								set @rdo='ok'
+								end
+								else
+								set @rdo='El usuario no tiene ese rol'
+end
+select * from LA_PETER_MACHINE.funcionalidad
+select * from LA_PETER_MACHINE.rol
+GO
+create procedure LA_PETER_MACHINE.Crear_Empresa(@contacto nvarchar(255),
+@usuario nvarchar(255),@pasword nvarchar(20),@nombre nvarchar(255),@cuit nvarchar(255),
+@mail nvarchar(255),@telefono nvarchar(50),@calle nvarchar(255),@cod_postal nvarchar(50),
+@ciudad nvarchar(255),@numero nvarchar(255),@piso nvarchar(255),@depto nvarchar(50),
+@rdo nvarchar(255) output)
+as
+begin
+begin try
+	declare @hash varbinary(20)
+	set @hash=HASHBYTES('sha2_256',@pasword)
+
+	if not exists(select * from LA_PETER_MACHINE.empresa where empr_cuit=@cuit)
+	begin
+	if not exists(select * from LA_PETER_MACHINE.usuario where usua_username=@usuario)
+	begin
+	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado)values(@usuario,@hash,1)
+	insert into LA_PETER_MACHINE.persona(pers_ciudad,pers_cod_postal,pers_depto,
+	pers_domicilio_calle,pers_mail,pers_numero_calle,pers_piso,pers_telefono,pers_username,pers_habilitado,pers_fecha_creacion)values(
+	@ciudad,@cod_postal,@depto,@calle,@mail,cast(@numero as numeric),cast(@piso as numeric),@telefono,@usuario,1,SYSDATETIME())
+	insert into LA_PETER_MACHINE.empresa(empr_ciudad,empr_cuit,
+	empr_nombre_contacto,empr_razon_social,empr_id_persona)values(@ciudad,@cuit,@contacto,
+	@nombre,
+	(select pers_id from LA_PETER_MACHINE.persona where pers_username=@usuario))
+	insert into LA_PETER_MACHINE.roles_usuario(rolu_username,rolu_id_rol)values(@usuario,
+	(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion='empresa'))
+	set @rdo='ok'
+	end
+	else
+	set @rdo='usuario en uso'
+	end
+	else
+	set @rdo='Ya existe la empresa'
+ end try
+begin catch
+	if exists(select * from LA_PETER_MACHINE.usuario where usua_username=@usuario)
+	begin
+	delete from LA_PETER_MACHINE.usuario where usua_username=@usuario
+	end
+	set @rdo='Error de ingreso' 
+end catch
+end 
+
+GO
