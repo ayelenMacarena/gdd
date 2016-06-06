@@ -61,12 +61,9 @@
             this.ingresoUser.Name = "ingresoUser";
             this.ingresoUser.Size = new System.Drawing.Size(100, 20);
             this.ingresoUser.TabIndex = 4;
-<<<<<<< HEAD
+
             this.ingresoUser.Enter += new System.EventHandler(this.textBox2_TextChanged);
-=======
-           // this.ingresoUser.TextChanged += new System.EventHandler(this.ingresoUser_TextChanged);
-           // this.ingresoUser.Enter += new System.EventHandler(this.textBox2_TextChanged);
->>>>>>> 8c24939e1973f2060c7c5a05afc444c313f5404f
+
             // 
             // ingresoPass
             // 
