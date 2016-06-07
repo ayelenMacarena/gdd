@@ -1,3 +1,8 @@
-App.config
-/obj/*
+/App.config
+
+/obj/
 *.config
+
+*.source
+*.pdb
+*.exe
