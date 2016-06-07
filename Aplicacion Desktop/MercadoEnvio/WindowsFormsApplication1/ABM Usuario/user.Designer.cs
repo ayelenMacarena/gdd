@@ -61,7 +61,9 @@
             this.ingresoUser.Name = "ingresoUser";
             this.ingresoUser.Size = new System.Drawing.Size(100, 20);
             this.ingresoUser.TabIndex = 4;
+
             this.ingresoUser.Enter += new System.EventHandler(this.textBox2_TextChanged);
+
             // 
             // ingresoPass
             // 

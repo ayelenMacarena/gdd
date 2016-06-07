@@ -14,7 +14,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
  
     public partial class user : Form
     {
-        int fails = 0;
+ 
         public user()
         {
             InitializeComponent();
@@ -53,52 +53,50 @@ namespace WindowsFormsApplication1.ABM_Usuario
             string username = ingresoUser.Text;
             loginProcedure.CommandType = CommandType.StoredProcedure;
             //Paso los parámetros al SP
-            loginProcedure.Parameters.Add("@username", SqlDbType.NVarChar);
+            loginProcedure.Parameters.AddWithValue("@username", username);
             loginProcedure.Parameters["@username"].Value = username;
-
-            loginProcedure.Parameters.Add("@pass", SqlDbType.NVarChar);
-            loginProcedure.Parameters["@pass"].Value = ingresoPass.Text;
+            string pass = ingresoPass.Text;
+            loginProcedure.Parameters.AddWithValue("@pass", pass);
+            
             SqlDataReader usuario = loginProcedure.ExecuteReader();
+            List<String> listaRoles = new List<String>();
+
             if (usuario.HasRows)
-
             {
-                MessageBox.Show("BIENVENIDO");
-                fails = 0; // Hacer sp que restartee, hay que persistirlo!
-                SqlCommand selectRol = new SqlCommand("LA_PETER_MACHINE.selectRol", conexion);
-                selectRol.CommandType = CommandType.StoredProcedure;
-                selectRol.Parameters.AddWithValue("@username", username);
-                SqlDataReader roles = selectRol.ExecuteReader(); //Aca rompe
-                while (roles.Read())
-                {
 
-                    roles.GetString(0);
-                }
-                //Hacer sp funcionalidades
+              
+                    while (usuario.Read())
+                    {
+                        if (usuario.GetBoolean(0)) // getBoolean recibe le número de fila que quiero convertir en boolean, en este caso es usua_habilitado la 0.
+                        { //Si el usuario está habilitado
+                                                       
+                            listaRoles.Add(usuario["rol_descripcion"].ToString());
+                        }
+                        else
+                        {
+                            MessageBox.Show("El usuario está inhabilitado, debe contactarse con el administrador del sistema");
+                        }
 
-            } 
+                    }
+
+                
+            }
             else
             {
-                conexion.Close();
-                if (fails < 3)
-                {
-                    fails++;
-                    MessageBox.Show("Usuario o Contraseña INCORRECTOS");
-                }
-                else
-                {
-                    //TODO: SP que inhabilita el usuario despues de 3 login mal.
-                    MessageBox.Show("Ingreso 3 veces mal la contraseña, su usuario fue inhabilitado");
 
-                }
+                MessageBox.Show("El usuario o contraseña especificado, no existe");
             }
+            conexion.Close();
+            if (listaRoles.Count() >=1)
+            {
+                //Si se cargo la listaRoles, es porque el usuario se logueo Ok y tiene roles asignados.
+                ABM_Rol.selectRol selectRol = new ABM_Rol.selectRol(listaRoles);
+                this.Hide();
+                selectRol.ShowDialog();
+                this.Close();
+            }
+
         }
         
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            ABM_Usuario.altaUser newUser = new ABM_Usuario.altaUser();
-            this.Hide();
-            newUser.ShowDialog();
-            this.Close();
-        }
     }
 }

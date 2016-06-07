@@ -1,6 +1,6 @@
-﻿namespace WindowsFormsApplication1.ABM_Rol
+﻿namespace WindowsFormsApplication1.ABM_Usuario
 {
-    partial class AltaRol
+    partial class EditarRoles
     {
         /// <summary>
         /// Required designer variable.
@@ -28,29 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox_1 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // dataGridView1
             // 
-            this.button1.Location = new System.Drawing.Point(238, 71);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Dar de alta";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(25, 44);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(364, 193);
+            this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(0, 222);
+            this.linkLabel1.Location = new System.Drawing.Point(22, 253);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(37, 13);
-            this.linkLabel1.TabIndex = 9;
+            this.linkLabel1.TabIndex = 1;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Volver";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
@@ -58,33 +58,34 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 77);
+            this.label1.Location = new System.Drawing.Point(22, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Descripción";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.label1.Size = new System.Drawing.Size(0, 13);
+            this.label1.TabIndex = 2;
             // 
-            // textBox_1
+            // button1
             // 
-            this.textBox_1.Location = new System.Drawing.Point(104, 74);
-            this.textBox_1.Name = "textBox_1";
-            this.textBox_1.Size = new System.Drawing.Size(100, 20);
-            this.textBox_1.TabIndex = 6;
-            this.textBox_1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.button1.Location = new System.Drawing.Point(314, 4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Modificar Datos";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // AltaRol
+            // EditarRoles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(325, 261);
+            this.ClientSize = new System.Drawing.Size(413, 269);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox_1);
-            this.Name = "AltaRol";
-            this.Text = "AltaRol";
-            this.Load += new System.EventHandler(this.AltaRol_Load);
+            this.Controls.Add(this.linkLabel1);
+            this.Controls.Add(this.dataGridView1);
+            this.Name = "EditarRoles";
+            this.Text = "EditarRoles";
+            this.Load += new System.EventHandler(this.EditarRoles_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -92,9 +93,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox_1;
+        private System.Windows.Forms.Button button1;
     }
 }

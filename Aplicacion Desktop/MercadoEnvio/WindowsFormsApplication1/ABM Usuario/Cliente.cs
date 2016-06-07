@@ -8,27 +8,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1.ABM_Rol
+namespace WindowsFormsApplication1.ABM_Usuario
 {
-    public partial class SeleccionRol : Form
+    public partial class Cliente : Form
     {
-        public SeleccionRol()
+        public Cliente()
         {
             InitializeComponent();
         }
+
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ListadoRol list = new ListadoRol();
+            Usuario usu = new Usuario();
             this.Hide();
-            list.ShowDialog();
+            usu.ShowDialog();
             this.Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ModificarRol mod = new ModificarRol();
+            AltaCliente alt = new AltaCliente();
             this.Hide();
-            mod.ShowDialog();
+            alt.ShowDialog();
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ListadoDeUsuarios list = new ListadoDeUsuarios();
+            this.Hide();
+            list.ShowDialog();
             this.Close();
         }
     }

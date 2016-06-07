@@ -155,8 +155,13 @@ DROP TABLE LA_PETER_MACHINE.costo_envio
 --     SE REALIZA DROP DEL SCRIPT DE MIGRACION      --
 ------------------------------------------------------
 
-IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.SP_Migracion'))
-DROP PROCEDURE LA_PETER_MACHINE.SP_Migracion
-;
+declare @dropSP nvarchar(max)
+set @dropSP=(select
+    'DROP PROCEDURE [' + routine_schema + '].[' + routine_name + ']'
+from 
+    information_schema.routines where routine_schema = 'LA_PETER_MACHINE' and routine_type = 'PROCEDURE'
+	FOR XML PATH ('')
+	)
 
+EXEC(@dropSP)
 DROP SCHEMA LA_PETER_MACHINE

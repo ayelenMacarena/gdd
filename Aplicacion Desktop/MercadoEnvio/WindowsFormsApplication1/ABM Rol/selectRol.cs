@@ -12,9 +12,28 @@ namespace WindowsFormsApplication1.ABM_Rol
 {
     public partial class selectRol : Form
     {
-        public selectRol()
+        public selectRol(List<String> listaRoles)
         {
             InitializeComponent();
+            comboBox1.DataSource = listaRoles;
         }
+       
+        
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //TODO: Aca redirecciona al Form general que hace tato
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void selectRol_Load(object sender, EventArgs e)
+        {
+            
+        }
+
     }
 }

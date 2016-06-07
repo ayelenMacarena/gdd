@@ -35,6 +35,7 @@
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
@@ -54,29 +55,23 @@
     <Compile Include="ABM Rol\AltaRol.Designer.cs">
       <DependentUpon>AltaRol.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Rol\EditarFuncionalidades.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Rol\EditarFuncionalidades.Designer.cs">
+      <DependentUpon>EditarFuncionalidades.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Rol\ListadoRol.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ABM Rol\ListadoRol.Designer.cs">
       <DependentUpon>ListadoRol.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Rol\ModificarRol.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM Rol\ModificarRol.Designer.cs">
-      <DependentUpon>ModificarRol.cs</DependentUpon>
-    </Compile>
     <Compile Include="ABM Rol\Rol.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ABM Rol\Rol.Designer.cs">
       <DependentUpon>Rol.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ABM Rol\SeleccionRol.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM Rol\SeleccionRol.Designer.cs">
-      <DependentUpon>SeleccionRol.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Rol\selectRol.cs">
       <SubType>Form</SubType>
@@ -108,11 +103,59 @@
     <Compile Include="ABM Rubro\Alta.Designer.cs">
       <DependentUpon>Alta.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Usuario\altaUser.cs">
+    <Compile Include="ABM Usuario\AltaCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Usuario\altaUser.Designer.cs">
-      <DependentUpon>altaUser.cs</DependentUpon>
+    <Compile Include="ABM Usuario\AltaCliente.Designer.cs">
+      <DependentUpon>AltaCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\AltaEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\AltaEmpresa.Designer.cs">
+      <DependentUpon>AltaEmpresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\EditarRoles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\EditarRoles.Designer.cs">
+      <DependentUpon>EditarRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\Empresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\Empresa.Designer.cs">
+      <DependentUpon>Empresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\ListadoDeUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\ListadoDeUsuarios.Designer.cs">
+      <DependentUpon>ListadoDeUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\modificarCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\modificarCliente.Designer.cs">
+      <DependentUpon>modificarCliente.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\modificarEmpresa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\modificarEmpresa.Designer.cs">
+      <DependentUpon>modificarEmpresa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\Usuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\Usuario.Designer.cs">
+      <DependentUpon>Usuario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Usuario\Cliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\Cliente.Designer.cs">
+      <DependentUpon>Cliente.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Usuario\user.cs">
       <SubType>Form</SubType>
@@ -132,13 +175,13 @@
     <Compile Include="Calificar\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="conectionClass.cs" />
     <Compile Include="ComprarOfertar\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ComprarOfertar\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Conection.cs" />
     <Compile Include="Facturas\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,17 +217,14 @@
     <EmbeddedResource Include="ABM Rol\AltaRol.resx">
       <DependentUpon>AltaRol.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM Rol\EditarFuncionalidades.resx">
+      <DependentUpon>EditarFuncionalidades.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\ListadoRol.resx">
       <DependentUpon>ListadoRol.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Rol\ModificarRol.resx">
-      <DependentUpon>ModificarRol.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\Rol.resx">
       <DependentUpon>Rol.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ABM Rol\SeleccionRol.resx">
-      <DependentUpon>SeleccionRol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\selectRol.resx">
       <DependentUpon>selectRol.cs</DependentUpon>
@@ -201,8 +241,32 @@
     <EmbeddedResource Include="ABM Rubro\Alta.resx">
       <DependentUpon>Alta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Usuario\altaUser.resx">
-      <DependentUpon>altaUser.cs</DependentUpon>
+    <EmbeddedResource Include="ABM Usuario\AltaCliente.resx">
+      <DependentUpon>AltaCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\AltaEmpresa.resx">
+      <DependentUpon>AltaEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\EditarRoles.resx">
+      <DependentUpon>EditarRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\Empresa.resx">
+      <DependentUpon>Empresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\ListadoDeUsuarios.resx">
+      <DependentUpon>ListadoDeUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\modificarCliente.resx">
+      <DependentUpon>modificarCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\modificarEmpresa.resx">
+      <DependentUpon>modificarEmpresa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\Usuario.resx">
+      <DependentUpon>Usuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\Cliente.resx">
+      <DependentUpon>Cliente.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\user.resx">
       <DependentUpon>user.cs</DependentUpon>
