@@ -40,4 +40,7 @@ end
 --@nombre='pepe',@numero='2162',@pasword='contra',@piso='5',@telefono='42131522',@tipo_DNI='DNI',
 --@rdo=''
 
-select clie_nombre + clie_apellido as Nombre,clie_dni as Identunico,clie  from LA_PETER_MACHINE.cliente, LA_PETER_MACHINE.usuario, LA_PETER_MACHINE.persona
+select clie_nombre + clie_apellido as Nombre,clie_dni as IdentUnico,usua_username as usarName,pers_ciudad as ciudad,
+pers_domicilio_calle as calle,pers_numero_calle as numero, pers_mail as mail
+  from LA_PETER_MACHINE.cliente, LA_PETER_MACHINE.usuario, LA_PETER_MACHINE.persona
+  where pers_id=clie_id_persona and pers_username=usua_username

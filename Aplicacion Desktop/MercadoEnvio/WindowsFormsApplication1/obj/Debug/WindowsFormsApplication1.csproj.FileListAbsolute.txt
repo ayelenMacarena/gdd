@@ -1,6 +1,5 @@
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.AltaRol.resources
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.EditarFuncionalidades.resources
-D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.ListadoDeUsuarios.resources
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.ListadoRol.resources
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.Rol.resources
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.selectRol.resources
@@ -23,3 +22,8 @@ D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplicati
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.ListadoDeUsuarios.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.EditarRoles.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.AltaEmpresa.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.Empresa.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.modificarEmpresa.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.modificarCliente.resources

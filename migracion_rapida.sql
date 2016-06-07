@@ -27,7 +27,7 @@ AS
 
 --FUNCIONALIDAD_ROL
 		-- Rol Admin
-		insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad,furo_id_rol) 
+		insert into	 LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad,furo_id_rol) 
 		values((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'administrar_usuario'),
 				(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'administrativo'))
 
@@ -75,9 +75,7 @@ AS
 
 --USUARIO (Empresa)
 	declare @hash varbinary(20)
-	declare @pass nvarchar(20)
-	set @pass = '12345'
-	set @hash = hashbytes('sha2_256',@pass);
+	set @hash = hashbytes('sha2_256','12345');
 
 	insert into LA_PETER_MACHINE.usuario(usua_username, usua_password, usua_habilitado, usua_intentos_login)
 	select distinct Publ_Empresa_Mail, @hash, 1, 0 from gd_esquema.Maestra
@@ -257,3 +255,7 @@ insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_persona
 		where p.publicacion_id = Publicacion_cod and pe.pers_mail = Cli_mail and Compra_Cantidad is not NULL
 
 GO
+
+exec LA_PETER_MACHINE.SP_Migracion
+
+ 
