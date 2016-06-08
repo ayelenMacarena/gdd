@@ -35,5 +35,10 @@ namespace WindowsFormsApplication1.ABM_Rol
             
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            //Aca va la pantalla de tato, puedo llegar a pasarle la selección.
+        }
+
     }
 }
