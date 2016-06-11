@@ -115,6 +115,12 @@
     <Compile Include="ABM Usuario\AltaEmpresa.Designer.cs">
       <DependentUpon>AltaEmpresa.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Usuario\CambiarContraseña.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Usuario\CambiarContraseña.Designer.cs">
+      <DependentUpon>CambiarContraseña.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Usuario\EditarRoles.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,54 +169,54 @@
     <Compile Include="ABM Usuario\user.Designer.cs">
       <DependentUpon>user.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Visibilidad\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ABM Visibilidad\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Calificar\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Calificar\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="conectionClass.cs" />
-    <Compile Include="ComprarOfertar\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ComprarOfertar\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Facturas\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Facturas\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Inicio.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Inicio.Designer.cs">
       <DependentUpon>Inicio.cs</DependentUpon>
     </Compile>
-    <Compile Include="Generar Publicación\Form1.cs">
+    <Compile Include="Listado Estadistico\ElegirListado.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Generar Publicación\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Listado Estadistico\ElegirListado.Designer.cs">
+      <DependentUpon>ElegirListado.cs</DependentUpon>
     </Compile>
-    <Compile Include="Historial Cliente\Form1.cs">
+    <Compile Include="Listado Estadistico\ElegirTrimestre.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Historial Cliente\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Listado Estadistico\ElegirTrimestre.Designer.cs">
+      <DependentUpon>ElegirTrimestre.cs</DependentUpon>
     </Compile>
-    <Compile Include="Listado Estadistico\Form1.cs">
+    <Compile Include="Listado Estadistico\ListadoVendXProdSinVend.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Listado Estadistico\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Listado Estadistico\ListadoVendXProdSinVend.Designer.cs">
+      <DependentUpon>ListadoVendXProdSinVend.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoEstadistico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoEstadistico.Designer.cs">
+      <DependentUpon>ListadoEstadistico.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoXFacturas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoXFacturas.Designer.cs">
+      <DependentUpon>ListadoXFacturas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoXMonto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoXMonto.Designer.cs">
+      <DependentUpon>ListadoXMonto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoXProductComprados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listado Estadistico\ListadoXProductComprados.Designer.cs">
+      <DependentUpon>ListadoXProductComprados.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -247,6 +253,9 @@
     <EmbeddedResource Include="ABM Usuario\AltaEmpresa.resx">
       <DependentUpon>AltaEmpresa.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ABM Usuario\CambiarContraseña.resx">
+      <DependentUpon>CambiarContraseña.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\EditarRoles.resx">
       <DependentUpon>EditarRoles.cs</DependentUpon>
     </EmbeddedResource>
@@ -271,11 +280,29 @@
     <EmbeddedResource Include="ABM Usuario\user.resx">
       <DependentUpon>user.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Facturas\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Inicio.resx">
       <DependentUpon>Inicio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ElegirListado.resx">
+      <DependentUpon>ElegirListado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ElegirTrimestre.resx">
+      <DependentUpon>ElegirTrimestre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ListadoVendXProdSinVend.resx">
+      <DependentUpon>ListadoVendXProdSinVend.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ListadoEstadistico.resx">
+      <DependentUpon>ListadoEstadistico.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ListadoXFacturas.resx">
+      <DependentUpon>ListadoXFacturas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ListadoXMonto.resx">
+      <DependentUpon>ListadoXMonto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listado Estadistico\ListadoXProductComprados.resx">
+      <DependentUpon>ListadoXProductComprados.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -299,7 +326,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ABM Visibilidad\" />
+    <Folder Include="Calificar\" />
+    <Folder Include="ComprarOfertar\" />
+    <Folder Include="Facturas\" />
+    <Folder Include="Generar Publicación\" />
+    <Folder Include="Historial Cliente\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

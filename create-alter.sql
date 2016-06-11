@@ -613,9 +613,30 @@ GO
  set @rdo='Error de ingreso'
  end catch
  end
+
+GO
+create procedure LA_PETER_MACHINE.CambiarContraseña(@usuario nvarchar(255),@contraseñaNueva nvarchar(20),@contraseñaVieja nvarchar(20),@rdo nvarchar(255) OUTPUT)
+as 
+begin
+declare @hashViejo varbinary(20)
+set @hashViejo=HASHBYTES('sha2_256',@contraseñaVieja)
+
+if exists (select* from LA_PETER_MACHINE.usuario
+where usua_username=@usuario and usua_password=@contraseñaVieja)
+begin
+declare @hashNuevo varbinary(20)
+set @hashNuevo=HASHBYTES('sha2_256',@contraseñaNueva)
+update LA_PETER_MACHINE.usuario
+set usua_password=@hashNuevo
+where usua_username=@usuario
+set @rdo='OK'
+end
+else
+set @rdo='Contraseña incorrecta'
+
+end
  
 GO
-
  create procedure LA_PETER_MACHINE.Modificar_Cliente(@usuario nvarchar(255),@pass nvarchar(20),@ciudad nvarchar(255),
  @apellido nvarchar(255),@nombre nvarchar(255),@mail nvarchar(255),@telefono nvarchar(50),@calle nvarchar(255),@cod_postal nvarchar(50),
  @numero numeric(18),@dpto nvarchar(50),@piso numeric(18),@fecha nvarchar(255),@rdo nvarchar(255) output)
@@ -646,55 +667,94 @@ GO
  set @rdo='Error de ingreso'
  end catch
  end
+ GO
+
+ create function LA_PETER_MACHINE.topDeVendedoresPorMontoFacturado(@fechaInicio nvarchar(255), @fechaFin nvarchar(255))
+returns @T table(Nombre nvarchar(255))
+as
+begin
+declare @fecha_inicio Datetime
+set @fecha_inicio=@fechaInicio
+declare @fecha_fin Datetime
+set @fecha_fin=@fechaFin
+insert into @T
+select top 5 Nombre from (select clie_nombre + ' ' + clie_apellido as Nombre,fact_total from LA_PETER_MACHINE.factura, LA_PETER_MACHINE.cliente
+where fact_id_vendedor=clie_id_persona and fact_fecha>=@fecha_inicio and fact_fecha<=@fecha_fin
+union all
+select empr_razon_social as Nombre, fact_total from LA_PETER_MACHINE.factura, LA_PETER_MACHINE.empresa 
+where fact_id_vendedor=empr_id_persona and fact_fecha>=@fecha_inicio and fact_fecha<=@fecha_fin) as t
+group by Nombre
+order by sum(fact_total) desc
+return
+end
  Go
 
+ create function LA_PETER_MACHINE.topDeProductosNoVendidos(@fechaInicio nvarchar(255), @fechaFin nvarchar(255), @visibilidad nvarchar(255))
+returns @T table(Nombre nvarchar(255))
+as
+begin
+declare @fecha_inicio Datetime
+set @fecha_inicio=@fechaInicio
+declare @fecha_fin Datetime
+set @fecha_fin=@fechaFin
+insert into @T
+select top 5  Nombre from (select    clie_nombre +' '+ clie_apellido as Nombre, sum(publ_cantidad) as cantidad, publ_fecha_fin as fecha, publ_cod_visibilidad as visibilidad 
+ from LA_PETER_MACHINE.publicacion, LA_PETER_MACHINE.cliente
+where publ_cod_visibilidad=(select  visi_cod  from LA_PETER_MACHINE.visibilidad where 
+visi_descripcion=@visibilidad) and
+ publ_fecha_fin>=@fecha_inicio and publ_fecha_fin<=@fecha_fin and 
+ publ_id_vendedor=clie_id_persona
+ group by clie_nombre,clie_apellido,publ_cantidad,publ_fecha_fin,publ_cod_visibilidad
+union all 
+select  empr_razon_social as Nombre, sum(publ_cantidad) as cantidad, publ_fecha_fin as fecha, publ_cod_visibilidad as visibilidad from LA_PETER_MACHINE.publicacion, LA_PETER_MACHINE.empresa
+where publ_cod_visibilidad=(select visi_cod  from LA_PETER_MACHINE.visibilidad where 
+visi_descripcion=@visibilidad) and
+ publ_fecha_fin>=@fecha_inicio and publ_fecha_fin<=@fecha_fin and 
+ publ_id_vendedor=empr_id_persona 
+ group by empr_razon_social,publ_cantidad,publ_fecha_fin, publ_cod_visibilidad
+)as t
+group by Nombre
+order by sum(cantidad) DESC
 
- /*-------- LOGIN ----------*/
+return
+end
 
- create procedure LA_PETER_MACHINE.login(@username nvarchar(255), @pass nvarchar(20))
-as 
-declare @fails numeric(3)
-declare @passEncontrada varbinary(20)
-declare @habilitado bit
-declare @passIngresadaEncript varbinary(20)
-set @passIngresadaEncript = hashbytes('sha2_256',@pass);
-
-
-
-select @fails=usua_intentos_login, @passEncontrada = usua_password, @habilitado = usua_habilitado
-	from LA_PETER_MACHINE.usuario u 
-	where u.usua_username = @username
-
-IF @passIngresadaEncript = @passEncontrada 
-	--Caso feliz, se encuentra el usuario y la contraseña es correcta
-	begin
-		if @habilitado = 1-- Verifico que esté habilitado, si lo está le seteo en 0 los intentos.
-			update LA_PETER_MACHINE.usuario set usua_intentos_login = 0 
-				where usua_username = @username;
-	end
-	
-IF @passIngresadaEncript != @passEncontrada 
---Error de password
-	begin
-		declare @failsFinales numeric(3) = @fails + 1;
-		-- Le incremento los intentos fallidos
-		update LA_PETER_MACHINE.usuario set usua_intentos_login = @failsFinales
-			where usua_username = @username;
-	end
-	if @failsFinales >= 3
-		-- Si los intentos fallidos son 3, deshabilito el usuario
-		begin
-			update LA_PETER_MACHINE.usuario set usua_habilitado = 0 
-				where usua_username = @username;
-		end
-	
-/* Devuelvo usuario habilitado y roles */
-
-SELECT usua_habilitado, rol_descripcion
-	FROM LA_PETER_MACHINE.usuario us, LA_PETER_MACHINE.roles_usuario ru , LA_PETER_MACHINE.rol rol
-	WHERE us.usua_username = @username 
-	and us.usua_username = ru.rolu_username
-	and @passIngresadaEncript =  us.usua_password
-	and ru.rolu_id_rol = rol.rol_id;
 GO
+
+create function LA_PETER_MACHINE.topDeVendedoresPorFacturas(@fechaInicio nvarchar(255), @fechaFin nvarchar(255))
+returns @T table(Nombre nvarchar(255))
+as
+begin
+declare @fecha_inicio Datetime
+set @fecha_inicio=@fechaInicio
+declare @fecha_fin Datetime
+set @fecha_fin=@fechaFin
+insert into @T
+select top 5 Nombre from (select clie_nombre + ' ' + clie_apellido as Nombre from LA_PETER_MACHINE.factura, LA_PETER_MACHINE.cliente
+where fact_id_vendedor=clie_id_persona and fact_fecha>=@fecha_inicio and fact_fecha<=@fecha_fin
+union all
+select empr_razon_social as Nombre from LA_PETER_MACHINE.factura, LA_PETER_MACHINE.empresa 
+where fact_id_vendedor=empr_id_persona and fact_fecha>=@fecha_inicio and fact_fecha<=@fecha_fin) as t
+group by Nombre
+order by count(*) desc
+return
+end
+
+go
+create function LA_PETER_MACHINE.ClienteConMasProductosComprados(@fechaInicio nvarchar(255), @fechaFin nvarchar(255), @rubro nvarchar(255))
+returns @T table(Nombre nvarchar(255))
+as
+begin
+insert into @T
+select top 5 clie_nombre + ' ' + clie_apellido as Nombre
+from LA_PETER_MACHINE.item_factura,LA_PETER_MACHINE.publicacion, LA_PETER_MACHINE.factura,LA_PETER_MACHINE.compra, LA_PETER_MACHINE.cliente
+where item_id_publicacion=publicacion_id and  comp_num_factura=fact_num and clie_id_persona=comp_id_comprador and item_num_factura=comp_num_factura and publ_cod_rubro=(select rubr_cod from LA_PETER_MACHINE.rubro
+where rubr_descripcion_corta=@rubro) and fact_fecha>=@fechaInicio and fact_fecha<=@fechaFin
+group by clie_nombre + ' ' + clie_apellido
+order by sum(item_cantidad) DESC
+return
+end
+
+GO
+
 

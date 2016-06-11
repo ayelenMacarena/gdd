@@ -11,7 +11,6 @@ D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplicati
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.Usuario.resources
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.Cliente.resources
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.user.resources
-D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Facturas.Form1.resources
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Inicio.resources
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
@@ -27,3 +26,10 @@ D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplicati
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.Empresa.resources
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.modificarEmpresa.resources
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.modificarCliente.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Listado_Estadistico.ElegirListado.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Listado_Estadistico.ElegirTrimestre.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Listado_Estadistico.ListadoVendXProdSinVend.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Listado_Estadistico.ListadoEstadistico.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Listado_Estadistico.ListadoXProductComprados.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Listado_Estadistico.ListadoXFacturas.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Listado_Estadistico.ListadoXMonto.resources

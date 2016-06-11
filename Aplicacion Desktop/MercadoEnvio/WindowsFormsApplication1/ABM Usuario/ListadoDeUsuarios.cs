@@ -57,8 +57,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
                 rdo.Size = 255;
                 rdo.Direction = ParameterDirection.Output;
-
-                rdo.Direction = ParameterDirection.Output;
                 controlarUsarioHabilitado.CommandType = CommandType.StoredProcedure;
                 controlarUsarioHabilitado.Parameters.Add("@Usuario", SqlDbType.NVarChar);
                 controlarUsarioHabilitado.Parameters["@Usuario"].Value =usu;

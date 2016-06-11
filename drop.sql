@@ -164,4 +164,13 @@ from
 	)
 
 EXEC(@dropSP)
+
+declare @dropF nvarchar(max)
+set @dropF=(select
+    'DROP fUNCTION [' + routine_schema + '].[' + routine_name + ']'
+from 
+    information_schema.routines where routine_schema = 'LA_PETER_MACHINE' and routine_type = 'FUNCTION'
+	FOR XML PATH ('')
+	)
+EXEC(@dropF)
 DROP SCHEMA LA_PETER_MACHINE
