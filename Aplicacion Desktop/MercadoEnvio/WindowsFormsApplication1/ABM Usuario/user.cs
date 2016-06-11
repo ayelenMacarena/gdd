@@ -18,6 +18,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public user()
         {
             InitializeComponent();
+            ingresoUser.KeyDown += new KeyEventHandler(OnKeyDownHandler);
+            ingresoPass.KeyDown += new KeyEventHandler(OnKeyDownHandler);
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -96,6 +98,14 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 this.Close();
             }
 
+        }
+
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.button1.PerformClick();
+            }
         }
         
     }
