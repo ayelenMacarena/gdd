@@ -26,19 +26,21 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //Aca va la pantalla de tato, puedo llegar a pasarle la selección.
-            rolSelected = (string)comboBox1.SelectedItem;
-            ABM_Usuario.MenuPrincipal menuPrincipal = new ABM_Usuario.MenuPrincipal(rolSelected);
-            this.Hide();
-            menuPrincipal.ShowDialog();
-            this.Close();
-        }
 
         private void selectRol_Load(object sender, EventArgs e)
         {
             
         }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            rolSelected = (string)comboBox1.SelectedItem;
+            ABM_Usuario.MenuPrincipal menuPrincipal = new ABM_Usuario.MenuPrincipal(rolSelected);
+            this.Hide();
+            menuPrincipal.ShowDialog();
+            this.Close();
+
+        }
+
     }
 }
