@@ -20,6 +20,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public MenuPrincipal(string rol)
         {
             InitializeComponent();
+            this.IsMdiContainer = true;
+            this.LayoutMdi(MdiLayout.Cascade);
             SqlConnection conexion = conectionDB.getConnection();
             conexion.Open();
             SqlCommand getFuncionalidades = new SqlCommand("LA_PETER_MACHINE.get_funcionalidades_para_rol", conexion);
@@ -227,10 +229,10 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public void STORE_publicar()
         {
             //Aca voy para Publicar
-            Generar_Publicación.generarPublicacion generarPubli = new Generar_Publicación.generarPublicacion();
-            this.Hide();
-            generarPubli.ShowDialog();
-            this.Close();
+            //Generar_Publicación.generarPublicacion generarPubli = new Generar_Publicación.generarPublicacion();
+            //generarPubli.MdiParent = this;
+            //generarPubli.Show();
+            //generarPubli.Location = new Point(0, 49);
         }
         public void STORE_categorizar_publicacion()
         { 
@@ -239,26 +241,28 @@ namespace WindowsFormsApplication1.ABM_Usuario
             this.Close();
         }
         public void STORE_visibilidad()
-        { 
-            //Aca voy para visibilidad
-            this.Hide();
-            this.Close();
+        {
+            //Aca voy para administrar visibilidades
+            ABM_Visibilidad.Visibilidad visib = new ABM_Visibilidad.Visibilidad();
+            visib.MdiParent = this;
+            visib.Show();
+            visib.Location = new Point(0, 49);
         }
         public void STORE_comprar_ofertar()
         { 
             //Aca voy para comprar ofertar
-            ComprarOfertar.Mostrar compOfer = new ComprarOfertar.Mostrar(15, 3, 0);
-            this.Hide();
-            compOfer.ShowDialog();
-            this.Close();
+            //ComprarOfertar.Mostrar compOfer = new ComprarOfertar.Mostrar(15, 3, 0);
+            //compOfer.MdiParent = this;
+            //compOfer.Show();
+            //compOfer.Location = new Point(0, 49);
         }
         public void STORE_historial_cliente()
         { 
             //Aca voy para historial cliente
-            Historial_Cliente.Mostrar compOfer = new Historial_Cliente.Mostrar(15, 3, 0);
-            this.Hide();
-            compOfer.ShowDialog();
-            this.Close();
+            //Historial_Cliente.Mostrar histoClie = new Historial_Cliente.Mostrar(15, 3, 0);
+            //histoClie.MdiParent = this;
+            //histoClie.Show();
+            //histoClie.Location = new Point(0, 49);
         }
         public void STORE_calificar()
         { 
@@ -276,33 +280,34 @@ namespace WindowsFormsApplication1.ABM_Usuario
         { 
             //Aca voy para listado estadistico
             Listado_Estadistico.ListadoEstadistico listadoEstad = new Listado_Estadistico.ListadoEstadistico();
-            this.Hide();
-            listadoEstad.ShowDialog();
-            this.Close();
+            listadoEstad.MdiParent = this;
+            listadoEstad.Show();
+            listadoEstad.Location = new Point(0, 49);
         }
         public void STORE_administrar_usuario()
         { 
             //Aca voy para administrar usuario
-            ABM_Usuario.AltaCliente admUsuario = new ABM_Usuario.AltaCliente();
-            this.Hide();
-            admUsuario.ShowDialog();
-            this.Close();
+            ABM_Usuario.Cliente admUsuario = new ABM_Usuario.Cliente();
+            admUsuario.MdiParent = this;
+            admUsuario.Show();
+            admUsuario.Location = new Point(0, 49);
         }
         public void STORE_administrar_rol()
         { 
             //Aca voy para administrar rol
-            ABM_Rol.AltaRol admRol = new ABM_Rol.AltaRol();
-            this.Hide();
-            admRol.ShowDialog();
-            this.Close();
+            ABM_Rol.Rol admRol = new ABM_Rol.Rol();
+            admRol.MdiParent = this;
+            admRol.Show();
+            admRol.Location = new Point(0, 49);
         }
         public void STORE_administrar_rubro()
         {
             //Aca voy para administrar rubro
-            ABM_Rubro.Alta admRubro = new ABM_Rubro.Alta();
-            this.Hide();
-            admRubro.ShowDialog();
-            this.Close();
+            ABM_Rubro.Rubro admRubro = new ABM_Rubro.Rubro();
+            admRubro.MdiParent = this;
+            admRubro.Show();
+            admRubro.Location = new Point(0, 49);
+
         }
 
     }
