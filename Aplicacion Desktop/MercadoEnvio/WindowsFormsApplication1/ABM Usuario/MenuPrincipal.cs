@@ -247,17 +247,17 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public void STORE_comprar_ofertar()
         { 
             //Aca voy para comprar ofertar
-            ComprarOfertar.Mostrar compOfer = new ComprarOfertar.Mostrar(15, 3, 0);
+            //ComprarOfertar.Mostrar compOfer = new ComprarOfertar.Mostrar(15, 3, 0);
             this.Hide();
-            compOfer.ShowDialog();
+            //compOfer.ShowDialog();
             this.Close();
         }
         public void STORE_historial_cliente()
         { 
             //Aca voy para historial cliente
-            Historial_Cliente.Mostrar compOfer = new Historial_Cliente.Mostrar(15, 3, 0);
+            //Historial_Cliente.Mostrar compOfer = new Historial_Cliente.Mostrar(15, 3, 0);
             this.Hide();
-            compOfer.ShowDialog();
+           // compOfer.ShowDialog();
             this.Close();
         }
         public void STORE_calificar()
