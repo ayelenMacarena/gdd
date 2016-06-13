@@ -181,7 +181,6 @@
             this.Controls.Add(this.button1);
             this.Name = "MenuPrincipal";
             this.Text = "MenuPrincipal";
-            this.Load += new System.EventHandler(this.MenuPrincipal_Load);
             this.ResumeLayout(false);
 
         }

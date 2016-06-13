@@ -16,12 +16,14 @@ namespace WindowsFormsApplication1.ABM_Usuario
     {
         List<string> listaFuncionalidades = new List<string>();
         List<string> listaNombres = new List<string>();
+        string usuario;
 
-        public MenuPrincipal(string rol)
+        public MenuPrincipal(string rol, string username)
         {
             InitializeComponent();
             this.IsMdiContainer = true;
             this.LayoutMdi(MdiLayout.Cascade);
+            usuario = username;
             SqlConnection conexion = conectionDB.getConnection();
             conexion.Open();
             SqlCommand getFuncionalidades = new SqlCommand("LA_PETER_MACHINE.get_funcionalidades_para_rol", conexion);
@@ -48,10 +50,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         }
 
-        private void MenuPrincipal_Load(object sender, EventArgs e)
-        {
-
-        }
 
 
 //Seteo la configuracion de cada boton para que se vea el nombre y se oculte si no existe
@@ -229,10 +227,12 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public void STORE_publicar()
         {
             //Aca voy para Publicar
-            //Generar_Publicación.generarPublicacion generarPubli = new Generar_Publicación.generarPublicacion();
-            //generarPubli.MdiParent = this;
-            //generarPubli.Show();
-            //generarPubli.Location = new Point(0, 49);
+            //Como todas las publicaciones inician en borrador, ya la creo desde acá.
+
+            Generar_Publicación.tiposDePublicacion generarPubli = new Generar_Publicación.tiposDePublicacion();
+            generarPubli.MdiParent = this;
+            generarPubli.Show();
+            generarPubli.Location = new Point(0, 49);
         }
         public void STORE_categorizar_publicacion()
         { 
