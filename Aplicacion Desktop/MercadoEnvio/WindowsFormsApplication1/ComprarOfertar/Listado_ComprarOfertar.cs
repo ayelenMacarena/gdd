@@ -15,9 +15,10 @@ namespace WindowsFormsApplication1.ComprarOfertar
 {
     public partial class Listado_ComprarOfertar : Form
     {
-        int registrosPorPagina = 15;
+        int registrosPorPagina = 12;
         int numeroPagina = 1;
         int cantidadDePaginas;
+        List<String> filtroRubros;
 
         int cliente = 39; //Harcodeado, pero deberia recibirlo del login.
 
@@ -25,28 +26,47 @@ namespace WindowsFormsApplication1.ComprarOfertar
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
-            //Logica_ComprarOfertar.llenarComboRubros(this.comboRubros);
-            Mostrar();
+
+            this.buttonComprar.Visible = false;
+            this.buttonOfertar.Visible = false;
+
+            this.buttonComprar.Enabled = false;
+            this.buttonOfertar.Enabled = false;
+            
+            this.labelRubrosSeleccionados.Text = String.Format("");
+
+
+            filtroRubros = new List<String>();
+            Logica_ComprarOfertar.llenarComboRubros(this.comboRubros);            
         }
+
 
         public void Mostrar()
         {
-            this.Grid_ComprarOfertar.DataSource = Logica_ComprarOfertar.Mostrar(registrosPorPagina, numeroPagina, cliente);
-            cantidadDePaginas = Logica_ComprarOfertar.tamanio(registrosPorPagina,cliente);
+            Grid_ComprarOfertar.DataSource = null;
+            var tipo = comboTipo.Text;
+
+            DataTable filasAMostrar = Logica_ComprarOfertar.Mostrar(registrosPorPagina, numeroPagina, cliente, tipo, textBuscado.Text);
+
+            Grid_ComprarOfertar.DataSource = filasAMostrar;
+            Grid_ComprarOfertar.ClearSelection();
+
+            if (tipo == "COMPRAS")
+            {
+                buttonComprar.Visible = true;
+            }
+
+            if (tipo == "SUBASTAS")
+            {
+                buttonOfertar.Visible = true;
+            }        
+
+            cantidadDePaginas = Logica_ComprarOfertar.tamanio(registrosPorPagina, cliente, tipo,textBuscado.Text); ;
+
             this.labelNroPagina.Text = String.Format("{0}", numeroPagina);
+            this.label_InfoPagina_CO.Text = String.Format("Paginas {0}", cantidadDePaginas);
         }
 
-        public void Buscar()
-        {
-            try
-            {
-                this.Grid_ComprarOfertar.DataSource = Logica_ComprarOfertar.Buscar(this.textBuscado.Text);
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
-        }
 
         private void label_Anterio_CO_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -57,6 +77,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
             }
         }
 
+
         private void label_Siguiente_CO_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (numeroPagina < cantidadDePaginas)
@@ -66,19 +87,6 @@ namespace WindowsFormsApplication1.ComprarOfertar
             }
         }
 
-        private void textBuscado_TextChanged(object sender, EventArgs e)
-        {
-            if (this.textBuscado.Text == String.Empty)
-            {
-                this.numeroPagina = 1;
-                this.Mostrar();
-            }
-            else
-            {
-                this.Buscar();
-            }
-            
-        }
 
         private void linkPrimeraPag_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -86,10 +94,85 @@ namespace WindowsFormsApplication1.ComprarOfertar
             Mostrar();
         }
 
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+
+        private void linkUltimaPag_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
             numeroPagina = cantidadDePaginas;
             Mostrar();
         }
+
+
+        private void buttonAgregarRubro_Click(object sender, EventArgs e)
+        {
+            if (!filtroRubros.Contains(comboRubros.Text))
+            {
+                filtroRubros.Add(comboRubros.Text);
+                this.labelRubrosSeleccionados.Text += (comboRubros.Text + " - ");
+            }
+        }
+
+
+        private void buttonLimpiarBusqueda_Click(object sender, EventArgs e)
+        {
+            labelRubrosSeleccionados.Text = "";
+            textBuscado.Text = "";
+            comboRubros.Text = "";
+            filtroRubros = new List<string>();
+            Grid_ComprarOfertar.DataSource = null;
+        }
+
+
+        private void buttonBuscar_Click(object sender, EventArgs e)
+        {
+            this.buttonComprar.Visible = false;
+            this.buttonOfertar.Visible = false;
+
+            this.buttonComprar.Enabled = false;
+            this.buttonOfertar.Enabled = false;
+
+            if (comboTipo.Text == String.Empty)
+            {
+                MessageBox.Show("Se debe indicar el tipo de publicacion a buscar.");
+                return;
+            }
+
+            this.numeroPagina = 1;
+            this.Mostrar();          
+
+            this.Grid_ComprarOfertar.Columns["publicacion_id"].Visible = false;
+
+        }
+
+
+        private void Grid_ComprarOfertar_SelectionChanged(object sender, EventArgs e)
+        {
+            var tipo = comboTipo.Text;
+
+            if (tipo == "COMPRAS")
+            {
+                buttonComprar.Enabled = true;
+            }
+
+            if (tipo == "SUBASTAS")
+            {
+                buttonOfertar.Enabled = true;
+            }        
+        }
+
+
+        private void buttonComprar_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow filaSeleccionada = Grid_ComprarOfertar.CurrentRow;
+            (new ComprarOfertar.Comprar(filaSeleccionada)).Show();
+        }
+
+        private void buttonOfertar_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow filaSeleccionada = Grid_ComprarOfertar.CurrentRow;
+            (new ComprarOfertar.Ofertar(filaSeleccionada)).Show();
+
+        }
+
+
     }
 }

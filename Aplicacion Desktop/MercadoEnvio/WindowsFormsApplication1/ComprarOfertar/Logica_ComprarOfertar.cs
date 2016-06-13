@@ -12,9 +12,9 @@ namespace WindowsFormsApplication1.ComprarOfertar
     class Logica_ComprarOfertar
     {
    
-        public static DataTable Mostrar(int registrosPorPagina, int numerosPagina, int cliente)
+        public static DataTable Mostrar(int registrosPorPagina, int numerosPagina, int cliente, String tipo, String termino)
         {
-            DataTable tablaDatos = new DataTable("ListadoPublicaciones");
+            DataTable tablaDatos = new DataTable("ListadoCompras");
             SqlConnection sqlConexion = conectionDB.getConnection();
 
             try
@@ -23,26 +23,14 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
                 SqlCommand sqlComando = new SqlCommand();
                 sqlComando.Connection = sqlConexion;
-                sqlComando.CommandText = "LA_PETER_MACHINE.SP_Listado_ComprarOfertar";
+                sqlComando.CommandText = "LA_PETER_MACHINE.SP_ListadoComprarOfertar";
                 sqlComando.CommandType = CommandType.StoredProcedure;
 
-                SqlParameter parRegistrosPorPagina = new SqlParameter();
-                parRegistrosPorPagina.ParameterName = "@registrosPorPagina";
-                parRegistrosPorPagina.SqlDbType = SqlDbType.Int;
-                parRegistrosPorPagina.Value = registrosPorPagina;
-                sqlComando.Parameters.Add(parRegistrosPorPagina);
-
-                SqlParameter parNumerosPagina = new SqlParameter();
-                parNumerosPagina.ParameterName = "@numerosPagina";
-                parNumerosPagina.SqlDbType = SqlDbType.Int;
-                parNumerosPagina.Value = numerosPagina;
-                sqlComando.Parameters.Add(parNumerosPagina);
-
-                SqlParameter parCliente = new SqlParameter();
-                parCliente.ParameterName = "@cliente";
-                parCliente.SqlDbType = SqlDbType.Int;
-                parCliente.Value = cliente;
-                sqlComando.Parameters.Add(parCliente);
+                sqlComando.Parameters.AddWithValue("@registrosPorPagina", registrosPorPagina);
+                sqlComando.Parameters.AddWithValue("@numerosPagina", numerosPagina);
+                sqlComando.Parameters.AddWithValue("@cliente", cliente);
+                sqlComando.Parameters.AddWithValue("@tipo", tipo);
+                sqlComando.Parameters.AddWithValue("@terminoBuscado",termino);
 
                 sqlComando.ExecuteNonQuery();
 
@@ -54,7 +42,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
             catch (Exception e)
             {
                 tablaDatos = null;
-                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_Listado_ComprarOfertar. " + e.Message);
+                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_ListadoComprarOfertar. " + e.Message);
             }
 
             finally
@@ -68,7 +56,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
 
 
-        public static int tamanio(int registrosPorPagina, int cliente)
+        public static int tamanio(int registrosPorPagina, int cliente, String tipo, String termino)
         {
             int totalPaginas = 1;
             SqlConnection sqlConexion = conectionDB.getConnection();
@@ -82,27 +70,22 @@ namespace WindowsFormsApplication1.ComprarOfertar
                 sqlComando.CommandText = "LA_PETER_MACHINE.SP_Cantidad_Paginas_ComprarOfertar";
                 sqlComando.CommandType = CommandType.StoredProcedure;
 
-                SqlParameter parRegistrosPorPagina = new SqlParameter();
-                parRegistrosPorPagina.ParameterName = "@registrosPorPagina";
-                parRegistrosPorPagina.SqlDbType = SqlDbType.Int;
-                parRegistrosPorPagina.Value = registrosPorPagina;
-                sqlComando.Parameters.Add(parRegistrosPorPagina);
+                sqlComando.Parameters.AddWithValue("@registrosPorPagina", registrosPorPagina);
 
-                SqlParameter parTotalDePaginas = new SqlParameter();
-                parTotalDePaginas.ParameterName = "@totalDePaginas";
-                parTotalDePaginas.Direction = ParameterDirection.Output;
-                parTotalDePaginas.SqlDbType = SqlDbType.Int;
-                sqlComando.Parameters.Add(parTotalDePaginas);
+                SqlParameter parTotalPaginas = new SqlParameter();
+                parTotalPaginas.ParameterName = "@totalDePaginas";
+                parTotalPaginas.Direction = ParameterDirection.Output;
+                parTotalPaginas.SqlDbType = SqlDbType.Int;
+                sqlComando.Parameters.Add(parTotalPaginas);
 
-                SqlParameter parCliente = new SqlParameter();
-                parCliente.ParameterName = "@cliente";
-                parCliente.SqlDbType = SqlDbType.Int;
-                parCliente.Value = cliente;
-                sqlComando.Parameters.Add(parCliente);
+                sqlComando.Parameters.AddWithValue("@cliente", cliente);
+                sqlComando.Parameters.AddWithValue("@tipo", tipo);
+                sqlComando.Parameters.AddWithValue("@terminoBuscado", termino);
+
 
                 sqlComando.ExecuteNonQuery();
 
-                totalPaginas = (int)sqlComando.Parameters[@totalPaginas].Value; 
+                totalPaginas = (int)sqlComando.Parameters["@totalDePaginas"].Value; 
             }
             catch (Exception e)
             {
@@ -117,89 +100,28 @@ namespace WindowsFormsApplication1.ComprarOfertar
             return totalPaginas;
         }
 
-
-
-
-        public static DataTable Buscar(String termino)
-        {
-            DataTable tablaDatos = new DataTable("ListadoPublicaciones");
-            SqlConnection sqlConexion = conectionDB.getConnection();
-
-            try
-            {
-                sqlConexion.Open();
-
-                SqlCommand sqlComando = new SqlCommand();
-                sqlComando.Connection = sqlConexion;
-                sqlComando.CommandText = "LA_PETER_MACHINE.SP_Buscador_Publicaciones";
-                sqlComando.CommandType = CommandType.StoredProcedure;
-
-                SqlParameter parTerminoBuscado = new SqlParameter();
-                parTerminoBuscado.ParameterName = "@terminoBuscado";
-                parTerminoBuscado.SqlDbType = SqlDbType.VarChar;
-                parTerminoBuscado.Size = termino.Length;
-                parTerminoBuscado.Value = termino;
-                sqlComando.Parameters.Add(parTerminoBuscado);
-
-                sqlComando.ExecuteNonQuery();
-
-                //Hasta aca se ejecuta solo en la base de datos, no los muestra en la app =>
-
-                SqlDataAdapter adaptadorDatos = new SqlDataAdapter(sqlComando);
-                adaptadorDatos.Fill(tablaDatos);
-            }
-            catch (Exception e)
-            {
-                tablaDatos = null;
-                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_Buscador_Publicaciones. " + e.Message);
-            }
-
-            finally
-            {
-                sqlConexion.Close();
-            }
-
-            return tablaDatos;
-        }
-
-
-
         public static void llenarComboRubros(ComboBox rubros)
         {
-            SqlConnection sqlConexion = conectionDB.getConnection();
+            SqlConnection conexion = conectionDB.getConnection();
+            conexion.Open();
+            SqlCommand loginProcedure = new SqlCommand("LA_PETER_MACHINE.SP_ListadoRubros", conexion);
+            loginProcedure.CommandType = CommandType.StoredProcedure;
 
-            try
+            SqlDataReader dataRubros = loginProcedure.ExecuteReader();
+            List<String> listaRubros = new List<String>();
+
+            if (dataRubros.HasRows)
             {
-                sqlConexion.Open();
-
-                SqlCommand sqlComando = new SqlCommand("select rubr_descripcion_corta from LA_PETER_MACHINE.rubro", sqlConexion);
-
-                SqlDataReader respuesta = sqlComando.ExecuteReader();
-
-                while (respuesta.Read() != null)
+                while (dataRubros.Read())
                 {
-                    rubros.Items.Add(respuesta.GetString(0));
+                   rubros.Items.Add(dataRubros["rubr_descripcion_corta"].ToString());
                 }
-
-                respuesta.Close();
-
-                //Hasta aca se ejecuta solo en la base de datos, no los muestra en la app =>
-
             }
-            catch (Exception e)
+            else
             {
-                throw new Exception("Error al intentar llenar el Combo Box Rubros. " + e.Message);
+                MessageBox.Show("Error al ejecutar el SP_ListadoRubros");
             }
-
-            finally
-            {
-                sqlConexion.Close();
-            }
-
-
+            conexion.Close();
         }
-
-
-
     }
 }
