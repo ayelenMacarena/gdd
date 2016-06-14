@@ -613,6 +613,28 @@ GO
  set @rdo='Error de ingreso'
  end catch
  end
+
+GO
+create procedure LA_PETER_MACHINE.CambiarContraseña(@usuario nvarchar(255),@contraseñaNueva nvarchar(20),@contraseñaVieja nvarchar(20),@rdo nvarchar(255) OUTPUT)
+as 
+begin
+declare @hashViejo varbinary(20)
+set @hashViejo=HASHBYTES('sha2_256',@contraseñaVieja)
+
+if exists (select* from LA_PETER_MACHINE.usuario
+where usua_username=@usuario and usua_password=@contraseñaVieja)
+begin
+declare @hashNuevo varbinary(20)
+set @hashNuevo=HASHBYTES('sha2_256',@contraseñaNueva)
+update LA_PETER_MACHINE.usuario
+set usua_password=@hashNuevo
+where usua_username=@usuario
+set @rdo='OK'
+end
+else
+set @rdo='Contraseña incorrecta'
+
+end
  
 GO
  create procedure LA_PETER_MACHINE.Modificar_Cliente(@usuario nvarchar(255),@pass nvarchar(20),@ciudad nvarchar(255),
@@ -645,4 +667,163 @@ GO
  set @rdo='Error de ingreso'
  end catch
  end
+ GO
+
+ create function LA_PETER_MACHINE.topDeVendedoresPorMontoFacturado(@fechaInicio nvarchar(255), @fechaFin nvarchar(255))
+returns @T table(Nombre nvarchar(255))
+as
+begin
+declare @fecha_inicio Datetime
+set @fecha_inicio=@fechaInicio
+declare @fecha_fin Datetime
+set @fecha_fin=@fechaFin
+insert into @T
+select top 5 Nombre from (select clie_nombre + ' ' + clie_apellido as Nombre,fact_total from LA_PETER_MACHINE.factura, LA_PETER_MACHINE.cliente
+where fact_id_vendedor=clie_id_persona and fact_fecha>=@fecha_inicio and fact_fecha<=@fecha_fin
+union all
+select empr_razon_social as Nombre, fact_total from LA_PETER_MACHINE.factura, LA_PETER_MACHINE.empresa 
+where fact_id_vendedor=empr_id_persona and fact_fecha>=@fecha_inicio and fact_fecha<=@fecha_fin) as t
+group by Nombre
+order by sum(fact_total) desc
+return
+end
  Go
+
+ create function LA_PETER_MACHINE.topDeProductosNoVendidos(@fechaInicio nvarchar(255), @fechaFin nvarchar(255), @visibilidad nvarchar(255))
+returns @T table(Nombre nvarchar(255))
+as
+begin
+declare @fecha_inicio Datetime
+set @fecha_inicio=@fechaInicio
+declare @fecha_fin Datetime
+set @fecha_fin=@fechaFin
+insert into @T
+select top 5  Nombre from (select    clie_nombre +' '+ clie_apellido as Nombre, sum(publ_cantidad) as cantidad, publ_fecha_fin as fecha, publ_cod_visibilidad as visibilidad 
+ from LA_PETER_MACHINE.publicacion, LA_PETER_MACHINE.cliente
+where publ_cod_visibilidad=(select  visi_cod  from LA_PETER_MACHINE.visibilidad where 
+visi_descripcion=@visibilidad) and
+ publ_fecha_fin>=@fecha_inicio and publ_fecha_fin<=@fecha_fin and 
+ publ_id_vendedor=clie_id_persona
+ group by clie_nombre,clie_apellido,publ_cantidad,publ_fecha_fin,publ_cod_visibilidad
+union all 
+select  empr_razon_social as Nombre, sum(publ_cantidad) as cantidad, publ_fecha_fin as fecha, publ_cod_visibilidad as visibilidad from LA_PETER_MACHINE.publicacion, LA_PETER_MACHINE.empresa
+where publ_cod_visibilidad=(select visi_cod  from LA_PETER_MACHINE.visibilidad where 
+visi_descripcion=@visibilidad) and
+ publ_fecha_fin>=@fecha_inicio and publ_fecha_fin<=@fecha_fin and 
+ publ_id_vendedor=empr_id_persona 
+ group by empr_razon_social,publ_cantidad,publ_fecha_fin, publ_cod_visibilidad
+)as t
+group by Nombre
+order by sum(cantidad) DESC
+
+return
+end
+
+GO
+
+create function LA_PETER_MACHINE.topDeVendedoresPorFacturas(@fechaInicio nvarchar(255), @fechaFin nvarchar(255))
+returns @T table(Nombre nvarchar(255))
+as
+begin
+declare @fecha_inicio Datetime
+set @fecha_inicio=@fechaInicio
+declare @fecha_fin Datetime
+set @fecha_fin=@fechaFin
+insert into @T
+select top 5 Nombre from (select clie_nombre + ' ' + clie_apellido as Nombre from LA_PETER_MACHINE.factura, LA_PETER_MACHINE.cliente
+where fact_id_vendedor=clie_id_persona and fact_fecha>=@fecha_inicio and fact_fecha<=@fecha_fin
+union all
+select empr_razon_social as Nombre from LA_PETER_MACHINE.factura, LA_PETER_MACHINE.empresa 
+where fact_id_vendedor=empr_id_persona and fact_fecha>=@fecha_inicio and fact_fecha<=@fecha_fin) as t
+group by Nombre
+order by count(*) desc
+return
+end
+
+go
+create function LA_PETER_MACHINE.ClienteConMasProductosComprados(@fechaInicio nvarchar(255), @fechaFin nvarchar(255), @rubro nvarchar(255))
+returns @T table(Nombre nvarchar(255))
+as
+begin
+insert into @T
+select top 5 clie_nombre + ' ' + clie_apellido as Nombre
+from LA_PETER_MACHINE.item_factura,LA_PETER_MACHINE.publicacion, LA_PETER_MACHINE.factura,LA_PETER_MACHINE.compra, LA_PETER_MACHINE.cliente
+where item_id_publicacion=publicacion_id and  comp_num_factura=fact_num and clie_id_persona=comp_id_comprador and item_num_factura=comp_num_factura and publ_cod_rubro=(select rubr_cod from LA_PETER_MACHINE.rubro
+where rubr_descripcion_corta=@rubro) and fact_fecha>=@fechaInicio and fact_fecha<=@fechaFin
+group by clie_nombre + ' ' + clie_apellido
+order by sum(item_cantidad) DESC
+return
+end
+
+GO
+
+CREATE procedure LA_PETER_MACHINE.get_funcionalidades_para_rol
+	@rol_desc nvarchar(255)
+AS
+	select f.func_procedure, f.func_descripcion
+	from LA_PETER_MACHINE.funcionalidad f, LA_PETER_MACHINE.funcionalidad_rol fr, LA_PETER_MACHINE.rol r
+	where f.funcionalidad_id = fr.furo_id_funcionalidad
+	and fr.furo_id_rol = r.rol_id
+	and r.rol_descripcion = @rol_desc
+	and r.rol_habilitado = 1
+GO
+
+create procedure LA_PETER_MACHINE.buscarFacturas (@fechaDesde varchar(15) , @fechaHasta varchar(15), 
+ 	@precioDesde nvarchar(200) , @precioHasta nvarchar(200) , @descripcion nvarchar(255), @vendedor nvarchar(255))
+as
+
+begin
+
+
+declare @miVendedor numeric(18,0)
+if @vendedor is not null
+	set @miVendedor = (select TOP 1 pers_id from LA_PETER_MACHINE.persona where pers_username = @vendedor ) ;
+
+declare @query varchar(255)
+
+
+
+IF @fechaDesde is Not NULL and @query is not NUll
+	set @query = @query + ' AND fact_fecha >= "' + @fechaDesde + '"'
+Else IF @fechaDesde is Not NULL 
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha >= "' + @fechaDesde + '"'
+
+IF @fechaHasta is not Null and @query is not null
+	set @query = @query + ' AND fact_fecha <= "' + @fechaHasta + '"'
+else IF @fechaHasta is not Null
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha <= "' + @fechaHasta + '"'
+
+
+IF @descripcion is not NUll and @query is not null
+	set @query = @query + 'AND fact_num = ' + convert(varchar(255), @descripcion);
+else
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_num = ' +  convert(varchar(255), @descripcion) ;
+
+
+if @miVendedor is not null and @query is not null
+	set @query = @query + ' AND fact_id_vendedor = ' + convert(varchar(10),@miVendedor);
+else if @miVendedor is not null
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_id_vendedor = ' + convert(varchar(10),@miVendedor);
+
+
+IF @precioDesde is Not NULL and @query is not NUll
+	set @query = @query + ' AND ' + 'fact_total >= ' + @precioDesde
+Else IF @precioDesde is Not NULL
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_total >= ' + @precioDesde
+
+IF @precioHasta is not Null and @query is not null
+	set @query = @query + ' AND fact_total <= ' + @precioHasta
+else IF @precioHasta is not Null
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_total <= '+ @precioHasta
+
+if @query is null and @precioHasta is null and @precioDesde is Null and @fechaDesde is null and @fechaHasta is null and @descripcion is null and @vendedor is null
+	set @query = 'select * from LA_PETER_MACHINE.factura'
+
+exec (@query)
+
+end
+
+GO
+
+
+

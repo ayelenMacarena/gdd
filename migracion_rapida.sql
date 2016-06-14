@@ -75,7 +75,9 @@ AS
 
 --USUARIO (Empresa)
 	declare @hash varbinary(20)
-	set @hash = hashbytes('sha2_256','12345');
+	declare @pass nvarchar(20)
+	set @pass = '12345'
+	set @hash = hashbytes('sha2_256',@pass);
 
 	insert into LA_PETER_MACHINE.usuario(usua_username, usua_password, usua_habilitado, usua_intentos_login)
 	select distinct Publ_Empresa_Mail, @hash, 1, 0 from gd_esquema.Maestra
@@ -89,17 +91,6 @@ AS
 	group by Cli_Mail
 
 
---ROLES_USUARIO (Empresa)
-	insert into LA_PETER_MACHINE.roles_usuario(rolu_username, rolu_id_rol)
-	select DISTINCT u.usua_username, r.rol_id from LA_PETER_MACHINE.rol r, LA_PETER_MACHINE.usuario u, LA_PETER_MACHINE.Persona p, gd_esquema.Maestra
-	where p.pers_mail = Publ_Empresa_Mail and p.pers_username = u.usua_username
-	and r.rol_descripcion = 'empresa'
-
---ROLES_USUARIO (Cliente)
-	insert into LA_PETER_MACHINE.roles_usuario(rolu_username, rolu_id_rol)
-	select DISTINCT u.usua_username, r.rol_id from LA_PETER_MACHINE.rol r, LA_PETER_MACHINE.usuario u, LA_PETER_MACHINE.Persona p, gd_esquema.Maestra
-	where p.pers_mail = Cli_Mail and p.pers_username = u.usua_username
-	and r.rol_descripcion = 'cliente'
 
 
 --PERSONA (Cliente)
@@ -109,6 +100,14 @@ AS
 	from gd_esquema.Maestra
 	where Cli_Mail is not null
 	group by Cli_Mail, Cli_Mail, Cli_Dom_Calle, Cli_Cod_Postal, Cli_Nro_Calle, Cli_Nro_Calle, Cli_Piso, Cli_Depto
+	
+
+--ROLES_USUARIO (Cliente)
+	insert into LA_PETER_MACHINE.roles_usuario(rolu_username, rolu_id_rol)
+	select DISTINCT u.usua_username, r.rol_id from LA_PETER_MACHINE.rol r, LA_PETER_MACHINE.usuario u, LA_PETER_MACHINE.Persona p, gd_esquema.Maestra
+	where p.pers_mail = Cli_Mail and p.pers_username = u.usua_username
+	and r.rol_descripcion = 'cliente'
+
 
 
 --PERSONA (Empresa)
@@ -121,6 +120,11 @@ AS
 	group by Publ_Empresa_Mail, Publ_Empresa_Dom_Calle, Publ_Empresa_Cod_Postal, Publ_Empresa_Nro_Calle,
 		Publ_Empresa_Piso, Publ_Empresa_Depto
 
+--ROLES_USUARIO (Empresa)
+	insert into LA_PETER_MACHINE.roles_usuario(rolu_username, rolu_id_rol)
+	select DISTINCT u.usua_username, r.rol_id from LA_PETER_MACHINE.rol r, LA_PETER_MACHINE.usuario u, LA_PETER_MACHINE.Persona p, gd_esquema.Maestra
+	where p.pers_mail = Publ_Empresa_Mail and p.pers_username = u.usua_username
+	and r.rol_descripcion = 'empresa'
 
 --CLIENTE
 DECLARE		@clie_id_tipo_doc numeric(18,0)
@@ -138,7 +142,6 @@ set @clie_id_tipo_doc = (select type_id from LA_PETER_MACHINE.document_type wher
 --RUBRO
 insert into LA_PETER_MACHINE.rubro(rubr_descripcion_corta)
 	select distinct Publicacion_Rubro_Descripcion from gd_esquema.Maestra
-
 
 --EMPRESA
 insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_persona)
