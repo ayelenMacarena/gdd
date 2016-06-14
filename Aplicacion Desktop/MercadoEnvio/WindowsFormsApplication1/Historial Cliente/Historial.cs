@@ -15,11 +15,9 @@ namespace WindowsFormsApplication1.Historial_Cliente
         int cliente = 39; //Harcodeado, pero deberia recibirlo del login.
 
         public Historial()
-        {         
+        {
+            InitializeComponent();
             this.labelCliente.Text = String.Format("{0}", cliente);
-
-
-
         }
     }
 }
