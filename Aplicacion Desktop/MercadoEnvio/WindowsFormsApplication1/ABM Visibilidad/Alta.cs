@@ -16,8 +16,8 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
     {
         int envio;
         string respuesta;
-        int precio;
-        double porcentaje;
+        decimal precio;
+        decimal porcentaje;
 
         public Alta()
         {
@@ -41,21 +41,43 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             SqlCommand crearVisib = new SqlCommand("LA_PETER_MACHINE.crearVisibilidad", conexion);
             crearVisib.CommandType = CommandType.StoredProcedure;
             //Paso los parámetros al SP
-            int.TryParse(this.precioText.Text, out precio);
-            crearVisib.Parameters.AddWithValue("@precio", this.precio);
-            double.TryParse(this.precioText.Text, out porcentaje);
-            crearVisib.Parameters.AddWithValue("@porcentaje", this.porcentaje);
-            if (this.envioBox.Checked) envio = 1; else envio = 0;
-            crearVisib.Parameters.AddWithValue("@envio", this.envio);
-            crearVisib.Parameters.AddWithValue("@descripcion", this.descripcionText.Text);
-            crearVisib.Parameters.Add("@rdo", SqlDbType.NVarChar).Direction = ParameterDirection.Output;
+            decimal.TryParse(this.precioBox.Text, out precio);
+            if(this.precio == 0)
+            {
+                MessageBox.Show("Valor de precio invalido");
+            }
+            else
+            {
+                crearVisib.Parameters.Add("@precio", SqlDbType.Real);
+                crearVisib.Parameters["@precio"].Precision = 18;
+                crearVisib.Parameters["@precio"].Scale = 0;
+                crearVisib.Parameters["@precio"].Value = this.precio;
+                decimal.TryParse(this.porcentajeBox.Text, out porcentaje);
+                if (this.porcentaje == 0)
+                {
+                    MessageBox.Show("Valor de porcentaje invalido");
+                }
+                else
+                {
+                    crearVisib.Parameters.Add("@porcentaje", SqlDbType.Real);
+                    crearVisib.Parameters["@porcentaje"].Precision = 18;
+                    crearVisib.Parameters["@porcentaje"].Scale = 2;
+                    crearVisib.Parameters["@porcentaje"].Value = this.porcentaje;
+                    if (this.envioBox.Checked) envio = 1; else envio = 0;
+                    crearVisib.Parameters.Add("@envio", SqlDbType.Bit);
+                    crearVisib.Parameters["@envio"].Value = this.envio;
+                    crearVisib.Parameters.Add("@descripcion", SqlDbType.NVarChar);
+                    crearVisib.Parameters["@descripcion"].Value = this.descripcionText.Text;
+                    crearVisib.Parameters.Add("@rdo", SqlDbType.NVarChar).Direction = ParameterDirection.Output;
+                    crearVisib.Parameters["@rdo"].Size = 255;
 
-            crearVisib.ExecuteNonQuery();
-            this.respuesta = Convert.ToString(crearVisib.Parameters["@rdo"].Value);
+                    crearVisib.ExecuteNonQuery();
+                    this.respuesta = Convert.ToString(crearVisib.Parameters["@rdo"].Value);
 
+                    MessageBox.Show(this.respuesta);
+                }
+            }
             conexion.Close();
-
-            MessageBox.Show(this.respuesta);
         }
 
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
