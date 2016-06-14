@@ -228,7 +228,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public void STORE_publicar()
         {
             //Aca voy para Publicar
-            Generar_Publicación.tiposDePublicacion generarPubli = new Generar_Publicación.tiposDePublicacion(this.usuario);
+            Generar_Publicación.busquedaPublicacion generarPubli = new Generar_Publicación.busquedaPublicacion(this.usuario);
             generarPubli.MdiParent = this;
             generarPubli.Show();
             generarPubli.Location = new Point(0, 49);

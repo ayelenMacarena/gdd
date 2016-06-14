@@ -782,18 +782,21 @@ if @vendedor is not null
 	set @miVendedor = (select TOP 1 pers_id from LA_PETER_MACHINE.persona where pers_username = @vendedor ) ;
 
 declare @query varchar(255)
+declare @fecha_inicio Datetime
+set @fecha_inicio=@fechaDesde
+declare @fecha_fin Datetime
+set @fecha_fin=@fechaHasta
 
 
+IF @fecha_inicio is Not NULL and @query is not NUll
+	set @query = @query + ' AND fact_fecha >= "' + @fecha_inicio + '"'
+Else IF @fecha_inicio is Not NULL 
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha >= "' + @fecha_inicio + '"'
 
-IF @fechaDesde is Not NULL and @query is not NUll
-	set @query = @query + ' AND fact_fecha >= "' + @fechaDesde + '"'
-Else IF @fechaDesde is Not NULL 
-	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha >= "' + @fechaDesde + '"'
-
-IF @fechaHasta is not Null and @query is not null
-	set @query = @query + ' AND fact_fecha <= "' + @fechaHasta + '"'
-else IF @fechaHasta is not Null
-	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha <= "' + @fechaHasta + '"'
+IF @fecha_fin is not Null and @query is not null
+	set @query = @query + ' AND fact_fecha <= "' + @fecha_fin + '"'
+else IF @fecha_fin is not Null
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha <= "' + @fecha_fin + '"'
 
 
 IF @descripcion is not NUll and @query is not null
@@ -828,4 +831,14 @@ end
 GO
 
 
+CREATE procedure LA_PETER_MACHINE.publicacionesParaModificar(@username nvarchar(255))
+AS
+	begin
+	declare @vendedor_id numeric(18)
+	set @vendedor_id = (select TOP 1 pers_id from LA_PETER_MACHINE.persona where pers_username = @username)
 
+	select * from LA_PETER_MACHINE.publicacion where publ_id_vendedor = @vendedor_id and 
+	publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Borrador') or 
+	publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Activa')
+	end
+GO

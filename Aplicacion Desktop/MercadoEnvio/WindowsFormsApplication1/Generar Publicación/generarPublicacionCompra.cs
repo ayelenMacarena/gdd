@@ -31,6 +31,37 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 textBoxCod.Text = numero["publicacion_id"].ToString();
             }
             textBox1.Text = usuario;
+            string rubros = "select rubr_descripcion_corta from LA_PETER_MACHINE.rubro";
+            SqlCommand listRubros = new SqlCommand(rubros, conexion);
+            conexion.Close();
+            conexion.Open();
+            SqlDataReader rub = listRubros.ExecuteReader();
+            List<String> rubritos = new List<String>();
+            if (rub.HasRows)
+            {
+                while (rub.Read())
+                {
+                    rubritos.Add(rub["rubr_descripcion_corta"].ToString());
+                }
+
+            }
+            comboBox1.DataSource = rubritos;
+            conexion.Close();
+            conexion.Open();
+            string visibilidad = "select visi_descripcion from LA_PETER_MACHINE.visibilidad";
+            SqlCommand listaVisi = new SqlCommand(visibilidad, conexion);
+
+            SqlDataReader vis = listRubros.ExecuteReader();
+            List<String> visib = new List<String>();
+            if (vis.HasRows)
+            {
+                while (vis.Read())
+                {
+                    visib.Add(vis["visi_descripcion"].ToString());
+                }
+
+            }
+            comboBox2.DataSource = visib;
 
 
 
@@ -72,10 +103,6 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
         }
 
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-            monthCalendarInicio.Visible = true;
-        }
 
         private void monthCalendarInicio_DateChanged(object sender, DateRangeEventArgs e)
         {
@@ -83,7 +110,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             monthCalendarInicio.Visible = false;
         }
 
-        private void textBox5_TextChanged(object sender, EventArgs e)
+        private void textBox5_Click(object sender, EventArgs e)
         {
             monthCalendarVencimiento.Visible = true;
         }
@@ -103,6 +130,18 @@ namespace WindowsFormsApplication1.Generar_Publicación
         {
             this.Close();
         }
+
+        private void textBox4_Click(object sender, EventArgs e)
+        {
+            monthCalendarInicio.Visible = true;
+        }
+
+        private void textBox5_Click_1(object sender, EventArgs e)
+        {
+            monthCalendarVencimiento.Visible = true;
+
+        }
+
 
 
 

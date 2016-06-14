@@ -38,9 +38,11 @@
             this.monthCalendarVencimiento = new System.Windows.Forms.MonthCalendar();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.monthCalendarInicio = new System.Windows.Forms.MonthCalendar();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.monthCalendarInicio = new System.Windows.Forms.MonthCalendar();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
@@ -146,10 +148,12 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.monthCalendarVencimiento);
+            this.groupBox1.Controls.Add(this.monthCalendarInicio);
+            this.groupBox1.Controls.Add(this.comboBox4);
+            this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.monthCalendarInicio);
-            this.groupBox1.Controls.Add(this.monthCalendarVencimiento);
             this.groupBox1.Controls.Add(this.comboBox3);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.checkBox5);
@@ -181,6 +185,32 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nueva publicación";
             // 
+            // monthCalendarInicio
+            // 
+            this.monthCalendarInicio.Location = new System.Drawing.Point(212, 195);
+            this.monthCalendarInicio.Name = "monthCalendarInicio";
+            this.monthCalendarInicio.TabIndex = 21;
+            this.monthCalendarInicio.Visible = false;
+            this.monthCalendarInicio.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendarInicio_DateChanged);
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Location = new System.Drawing.Point(300, 323);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(64, 21);
+            this.comboBox4.TabIndex = 36;
+            this.comboBox4.Text = "Si";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(196, 326);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(78, 13);
+            this.label10.TabIndex = 35;
+            this.label10.Text = "Acepta envío?";
+            // 
             // textBox1
             // 
             this.textBox1.BackColor = System.Drawing.SystemColors.ScrollBar;
@@ -198,14 +228,6 @@
             this.label9.Size = new System.Drawing.Size(69, 13);
             this.label9.TabIndex = 33;
             this.label9.Text = "Responsable";
-            // 
-            // monthCalendarInicio
-            // 
-            this.monthCalendarInicio.Location = new System.Drawing.Point(210, 195);
-            this.monthCalendarInicio.Name = "monthCalendarInicio";
-            this.monthCalendarInicio.TabIndex = 21;
-            this.monthCalendarInicio.Visible = false;
-            this.monthCalendarInicio.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendarInicio_DateChanged);
             // 
             // comboBox3
             // 
@@ -295,7 +317,7 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(158, 20);
             this.textBox5.TabIndex = 22;
-            this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
+            this.textBox5.Click += new System.EventHandler(this.textBox5_Click_1);
             // 
             // label6
             // 
@@ -312,7 +334,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(158, 20);
             this.textBox4.TabIndex = 20;
-            this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            this.textBox4.Click += new System.EventHandler(this.textBox4_Click);
             // 
             // textBox3
             // 
@@ -421,5 +443,7 @@
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.Label label10;
     }
 }
