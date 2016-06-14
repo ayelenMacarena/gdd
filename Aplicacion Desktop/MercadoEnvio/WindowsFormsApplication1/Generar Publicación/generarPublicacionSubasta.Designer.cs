@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1.Generar_Publicación
 {
-    partial class generarPublicacionCompra
+    partial class generarPublicacionSubasta
     {
         /// <summary>
         /// Required designer variable.
@@ -54,13 +54,12 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -111,7 +110,7 @@
             // Stock
             // 
             this.Stock.AutoSize = true;
-            this.Stock.Location = new System.Drawing.Point(5, 101);
+            this.Stock.Location = new System.Drawing.Point(7, 97);
             this.Stock.Name = "Stock";
             this.Stock.Size = new System.Drawing.Size(35, 13);
             this.Stock.TabIndex = 9;
@@ -146,6 +145,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.textBox6);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.monthCalendarInicio);
@@ -166,7 +166,6 @@
             this.groupBox1.Controls.Add(this.textBox2);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.numericUpDown1);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.checkBox1);
@@ -258,9 +257,9 @@
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(55, 192);
+            this.comboBox2.Location = new System.Drawing.Point(72, 192);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(335, 21);
+            this.comboBox2.Size = new System.Drawing.Size(318, 21);
             this.comboBox2.TabIndex = 26;
             // 
             // label7
@@ -275,9 +274,9 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(55, 157);
+            this.comboBox1.Location = new System.Drawing.Point(72, 157);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(335, 21);
+            this.comboBox1.Size = new System.Drawing.Size(318, 21);
             this.comboBox1.TabIndex = 24;
             // 
             // Rubro
@@ -316,20 +315,11 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(65, 120);
+            this.textBox3.Location = new System.Drawing.Point(72, 120);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(111, 20);
             this.textBox3.TabIndex = 19;
             this.textBox3.Validating += new System.ComponentModel.CancelEventHandler(this.textBox3_Validating);
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(273, 120);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(117, 20);
-            this.textBox2.TabIndex = 18;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            this.textBox2.Validating += new System.ComponentModel.CancelEventHandler(this.textBox2_Validating);
             // 
             // label5
             // 
@@ -343,23 +333,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 123);
+            this.label3.Location = new System.Drawing.Point(2, 123);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(37, 13);
+            this.label3.Size = new System.Drawing.Size(66, 13);
             this.label3.TabIndex = 16;
-            this.label3.Text = "Precio";
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(65, 94);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(47, 20);
-            this.numericUpDown1.TabIndex = 15;
-            this.numericUpDown1.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.label3.Text = "Precio inicial";
             // 
             // label1
             // 
@@ -370,7 +348,23 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Descripción";
             // 
-            // generarPublicacionCompra
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(72, 94);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(111, 20);
+            this.textBox6.TabIndex = 35;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(273, 120);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(117, 20);
+            this.textBox2.TabIndex = 18;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.textBox2.Validating += new System.ComponentModel.CancelEventHandler(this.textBox2_Validating);
+            // 
+            // generarPublicacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -378,12 +372,11 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
-            this.Name = "generarPublicacionCompra";
+            this.Name = "generarPublicacion";
             this.RightToLeftLayout = true;
             this.Text = "Generar publicación";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -404,10 +397,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MonthCalendar monthCalendarInicio;
         private System.Windows.Forms.CheckBox checkBox4;
@@ -421,5 +412,7 @@
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox checkBox5;
+        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }

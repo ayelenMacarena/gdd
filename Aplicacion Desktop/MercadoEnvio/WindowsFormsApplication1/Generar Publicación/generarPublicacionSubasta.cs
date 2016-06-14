@@ -12,12 +12,13 @@ using System.Data.SqlClient; //Para conectar con la base
 
 namespace WindowsFormsApplication1.Generar_Publicación
 {
-    public partial class generarPublicacionCompra : Form
+    public partial class generarPublicacionSubasta : Form
     {
-
-        public generarPublicacionCompra(string usuario)
+        
+        public generarPublicacionSubasta(string usuario)
         {
             InitializeComponent();
+           
 
             SqlConnection conexion = conectionDB.getConnection();
             conexion.Open();
@@ -30,6 +31,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             {
                 textBoxCod.Text = numero["publicacion_id"].ToString();
             }
+
             textBox1.Text = usuario;
 
 

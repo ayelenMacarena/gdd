@@ -227,9 +227,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public void STORE_publicar()
         {
             //Aca voy para Publicar
-            //Como todas las publicaciones inician en borrador, ya la creo desde acá.
-
-            Generar_Publicación.tiposDePublicacion generarPubli = new Generar_Publicación.tiposDePublicacion();
+            Generar_Publicación.tiposDePublicacion generarPubli = new Generar_Publicación.tiposDePublicacion(this.usuario);
             generarPubli.MdiParent = this;
             generarPubli.Show();
             generarPubli.Location = new Point(0, 49);
@@ -316,6 +314,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             admRubro.Location = new Point(0, 49);
 
         }
+
 
     }
 }
