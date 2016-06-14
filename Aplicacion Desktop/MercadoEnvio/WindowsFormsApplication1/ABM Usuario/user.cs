@@ -20,6 +20,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             InitializeComponent();
             ingresoUser.KeyDown += new KeyEventHandler(OnKeyDownHandler);
             ingresoPass.KeyDown += new KeyEventHandler(OnKeyDownHandler);
+            
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -92,7 +93,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             if (listaRoles.Count() >=1)
             {
                 //Si se cargo la listaRoles, es porque el usuario se logueo Ok y tiene roles asignados.
-                ABM_Rol.selectRol selectRol = new ABM_Rol.selectRol(listaRoles);
+                ABM_Rol.selectRol selectRol = new ABM_Rol.selectRol(listaRoles, ingresoUser.Text);
                 this.Hide();
                 selectRol.ShowDialog();
                 this.Close();

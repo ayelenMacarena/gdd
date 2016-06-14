@@ -104,7 +104,7 @@ namespace WindowsFormsApplication1.Facturas
             {
                 buscarFacturas.Parameters.AddWithValue("@fechaDesde", dateFromLabel.Text);
             }
-            
+
 
             if (dateToLabel.Text == String.Empty)
             {
@@ -114,7 +114,7 @@ namespace WindowsFormsApplication1.Facturas
             {
                 buscarFacturas.Parameters.AddWithValue("@fechaHasta", dateToLabel.Text);
             }
-            
+
             if (priceFromLabel.Text == String.Empty)
             {
                 buscarFacturas.Parameters.AddWithValue("@precioDesde", DBNull.Value);
@@ -123,7 +123,7 @@ namespace WindowsFormsApplication1.Facturas
             {
                 buscarFacturas.Parameters.AddWithValue("@precioDesde", priceFromLabel.Text);
             }
-           
+
             if (priceToLabel.Text == String.Empty)
             {
                 buscarFacturas.Parameters.AddWithValue("@precioHasta", DBNull.Value);
@@ -132,7 +132,7 @@ namespace WindowsFormsApplication1.Facturas
             {
                 buscarFacturas.Parameters.AddWithValue("@precioHasta", priceToLabel.Text);
             }
-            
+
             if (detailsLabel.Text == String.Empty)
             {
                 buscarFacturas.Parameters.AddWithValue("@descripcion", DBNull.Value);
@@ -141,14 +141,16 @@ namespace WindowsFormsApplication1.Facturas
             {
                 buscarFacturas.Parameters.AddWithValue("@descripcion", detailsLabel.Text);
             }
-            
+
             if (salesmanComboBox.Text == String.Empty)
-            { buscarFacturas.Parameters.AddWithValue("@vendedor",  DBNull.Value); }
+            { buscarFacturas.Parameters.AddWithValue("@vendedor", DBNull.Value); }
             else { buscarFacturas.Parameters.AddWithValue("@vendedor", salesmanComboBox.Text); }
 
             DataTable table = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(buscarFacturas);
             adapter.Fill(table);
+
+        }
 
 
             
