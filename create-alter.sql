@@ -4,7 +4,7 @@
 
 CREATE SCHEMA LA_PETER_MACHINE
 CREATE TABLE calificacion ( 
-	calificacion_id numeric(18) NOT NULL,
+	calificacion_id numeric(18) NOT NULL IDENTITY(1,1),
 	cali_valor numeric(5),
 	cali_detalle nvarchar(100),
 	cali_id_vendedor numeric(18) NOT NULL
@@ -316,6 +316,8 @@ ALTER TABLE LA_PETER_MACHINE.roles_usuario ADD CONSTRAINT FK_roles_usuario_usuar
 ALTER TABLE LA_PETER_MACHINE.persona ADD CONSTRAINT FK_vendedor_usuario 
 	FOREIGN KEY (pers_username) REFERENCES LA_PETER_MACHINE.usuario (usua_username)
 GO
+
+
 --STORE PROCEDURES	
 create procedure LA_PETER_machine.agregar_funcionalidad_rol(@funcionalidad nvarchar(255),@rol nvarchar(255), @rdo nvarchar(255) output)
 as

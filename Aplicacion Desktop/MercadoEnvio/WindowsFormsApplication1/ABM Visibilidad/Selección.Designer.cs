@@ -38,10 +38,12 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.porcentajeText = new System.Windows.Forms.TextBox();
-            this.precioText = new System.Windows.Forms.TextBox();
             this.codigoBox = new System.Windows.Forms.TextBox();
             this.volverLink = new System.Windows.Forms.LinkLabel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.precioBox = new System.Windows.Forms.MaskedTextBox();
+            this.porcentajeBox = new System.Windows.Forms.MaskedTextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,6 +59,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.porcentajeBox);
+            this.groupBox1.Controls.Add(this.precioBox);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.descripcionText);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
@@ -66,8 +72,6 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.porcentajeText);
-            this.groupBox1.Controls.Add(this.precioText);
             this.groupBox1.Controls.Add(this.codigoBox);
             this.groupBox1.ForeColor = System.Drawing.Color.DarkBlue;
             this.groupBox1.Location = new System.Drawing.Point(12, 23);
@@ -155,20 +159,6 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Precio";
             // 
-            // porcentajeText
-            // 
-            this.porcentajeText.Location = new System.Drawing.Point(170, 82);
-            this.porcentajeText.Name = "porcentajeText";
-            this.porcentajeText.Size = new System.Drawing.Size(84, 20);
-            this.porcentajeText.TabIndex = 2;
-            // 
-            // precioText
-            // 
-            this.precioText.Location = new System.Drawing.Point(6, 82);
-            this.precioText.Name = "precioText";
-            this.precioText.Size = new System.Drawing.Size(84, 20);
-            this.precioText.TabIndex = 1;
-            // 
             // codigoBox
             // 
             this.codigoBox.Location = new System.Drawing.Point(105, 20);
@@ -187,6 +177,42 @@
             this.volverLink.TabStop = true;
             this.volverLink.Text = "< Volver";
             this.volverLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.volverLink_LinkClicked);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.Color.Black;
+            this.label6.Location = new System.Drawing.Point(6, 85);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(13, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "$";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.ForeColor = System.Drawing.Color.Black;
+            this.label7.Location = new System.Drawing.Point(244, 85);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(15, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "%";
+            // 
+            // precioBox
+            // 
+            this.precioBox.Location = new System.Drawing.Point(19, 82);
+            this.precioBox.Mask = "999.99";
+            this.precioBox.Name = "precioBox";
+            this.precioBox.Size = new System.Drawing.Size(71, 20);
+            this.precioBox.TabIndex = 14;
+            // 
+            // porcentajeBox
+            // 
+            this.porcentajeBox.Location = new System.Drawing.Point(170, 82);
+            this.porcentajeBox.Mask = "999.99";
+            this.porcentajeBox.Name = "porcentajeBox";
+            this.porcentajeBox.Size = new System.Drawing.Size(73, 20);
+            this.porcentajeBox.TabIndex = 15;
             // 
             // Selección
             // 
@@ -210,8 +236,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox porcentajeText;
-        private System.Windows.Forms.TextBox precioText;
         private System.Windows.Forms.TextBox codigoBox;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
@@ -220,5 +244,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox envioBox;
         private System.Windows.Forms.LinkLabel volverLink;
+        private System.Windows.Forms.MaskedTextBox porcentajeBox;
+        private System.Windows.Forms.MaskedTextBox precioBox;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
     }
 }

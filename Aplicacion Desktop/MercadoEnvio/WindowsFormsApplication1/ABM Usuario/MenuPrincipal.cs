@@ -23,6 +23,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             InitializeComponent();
             this.IsMdiContainer = true;
             this.LayoutMdi(MdiLayout.Cascade);
+
             usuario = username;
             SqlConnection conexion = conectionDB.getConnection();
             conexion.Open();
@@ -249,10 +250,9 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public void STORE_comprar_ofertar()
         { 
             //Aca voy para comprar ofertar
-            //ComprarOfertar.Mostrar compOfer = new ComprarOfertar.Mostrar(15, 3, 0);
             this.Hide();
-            //compOfer.ShowDialog();
             this.Close();
+            //ComprarOfertar.Mostrar compOfer = new ComprarOfertar.Mostrar(15, 3, 0);
             //compOfer.MdiParent = this;
             //compOfer.Show();
             //compOfer.Location = new Point(0, 49);
@@ -260,9 +260,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public void STORE_historial_cliente()
         { 
             //Aca voy para historial cliente
-            //Historial_Cliente.Mostrar compOfer = new Historial_Cliente.Mostrar(15, 3, 0);
             this.Hide();
-           // compOfer.ShowDialog();
             this.Close();
             //Historial_Cliente.Mostrar histoClie = new Historial_Cliente.Mostrar(15, 3, 0);
             //histoClie.MdiParent = this;
@@ -272,8 +270,10 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public void STORE_calificar()
         { 
             //Aca voy para calificar
-            this.Hide();
-            this.Close();
+            Calificar.Calificar calificacion = new Calificar.Calificar(usuario);
+            calificacion.MdiParent = this;
+            calificacion.Show();
+            calificacion.Location = new Point(0, 49);
         }
         public void STORE_facturas_realizadas()
         { 
@@ -314,7 +314,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
             admRubro.Location = new Point(0, 49);
 
         }
-
 
     }
 }
