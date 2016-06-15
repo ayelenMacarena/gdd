@@ -43,5 +43,14 @@ namespace WindowsFormsApplication1.Generar_Publicación
             this.Close();
         }
 
+        private void buttonModificar_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow filaSeleccionada = dataGridView1.CurrentRow;
+            Generar_Publicación.modificarPublicacion modificarPublicacion = new Generar_Publicación.modificarPublicacion(filaSeleccionada, this.user);
+            this.Hide();
+            modificarPublicacion.ShowDialog();
+            
+        }
+
     }
 }
