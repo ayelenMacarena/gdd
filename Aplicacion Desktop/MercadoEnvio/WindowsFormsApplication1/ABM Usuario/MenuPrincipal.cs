@@ -250,22 +250,21 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public void STORE_comprar_ofertar()
         { 
             //Aca voy para comprar ofertar
-            this.Hide();
-            this.Close();
-            //ComprarOfertar.Mostrar compOfer = new ComprarOfertar.Mostrar(15, 3, 0);
-            //compOfer.MdiParent = this;
-            //compOfer.Show();
-            //compOfer.Location = new Point(0, 49);
+            //this.Hide();
+            //this.Close();
+            ComprarOfertar.Listado_ComprarOfertar compOfer = new ComprarOfertar.Listado_ComprarOfertar();
+            compOfer.MdiParent = this;
+            compOfer.Show();
+            compOfer.Location = new Point(0, 49);
         }
         public void STORE_historial_cliente()
         { 
             //Aca voy para historial cliente
-            this.Hide();
-            this.Close();
-            //Historial_Cliente.Mostrar histoClie = new Historial_Cliente.Mostrar(15, 3, 0);
-            //histoClie.MdiParent = this;
-            //histoClie.Show();
-            //histoClie.Location = new Point(0, 49);
+           
+            Historial_Cliente.Historial histoClie = new Historial_Cliente.Historial(usuario);
+            histoClie.MdiParent = this;
+            histoClie.Show();
+            histoClie.Location = new Point(0, 49);
         }
         public void STORE_calificar()
         { 
@@ -278,8 +277,10 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public void STORE_facturas_realizadas()
         { 
             //Aca voy para facturas realizadas
-            this.Hide();
-            this.Close();
+            Facturas.consultaFacturas facturas = new Facturas.consultaFacturas();
+            facturas.MdiParent = this;
+            facturas.Show();
+            facturas.Location = new Point(0, 49);
         }
         public void STORE_listado_estadistico()
         { 
@@ -292,7 +293,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
         public void STORE_administrar_usuario()
         { 
             //Aca voy para administrar usuario
-            ABM_Usuario.Cliente admUsuario = new ABM_Usuario.Cliente();
+            ABM_Usuario.Usuario admUsuario = new ABM_Usuario.Usuario();
             admUsuario.MdiParent = this;
             admUsuario.Show();
             admUsuario.Location = new Point(0, 49);
@@ -305,13 +306,13 @@ namespace WindowsFormsApplication1.ABM_Usuario
             admRol.Show();
             admRol.Location = new Point(0, 49);
         }
-        public void STORE_administrar_rubro()
+        public void STORE_administrar_contrasenia()
         {
-            //Aca voy para administrar rubro
-            ABM_Rubro.Rubro admRubro = new ABM_Rubro.Rubro();
-            admRubro.MdiParent = this;
-            admRubro.Show();
-            admRubro.Location = new Point(0, 49);
+            //Aca voy para administrar contrasenia
+            ABM_Usuario.CambiarContraseña cambiarContrasenia = new ABM_Usuario.CambiarContraseña(usuario);
+            cambiarContrasenia.MdiParent = this;
+            cambiarContrasenia.Show();
+            cambiarContrasenia.Location = new Point(0, 49);
 
         }
 

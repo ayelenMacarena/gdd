@@ -25,8 +25,8 @@ namespace WindowsFormsApplication1.Generar_Publicación
             publicaciones.CommandType = CommandType.StoredProcedure;
             publicaciones.Parameters.AddWithValue("@username", user);
             SqlDataAdapter adapter = new SqlDataAdapter(publicaciones);
-            //Ver que estoy haciendo mal, no completa. 
             adapter.Fill(table);
+            dataGridView1.DataSource = table;
 
         }
 

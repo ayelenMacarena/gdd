@@ -14,7 +14,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
 {
     public partial class generarPublicacionCompra : Form
     {
-
+        string username;
         public generarPublicacionCompra(string usuario)
         {
             InitializeComponent();
@@ -23,7 +23,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             conexion.Open();
             string ultimoNumero = "SELECT TOP 1 publicacion_id from LA_PETER_MACHINE.publicacion order by publicacion_id desc";
             SqlCommand lastNumber = new SqlCommand(ultimoNumero, conexion);
-            
+            username = usuario;
             SqlDataReader numero = lastNumber.ExecuteReader();
 
             while (numero.Read())
@@ -46,23 +46,29 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
             }
             comboBox1.DataSource = rubritos;
+
             conexion.Close();
+
             conexion.Open();
+
             string visibilidad = "select visi_descripcion from LA_PETER_MACHINE.visibilidad";
             SqlCommand listaVisi = new SqlCommand(visibilidad, conexion);
 
-            SqlDataReader vis = listRubros.ExecuteReader();
+            SqlDataReader vis = listaVisi.ExecuteReader();
             List<String> visib = new List<String>();
             if (vis.HasRows)
             {
                 while (vis.Read())
                 {
-                    visib.Add(vis["visi_descripcion"].ToString());
+
+                    comboBox2.Items.Add(vis["visi_descripcion"].ToString());
+                    
                 }
 
-            }
-            comboBox2.DataSource = visib;
 
+            }
+
+            conexion.Close();
 
 
         }
@@ -141,6 +147,40 @@ namespace WindowsFormsApplication1.Generar_Publicación
             monthCalendarVencimiento.Visible = true;
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SqlConnection conexion = conectionDB.getConnection();
+            conexion.Open();
+            
+            SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
+            rdo.Size = 255;
+            rdo.Direction = ParameterDirection.Output;
+            SqlCommand publicar = new SqlCommand("LA_PETER_MACHINE.crearPublicacion", conexion);
+            publicar.CommandType = CommandType.StoredProcedure;
+            publicar.Parameters.AddWithValue("@username", this.username); 
+            publicar.Parameters.AddWithValue("@estado", comboBox5.Text);
+            publicar.Parameters.AddWithValue("@tipo", "Compra Inmediata");
+            publicar.Parameters.AddWithValue("@descripcion", textBoxDescripcion.Text);
+            publicar.Parameters.AddWithValue("@precio", textBox3.Text);
+            publicar.Parameters.AddWithValue("@costo", textBox2.Text);
+            publicar.Parameters.AddWithValue("@rubro", comboBox1.Text);
+            publicar.Parameters.AddWithValue("@visibilidad", comboBox2.Text);
+            publicar.Parameters.AddWithValue("@preguntas", comboBox3.Text);
+            publicar.Parameters.AddWithValue("@envio", comboBox4.Text);
+            publicar.Parameters.AddWithValue("@fecha_inicio", textBox4.Text);
+            publicar.Parameters.AddWithValue("@fecha_fin", textBox5.Text);
+            publicar.Parameters.AddWithValue("@stock", numericUpDown1.Text);
+            publicar.Parameters.Add(rdo);
+
+
+            publicar.ExecuteNonQuery();
+            MessageBox.Show(rdo.Value.ToString());
+            conexion.Close();
+            this.Close();
+
+        }
+
 
 
 

@@ -36,7 +36,6 @@
             this.Stock = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.monthCalendarVencimiento = new System.Windows.Forms.MonthCalendar();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.monthCalendarInicio = new System.Windows.Forms.MonthCalendar();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
@@ -45,9 +44,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -61,6 +57,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -73,6 +71,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Aceptar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -130,35 +129,24 @@
             // 
             // monthCalendarVencimiento
             // 
-            this.monthCalendarVencimiento.Location = new System.Drawing.Point(210, 195);
+            this.monthCalendarVencimiento.Location = new System.Drawing.Point(224, 145);
             this.monthCalendarVencimiento.Name = "monthCalendarVencimiento";
             this.monthCalendarVencimiento.TabIndex = 12;
             this.monthCalendarVencimiento.Visible = false;
             this.monthCalendarVencimiento.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendarVencimiento_DateChanged);
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(81, 291);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(56, 17);
-            this.checkBox1.TabIndex = 13;
-            this.checkBox1.Text = "Activa";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.monthCalendarVencimiento);
+            this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.monthCalendarInicio);
+            this.groupBox1.Controls.Add(this.monthCalendarVencimiento);
+            this.groupBox1.Controls.Add(this.comboBox5);
             this.groupBox1.Controls.Add(this.comboBox4);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.comboBox3);
             this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.checkBox5);
-            this.groupBox1.Controls.Add(this.checkBox4);
-            this.groupBox1.Controls.Add(this.checkBox3);
             this.groupBox1.Controls.Add(this.comboBox2);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.comboBox1);
@@ -173,7 +161,6 @@
             this.groupBox1.Controls.Add(this.numericUpDown1);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.checkBox1);
             this.groupBox1.Controls.Add(this.textBoxCod);
             this.groupBox1.Controls.Add(this.Stock);
             this.groupBox1.Controls.Add(this.label2);
@@ -187,7 +174,7 @@
             // 
             // monthCalendarInicio
             // 
-            this.monthCalendarInicio.Location = new System.Drawing.Point(212, 195);
+            this.monthCalendarInicio.Location = new System.Drawing.Point(224, 149);
             this.monthCalendarInicio.Name = "monthCalendarInicio";
             this.monthCalendarInicio.TabIndex = 21;
             this.monthCalendarInicio.Visible = false;
@@ -196,6 +183,9 @@
             // comboBox4
             // 
             this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Items.AddRange(new object[] {
+            "Si",
+            "No"});
             this.comboBox4.Location = new System.Drawing.Point(300, 323);
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(64, 21);
@@ -232,6 +222,9 @@
             // comboBox3
             // 
             this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Items.AddRange(new object[] {
+            "Si",
+            "No"});
             this.comboBox3.Location = new System.Drawing.Point(112, 323);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(64, 21);
@@ -246,36 +239,6 @@
             this.label8.Size = new System.Drawing.Size(97, 13);
             this.label8.TabIndex = 31;
             this.label8.Text = "Acepta preguntas?";
-            // 
-            // checkBox5
-            // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Location = new System.Drawing.Point(217, 291);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(73, 17);
-            this.checkBox5.TabIndex = 30;
-            this.checkBox5.Text = "Finalizada";
-            this.checkBox5.UseVisualStyleBackColor = true;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(143, 291);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(68, 17);
-            this.checkBox4.TabIndex = 29;
-            this.checkBox4.Text = "Pausada";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(7, 291);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(66, 17);
-            this.checkBox3.TabIndex = 28;
-            this.checkBox3.Text = "Borrador";
-            this.checkBox3.UseVisualStyleBackColor = true;
             // 
             // comboBox2
             // 
@@ -322,7 +285,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(4, 255);
+            this.label6.Location = new System.Drawing.Point(0, 248);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(112, 13);
             this.label6.TabIndex = 21;
@@ -392,6 +355,29 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Descripción";
             // 
+            // comboBox5
+            // 
+            this.comboBox5.FormattingEnabled = true;
+            this.comboBox5.Items.AddRange(new object[] {
+            "Activa",
+            "Borrador",
+            "Pausada",
+            "Finalizada"});
+            this.comboBox5.Location = new System.Drawing.Point(112, 286);
+            this.comboBox5.Name = "comboBox5";
+            this.comboBox5.Size = new System.Drawing.Size(288, 21);
+            this.comboBox5.TabIndex = 37;
+            this.comboBox5.Text = "Borrador";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 290);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(69, 13);
+            this.label11.TabIndex = 38;
+            this.label11.Text = "Estado inicial";
+            // 
             // generarPublicacionCompra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -420,7 +406,6 @@
         private System.Windows.Forms.Label Stock;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.MonthCalendar monthCalendarVencimiento;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label6;
@@ -432,8 +417,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MonthCalendar monthCalendarInicio;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox comboBox1;
@@ -442,8 +425,9 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckBox checkBox5;
         private System.Windows.Forms.ComboBox comboBox4;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.Label label11;
     }
 }
