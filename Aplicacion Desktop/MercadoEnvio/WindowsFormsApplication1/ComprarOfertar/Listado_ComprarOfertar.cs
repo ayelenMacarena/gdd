@@ -20,12 +20,18 @@ namespace WindowsFormsApplication1.ComprarOfertar
         int cantidadDePaginas;
         List<String> filtroRubros;
 
-        int cliente = 39; //Harcodeado, pero deberia recibirlo del login.
+        String usuario;
 
-        public Listado_ComprarOfertar()
+        int cliente;
+
+        public Listado_ComprarOfertar(String usuarioParam)
         {
             InitializeComponent();
             this.Dock = DockStyle.Fill;
+
+            usuario = usuarioParam;
+
+            cliente = Logica_ComprarOfertar.ObtenerIdCliente(usuario);
 
             this.buttonComprar.Visible = false;
             this.buttonOfertar.Visible = false;
@@ -65,6 +71,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
             this.labelNroPagina.Text = String.Format("{0}", numeroPagina);
             this.label_InfoPagina_CO.Text = String.Format("Paginas {0}", cantidadDePaginas);
+            this.Grid_ComprarOfertar.Columns["publicacion_id"].Visible = false;
         }
 
 
@@ -138,9 +145,6 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
             this.numeroPagina = 1;
             this.Mostrar();          
-
-            this.Grid_ComprarOfertar.Columns["publicacion_id"].Visible = false;
-
         }
 
 
@@ -163,13 +167,13 @@ namespace WindowsFormsApplication1.ComprarOfertar
         private void buttonComprar_Click(object sender, EventArgs e)
         {
             DataGridViewRow filaSeleccionada = Grid_ComprarOfertar.CurrentRow;
-            (new ComprarOfertar.Comprar(filaSeleccionada)).Show();
+            (new ComprarOfertar.Comprar(filaSeleccionada, this)).Show();
         }
 
         private void buttonOfertar_Click(object sender, EventArgs e)
         {
             DataGridViewRow filaSeleccionada = Grid_ComprarOfertar.CurrentRow;
-            (new ComprarOfertar.Ofertar(filaSeleccionada)).Show();
+            (new ComprarOfertar.Ofertar(filaSeleccionada, this)).Show();
 
         }
 

@@ -264,7 +264,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             //Aca voy para comprar ofertar
             //this.Hide();
             //this.Close();
-            ComprarOfertar.Listado_ComprarOfertar compOfer = new ComprarOfertar.Listado_ComprarOfertar();
+            ComprarOfertar.Listado_ComprarOfertar compOfer = new ComprarOfertar.Listado_ComprarOfertar(usuario);
             compOfer.MdiParent = this;
             compOfer.Show();
             compOfer.Location = new Point(0, 49);

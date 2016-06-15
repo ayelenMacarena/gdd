@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -122,6 +123,139 @@ namespace WindowsFormsApplication1.ComprarOfertar
                 MessageBox.Show("Error al ejecutar el SP_ListadoRubros");
             }
             conexion.Close();
+        }
+
+
+        public static void Comprar(int publ_id, int cantidad)
+        {
+            SqlConnection sqlConexion = conectionDB.getConnection();
+
+            try
+            {
+                sqlConexion.Open();
+
+                SqlCommand sqlComando = new SqlCommand();
+                sqlComando.Connection = sqlConexion;
+                sqlComando.CommandText = "LA_PETER_MACHINE.SP_EjecutarCompra_ComprarOfertar";
+                sqlComando.CommandType = CommandType.StoredProcedure;
+
+                sqlComando.Parameters.AddWithValue("@publ_id", publ_id);
+                sqlComando.Parameters.AddWithValue("@cantidad", cantidad);
+
+
+                sqlComando.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_EjecutarCompra_ComprarOfertar. " + e.Message);
+            }
+
+            finally
+            {
+                sqlConexion.Close();
+            }
+            
+        }
+
+        public static void Ofertar(int publ_id, int precio)
+        {
+            SqlConnection sqlConexion = conectionDB.getConnection();
+
+            try
+            {
+                sqlConexion.Open();
+
+                SqlCommand sqlComando = new SqlCommand();
+                sqlComando.Connection = sqlConexion;
+                sqlComando.CommandText = "LA_PETER_MACHINE.SP_EjecutarOferta_ComprarOfertar";
+                sqlComando.CommandType = CommandType.StoredProcedure;
+
+                sqlComando.Parameters.AddWithValue("@publ_id", publ_id);
+                sqlComando.Parameters.AddWithValue("@precio", precio);
+
+
+                sqlComando.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_EjecutarOferta_ComprarOfertar. " + e.Message);
+            }
+
+            finally
+            {
+                sqlConexion.Close();
+            }
+
+        }
+
+        public static void InsertarFactura(int publ_id, int cantidad)
+        {
+            SqlConnection sqlConexion = conectionDB.getConnection();
+
+            try
+            {
+                sqlConexion.Open();
+
+                SqlCommand sqlComando = new SqlCommand();
+                sqlComando.Connection = sqlConexion;
+                sqlComando.CommandText = "LA_PETER_MACHINE.SP_InsertarFactura_ComprarOfertar";
+                sqlComando.CommandType = CommandType.StoredProcedure;
+
+                sqlComando.Parameters.AddWithValue("@publ_id", publ_id);
+                sqlComando.Parameters.AddWithValue("@date", Convert.ToDateTime(ConfigurationManager.AppSettings["dateTimeStamp"].ToString()));
+                sqlComando.Parameters.AddWithValue("@cantidad", cantidad);
+
+                sqlComando.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_InsertarFactura_ComprarOfertar. " + e.Message);
+            }
+
+            finally
+            {
+                sqlConexion.Close();
+            }
+   
+        }
+
+        public static int ObtenerIdCliente(string usuario)
+        {
+            SqlConnection sqlConexion = conectionDB.getConnection();
+            int idUser;
+
+            try
+            {
+                sqlConexion.Open();
+
+                SqlCommand sqlComando = new SqlCommand();
+                sqlComando.Connection = sqlConexion;
+                sqlComando.CommandText = "LA_PETER_MACHINE.SP_ObtenerIdUser_ComprarOfertar";
+                sqlComando.CommandType = CommandType.StoredProcedure;
+
+                sqlComando.Parameters.AddWithValue("@username", usuario);
+
+                SqlParameter parIdUser = new SqlParameter();
+                parIdUser.ParameterName = "@idUser";
+                parIdUser.Direction = ParameterDirection.Output;
+                parIdUser.SqlDbType = SqlDbType.Int;
+                sqlComando.Parameters.Add(parIdUser);
+
+                sqlComando.ExecuteNonQuery();
+
+                idUser = (int)sqlComando.Parameters["@idUser"].Value;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_ObtenerIdUser_ComprarOfertar. " + e.Message);
+            }
+
+            finally
+            {
+                sqlConexion.Close();
+            }
+
+            return idUser;
         }
     }
 }

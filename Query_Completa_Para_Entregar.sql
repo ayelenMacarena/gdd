@@ -1281,14 +1281,86 @@ create procedure LA_PETER_MACHINE.crearVisibilidad( @precio numeric(18,0), @porc
 	end
 GO
 
-CREATE PROCEDURE LA_PETER_MACHINE.SP_Buscador_Publicaciones
-@terminoBuscado as varchar(255),
-@cliente INT,
-@tipo VARCHAR(8)
+
+CREATE PROCEDURE LA_PETER_MACHINE.SP_ListadoRubros
 AS
-BEGIN
+	select rubr_descripcion_corta from LA_PETER_MACHINE.rubro
+GO
+
+CREATE PROCEDURE LA_PETER_MACHINE.SP_InsertarFactura_ComprarOfertar
+(@publ_id INT,
+@date DATETIME,
+@cantidad INT)
+AS
+
+DECLARE @costoEnvio INT,
+		@costoPublicacion INT,
+		@codVisibilidad INT,
+		@envioHabilitado INT,
+		@costoPorcentaje NUMERIC(18,2),
+		@precioPubli NUMERIC(18,2),
+		@vendedor NUMERIC(18,0),
+		@numFact NUMERIC(18,0),
+		@total INT,
+		@fecha DATETIME
+
+SET @fecha = @date
+SET @codVisibilidad = (select publ_cod_visibilidad from LA_PETER_MACHINE.publicacion WHERE publicacion_id = @publ_id)
+SET @envioHabilitado = (select publ_envio_habilitado from LA_PETER_MACHINE.publicacion WHERE publicacion_id = @publ_id)
+SET @precioPubli = (select publ_precio from LA_PETER_MACHINE.publicacion WHERE publicacion_id = @publ_id)
+SET @vendedor = (select publ_id_vendedor from LA_PETER_MACHINE.publicacion WHERE publicacion_id = @publ_id)
+
+IF @envioHabilitado = 1
+	BEGIN
+		SET @costoEnvio = (select cost_costo from LA_PETER_MACHINE.costo_envio where cost_visi_cod = @codVisibilidad)
+	END
+ELSE 
+	BEGIN
+		SET @costoEnvio = 0
+	END
+
+IF @codVisibilidad = 10006
+	BEGIN
+		SET @costoPublicacion = 0
+		SET @costoPorcentaje = 0
+	END
+ELSE 
+	BEGIN
+		SET @costoPublicacion = (select visi_precio from LA_PETER_MACHINE.visibilidad where visi_cod = @codVisibilidad)
+		SET @costoPorcentaje = @precioPubli * (select visi_porcentaje from LA_PETER_MACHINE.visibilidad where visi_cod = @codVisibilidad)
+	END
+
+
+SET @total = (@costoPorcentaje*@cantidad) + @costoEnvio + @costoPublicacion
+
+
+INSERT INTO LA_PETER_MACHINE.factura(fact_fecha, fact_total, fact_forma_pago, fact_id_vendedor)
+		VALUES (@fecha,@total,'Efectivo',@vendedor)
+
+SET @numFact = (select TOP 1 fact_num from LA_PETER_MACHINE.factura)
+
+IF @codVisibilidad != 10006
+	BEGIN
+		INSERT INTO LA_PETER_MACHINE.item_factura VALUES (@numFact,@publ_id, @cantidad, @costoPorcentaje)
+		INSERT INTO LA_PETER_MACHINE.item_factura VALUES (@numFact,@publ_id, 1, @costoPublicacion)
+		INSERT INTO LA_PETER_MACHINE.item_factura VALUES (@numFact,@publ_id, 1, @costoEnvio)
+	END
+
+GO
+
+
+CREATE PROCEDURE LA_PETER_MACHINE.SP_ListadoComprarOfertar
+(@registrosPorPagina INT,
+@numerosPagina INT,
+@cliente INT,
+@tipo VARCHAR(8),
+@terminoBuscado as varchar(255))
+AS
 	DECLARE @ID_TIPO INT
 
+	BEGIN 
+	SET NOCOUNT ON
+	
 	IF (@tipo = 'SUBASTAS') 
 		BEGIN 
 			SET @ID_TIPO = 2
@@ -1297,22 +1369,21 @@ BEGIN
 		BEGIN
 			SET @ID_TIPO = 1
 		END	
+		
+	SELECT publicacion_id, publ_descripcion, publ_precio, publ_cantidad, publ_id_vendedor
+		FROM LA_PETER_MACHINE.publicacion, LA_PETER_MACHINE.estado, LA_PETER_MACHINE.tipo
+		WHERE  publ_id_vendedor != @cliente
+			and publ_id_estado = estado_id and esta_descripcion = 'Finalizada'
+			and publ_id_tipo = @ID_TIPO
+			and	publ_descripcion LIKE '%' + @terminoBuscado + '%'
+			and publ_cantidad > 0
+		GROUP BY publicacion_id, publ_descripcion, publ_precio, publ_id_vendedor, publ_id_tipo, publ_cantidad, publ_cod_visibilidad
+		ORDER BY publ_cod_visibilidad asc
 
-	SET NOCOUNT ON;
-
-	SELECT publicacion_id, publ_descripcion, publ_precio, publ_id_vendedor, publ_id_tipo, publ_cantidad, publ_cod_visibilidad
-	FROM LA_PETER_MACHINE.publicacion, LA_PETER_MACHINE.estado, LA_PETER_MACHINE.tipo
-	WHERE  publ_id_vendedor != @cliente
-		and publ_id_estado = estado_id 
-		and esta_descripcion = 'Finalizada'
-		and publ_id_tipo = @ID_TIPO
-		and	publ_descripcion LIKE '%' + @terminoBuscado + '%'
-	GROUP BY publicacion_id, publ_descripcion, publ_precio, publ_id_vendedor, publ_id_tipo, publ_cantidad, publ_cod_visibilidad
-	ORDER BY publ_cod_visibilidad asc
-
-END
+	OFFSET (@numerosPagina - 1) * @registrosPorPagina ROWS
+	FETCH NEXT @registrosPorPagina ROWS ONLY
+	END;
 GO
-
 
 CREATE PROCEDURE LA_PETER_MACHINE.SP_Cantidad_Paginas_ComprarOfertar
 (@registrosPorPagina INT,
@@ -1345,7 +1416,8 @@ DECLARE @cantidadFilas int
 					WHERE  publ_id_vendedor != @cliente
 						and publ_id_estado = estado_id and esta_descripcion = 'Finalizada'
 						and publ_id_tipo = @ID_TIPO
-						and	publ_descripcion LIKE '%' + @terminoBuscado + '%') 
+						and	publ_descripcion LIKE '%' + @terminoBuscado + '%'
+						and publ_cantidad > 0)						
 		SET @totalDePaginas = @cantidadFilas / @registrosPorPagina
 		IF (@cantidadFilas % @registrosPorPagina) > 0
 			BEGIN
@@ -1360,45 +1432,33 @@ DECLARE @cantidadFilas int
 	END
 GO
 
-CREATE PROCEDURE LA_PETER_MACHINE.SP_ListadoRubros
+CREATE PROCEDURE LA_PETER_MACHINE.SP_EjecutarCompra_ComprarOfertar
+(@publ_id INT,
+@cantidad INT)
 AS
-	select rubr_descripcion_corta from LA_PETER_MACHINE.rubro
+
+UPDATE LA_PETER_MACHINE.publicacion SET publ_cantidad = (publ_cantidad - @cantidad) WHERE publicacion_id = @publ_id
+
 GO
 
-CREATE PROCEDURE LA_PETER_MACHINE.SP_ListadoComprarOfertar
-(@registrosPorPagina INT,
-@numerosPagina INT,
-@cliente INT,
-@tipo VARCHAR(8),
-@terminoBuscado as varchar(255))
+CREATE PROCEDURE LA_PETER_MACHINE.SP_ObtenerIdUser_ComprarOfertar
+(@username NVARCHAR(255),
+@idUser INT OUTPUT)
 AS
-	DECLARE @ID_TIPO INT
 
-	BEGIN 
-	SET NOCOUNT ON
-	
-	IF (@tipo = 'SUBASTAS') 
-		BEGIN 
-			SET @ID_TIPO = 2
-		END
-	ELSE
-		BEGIN
-			SET @ID_TIPO = 1
-		END	
-		
-	SELECT publicacion_id, publ_descripcion, publ_precio, publ_id_vendedor, publ_id_tipo, publ_cantidad, publ_cod_visibilidad
-		FROM LA_PETER_MACHINE.publicacion, LA_PETER_MACHINE.estado, LA_PETER_MACHINE.tipo
-		WHERE  publ_id_vendedor != @cliente
-			and publ_id_estado = estado_id and esta_descripcion = 'Finalizada'
-			and publ_id_tipo = @ID_TIPO
-			and	publ_descripcion LIKE '%' + @terminoBuscado + '%'
-		GROUP BY publicacion_id, publ_descripcion, publ_precio, publ_id_vendedor, publ_id_tipo, publ_cantidad, publ_cod_visibilidad
-		ORDER BY publ_cod_visibilidad asc
+SET @idUser = (select pers_id from LA_PETER_MACHINE.persona where pers_username = @username)
 
-	OFFSET (@numerosPagina - 1) * @registrosPorPagina ROWS
-	FETCH NEXT @registrosPorPagina ROWS ONLY
-	END;
 GO
+
+CREATE PROCEDURE LA_PETER_MACHINE.SP_EjecutarOferta_ComprarOfertar
+(@publ_id INT,
+@precio INT)
+AS
+
+UPDATE LA_PETER_MACHINE.publicacion SET publ_precio = @precio  WHERE publicacion_id = @publ_id
+
+GO
+
 
 ------------------------------------------------------
 --             SE REALIZA LA MIGRACION              --

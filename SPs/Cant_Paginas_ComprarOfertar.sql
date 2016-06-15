@@ -29,7 +29,8 @@ DECLARE @cantidadFilas int
 					WHERE  publ_id_vendedor != @cliente
 						and publ_id_estado = estado_id and esta_descripcion = 'Finalizada'
 						and publ_id_tipo = @ID_TIPO
-						and	publ_descripcion LIKE '%' + @terminoBuscado + '%') 
+						and	publ_descripcion LIKE '%' + @terminoBuscado + '%'
+						and publ_cantidad > 0)						
 		SET @totalDePaginas = @cantidadFilas / @registrosPorPagina
 		IF (@cantidadFilas % @registrosPorPagina) > 0
 			BEGIN
