@@ -73,12 +73,15 @@ AS
 		(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'empresa'))
 
 
---USUARIO (Empresa)
+--USUARIO
 	declare @hash varbinary(20)
 	declare @pass nvarchar(20)
 	set @pass = '12345'
 	set @hash = hashbytes('sha2_256',@pass);
 
+	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado,usua_intentos_login) values ('admin',@hash,1,0)
+
+--USUARIO (Empresa)
 	insert into LA_PETER_MACHINE.usuario(usua_username, usua_password, usua_habilitado, usua_intentos_login)
 	select distinct Publ_Empresa_Mail, @hash, 1, 0 from gd_esquema.Maestra
 		where Publ_Empresa_Mail is not null
@@ -90,7 +93,8 @@ AS
 	where Cli_Mail is not null
 	group by Cli_Mail
 
-	
+--ROLES_USUARIO
+	insert into LA_PETER_MACHINE.roles_usuario(rolu_username, rolu_id_rol) values ('admin',(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'administrativo'))
 
 
 --PERSONA (Cliente)
@@ -266,5 +270,3 @@ insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_persona
 GO
 
 exec LA_PETER_MACHINE.SP_Migracion
-
- 

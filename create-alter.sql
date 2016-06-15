@@ -32,7 +32,6 @@ CREATE TABLE compra (
 
 CREATE TABLE empresa ( 
 	empr_razon_social nvarchar(255) NOT NULL,
-	--empr_ciudad nvarchar(255),
 	empr_cuit nvarchar(50) NOT NULL,
 	empr_nombre_contacto nvarchar(255),
 	empr_id_persona numeric(18) NOT NULL
@@ -318,7 +317,11 @@ ALTER TABLE LA_PETER_MACHINE.persona ADD CONSTRAINT FK_vendedor_usuario
 GO
 
 
---STORE PROCEDURES	
+------------------------------------------------------
+--     SE CREAN LOS STORE PROCEDURES UTILIZADOS     --
+------------------------------------------------------
+
+
 create procedure LA_PETER_machine.agregar_funcionalidad_rol(@funcionalidad nvarchar(255),@rol nvarchar(255), @rdo nvarchar(255) output)
 as
 begin
@@ -428,7 +431,7 @@ create procedure LA_PETER_MACHINE.Crear_Cliente(
 @usuario nvarchar(255),@pasword nvarchar(20),@nombre nvarchar(255),
 @apellido nvarchar(255),@dni nvarchar(255),@fecha_nac nvarchar(255),
 @mail nvarchar(255),@telefono nvarchar(50),@calle nvarchar(255),@cod_postal nvarchar(50),
-@ciudad nvarchar(255),@numero nvarchar(255),@piso nvarchar(255),@depto nvarchar(50),@tipo_DNI nvarchar(255),
+@ciudad nvarchar(255),@numero nvarchar(255),@piso nvarchar(255),@depto nvarchar(50),@tipo_DNI nvarchar(255),@fechaCreacion nvarchar(255),
 @rdo nvarchar(255) output)
 as
 begin
@@ -444,7 +447,7 @@ begin try
 	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado)values(@usuario,@hash,1)
 	insert into LA_PETER_MACHINE.persona(pers_ciudad,pers_cod_postal,pers_depto,
 	pers_domicilio_calle,pers_mail,pers_numero_calle,pers_piso,pers_telefono,pers_username,pers_habilitado,pers_fecha_creacion)values(
-	@ciudad,@cod_postal,@depto,@calle,@mail,cast(@numero as numeric),cast(@piso as numeric),@telefono,@usuario,1,SYSDATETIME())
+	@ciudad,@cod_postal,@depto,@calle,@mail,cast(@numero as numeric),cast(@piso as numeric),@telefono,@usuario,1,CONVERT(datetime,@fechaCreacion,121))
 	insert into LA_PETER_MACHINE.cliente(clie_apellido,clie_dni,
 	clie_fecha_nac,clie_nombre,clie_id_tipo_doc,clie_id_persona)values(@apellido,cast(@dni as numeric),
 	@fecha,@nombre,(select type_id from LA_PETER_MACHINE.document_type where type_descripcion=@tipo_DNI),
@@ -547,7 +550,7 @@ GO
 create procedure LA_PETER_MACHINE.Crear_Empresa(@contacto nvarchar(255),
 @usuario nvarchar(255),@pasword nvarchar(20),@nombre nvarchar(255),@cuit nvarchar(255),
 @mail nvarchar(255),@telefono nvarchar(50),@calle nvarchar(255),@cod_postal nvarchar(50),
-@ciudad nvarchar(255),@numero nvarchar(255),@piso nvarchar(255),@depto nvarchar(50),
+@ciudad nvarchar(255),@numero nvarchar(255),@piso nvarchar(255),@depto nvarchar(50), @fechaCreacion nvarchar(255),
 @rdo nvarchar(255) output)
 as
 begin
@@ -562,7 +565,7 @@ begin try
 	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado)values(@usuario,@hash,1)
 	insert into LA_PETER_MACHINE.persona(pers_ciudad,pers_cod_postal,pers_depto,
 	pers_domicilio_calle,pers_mail,pers_numero_calle,pers_piso,pers_telefono,pers_username,pers_habilitado,pers_fecha_creacion)values(
-	@ciudad,@cod_postal,@depto,@calle,@mail,cast(@numero as numeric),cast(@piso as numeric),@telefono,@usuario,1,SYSDATETIME())
+	@ciudad,@cod_postal,@depto,@calle,@mail,cast(@numero as numeric),cast(@piso as numeric),@telefono,@usuario,1,CONVERT(datetime,@fechaCreacion,121))
 	insert into LA_PETER_MACHINE.empresa(empr_cuit,
 	empr_nombre_contacto,empr_razon_social,empr_id_persona)values(@cuit,@contacto,
 	@nombre,

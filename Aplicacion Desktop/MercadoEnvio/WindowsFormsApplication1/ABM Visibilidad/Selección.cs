@@ -14,14 +14,18 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
     public partial class Selección : Form
     {
         int envio;
-        string respuesta;
         decimal codigo;
         decimal precio;
         decimal porcentaje;
 
-        public Selección()
+        public Selección(decimal codigo, decimal precio, decimal porcentaje, int envio, string descripcion)
         {
             InitializeComponent();
+            this.codigoBox.Text = codigo.ToString();
+            this.precioBox.Text = precio.ToString();
+            this.porcentajeBox.Text = porcentaje.ToString();
+            this.envioBox.Checked = envio == 1;
+            this.descripcionText.Text = descripcion;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -45,7 +49,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             {
                 modificarVisib.Parameters.Add("@precio", SqlDbType.Real);
                 modificarVisib.Parameters["@precio"].Precision = 18;
-                modificarVisib.Parameters["@precio"].Scale = 0;
+                modificarVisib.Parameters["@precio"].Scale = 2;
                 modificarVisib.Parameters["@precio"].Value = this.precio;
                 decimal.TryParse(this.porcentajeBox.Text, out porcentaje);
                 if (this.porcentaje == 0)

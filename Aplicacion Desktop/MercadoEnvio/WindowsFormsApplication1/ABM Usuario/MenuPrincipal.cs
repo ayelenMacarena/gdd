@@ -145,7 +145,11 @@ namespace WindowsFormsApplication1.ABM_Usuario
             button11.Visible = listaNombres.Count >= contador;
             button11.Enabled = listaNombres.Count >= contador;
 
-            button12.Text = "salir";
+            button12.Text = "Salir";
+
+            button13.Visible = false;
+            button13.Enabled = false;
+            button13.Text = "CambiarPass";
         }
 
 
@@ -221,6 +225,14 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
             this.Hide();
             this.Close();
+        }
+        //Cambiar Pass
+        private void button13_Click(object sender, EventArgs e)
+        {
+            ABM_Usuario.CambiarContraseña cambiarContra = new ABM_Usuario.CambiarContraseña(this.usuario);
+            cambiarContra.MdiParent = this;
+            cambiarContra.Show();
+            cambiarContra.Location = new Point(0, 49);
         }
 
 

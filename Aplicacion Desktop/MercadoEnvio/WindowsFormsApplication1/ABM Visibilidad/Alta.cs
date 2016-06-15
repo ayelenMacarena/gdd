@@ -50,7 +50,7 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             {
                 crearVisib.Parameters.Add("@precio", SqlDbType.Real);
                 crearVisib.Parameters["@precio"].Precision = 18;
-                crearVisib.Parameters["@precio"].Scale = 0;
+                crearVisib.Parameters["@precio"].Scale = 2;
                 crearVisib.Parameters["@precio"].Value = this.precio;
                 decimal.TryParse(this.porcentajeBox.Text, out porcentaje);
                 if (this.porcentaje == 0)

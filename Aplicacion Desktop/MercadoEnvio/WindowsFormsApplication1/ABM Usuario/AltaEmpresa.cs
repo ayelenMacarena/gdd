@@ -8,11 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace WindowsFormsApplication1.ABM_Usuario
 {
     public partial class AltaEmpresa : Form
     {
+        string dateTimeStamp = ConfigurationManager.AppSettings["dateTimeStamp"].ToString();
+
         public AltaEmpresa()
         {
             InitializeComponent();
@@ -56,6 +59,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 cmd.Parameters["@piso"].Value = textBox14.Text;
                 cmd.Parameters.Add("@depto", SqlDbType.NVarChar);
                 cmd.Parameters["@depto"].Value = textBox15.Text;
+                cmd.Parameters.Add("@fechaCreacion", SqlDbType.NVarChar);
+                cmd.Parameters["@fechaCreacion"].Value = dateTimeStamp;
                 cmd.Parameters.Add(rdo);
                 cmd.ExecuteNonQuery();
                 MessageBox.Show(rdo.Value.ToString());
