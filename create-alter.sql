@@ -782,18 +782,21 @@ if @vendedor is not null
 	set @miVendedor = (select TOP 1 pers_id from LA_PETER_MACHINE.persona where pers_username = @vendedor ) ;
 
 declare @query varchar(255)
+declare @fecha_inicio Datetime
+set @fecha_inicio=@fechaDesde
+declare @fecha_fin Datetime
+set @fecha_fin=@fechaHasta
 
 
+IF @fecha_inicio is Not NULL and @query is not NUll
+	set @query = @query + ' AND fact_fecha >= "' + @fecha_inicio + '"'
+Else IF @fecha_inicio is Not NULL 
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha >= "' + @fecha_inicio + '"'
 
-IF @fechaDesde is Not NULL and @query is not NUll
-	set @query = @query + ' AND fact_fecha >= "' + @fechaDesde + '"'
-Else IF @fechaDesde is Not NULL 
-	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha >= "' + @fechaDesde + '"'
-
-IF @fechaHasta is not Null and @query is not null
-	set @query = @query + ' AND fact_fecha <= "' + @fechaHasta + '"'
-else IF @fechaHasta is not Null
-	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha <= "' + @fechaHasta + '"'
+IF @fecha_fin is not Null and @query is not null
+	set @query = @query + ' AND fact_fecha <= "' + @fecha_fin + '"'
+else IF @fecha_fin is not Null
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha <= "' + @fecha_fin + '"'
 
 
 IF @descripcion is not NUll and @query is not null
@@ -828,4 +831,123 @@ end
 GO
 
 
+CREATE procedure LA_PETER_MACHINE.publicacionesParaModificar(@username nvarchar(255))
+AS
+	begin
+	declare @vendedor_id numeric(18)
+	set @vendedor_id = (select TOP 1 pers_id from LA_PETER_MACHINE.persona where pers_username = @username)
 
+	select * from LA_PETER_MACHINE.publicacion where publ_id_vendedor = @vendedor_id and 
+	publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Borrador') or 
+	publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Activa')
+	end
+GO
+
+create procedure LA_PETER_MACHINE.login(@username nvarchar(255), @pass nvarchar(20))
+as 
+declare @fails numeric(3)
+declare @passEncontrada varbinary(20)
+declare @habilitado bit
+declare @passIngresadaEncript varbinary(20)
+set @passIngresadaEncript = hashbytes('sha2_256',@pass);
+
+
+
+select @fails=usua_intentos_login, @passEncontrada = usua_password, @habilitado = usua_habilitado
+	from LA_PETER_MACHINE.usuario u 
+	where u.usua_username = @username
+
+IF @passIngresadaEncript = @passEncontrada 
+	--Caso feliz, se encuentra el usuario y la contraseña es correcta
+	begin
+		if @habilitado = 1-- Verifico que esté habilitado, si lo está le seteo en 0 los intentos.
+			update LA_PETER_MACHINE.usuario set usua_intentos_login = 0 
+				where usua_username = @username;
+	end
+	
+IF @passIngresadaEncript != @passEncontrada 
+--Error de password
+	begin
+		declare @failsFinales numeric(3) = @fails + 1;
+		-- Le incremento los intentos fallidos
+		update LA_PETER_MACHINE.usuario set usua_intentos_login = @failsFinales
+			where usua_username = @username;
+	end
+	if @failsFinales >= 3
+		-- Si los intentos fallidos son 3, deshabilito el usuario
+		begin
+			update LA_PETER_MACHINE.usuario set usua_habilitado = 0 
+				where usua_username = @username;
+		end
+	
+/* Devuelvo usuario habilitado y roles */
+
+
+
+SELECT usua_habilitado, rol_descripcion
+	FROM LA_PETER_MACHINE.usuario us, LA_PETER_MACHINE.roles_usuario ru , LA_PETER_MACHINE.rol rol
+	WHERE us.usua_username = @username 
+	and us.usua_username = ru.rolu_username
+	and @passIngresadaEncript =  us.usua_password
+	and ru.rolu_id_rol = rol.rol_id;
+GO
+
+create procedure LA_PETER_MACHINE.buscarComprasSinCalificar(@username nvarchar(255))
+	as
+	begin
+		select publ_descripcion, comp_id_vendedor, compra_id from LA_PETER_MACHINE.compra, LA_PETER_MACHINE.publicacion, LA_PETER_MACHINE.persona 
+		where pers_username = @username and comp_id_vendedor = pers_id and publicacion_id = comp_id_publicacion and comp_id_calificacion is null
+	end
+
+go
+
+CREATE procedure LA_PETER_MACHINE.crearPublicacion(@username nvarchar(255), @estado nvarchar(255), @tipo nvarchar(255),
+	@descripcion nvarchar(255), @precio nvarchar(255), @costo nvarchar(255), @rubro nvarchar(255), @visibilidad nvarchar(255), 
+	@preguntas nvarchar(255), @envio nvarchar(255), @fecha_inicio nvarchar(255), @fecha_fin nvarchar(255), @stock nvarchar(255),@rdo nvarchar(255) output )
+AS
+	begin
+	begin try
+	declare @vendedor_id numeric(18)
+	set @vendedor_id = (select TOP 1 pers_id from LA_PETER_MACHINE.persona where pers_username = @username)
+
+	declare @estado_id numeric(18)
+	set @estado_id = (select TOP 1 estado_id from LA_PETER_MACHINE.estado where esta_descripcion = @estado)
+
+	declare @tipo_id numeric(18)
+	set @tipo_id = (select TOP 1  tipo_id from LA_PETER_MACHINE.tipo where tipo_descripcion = @tipo)
+
+	declare @rubro_id numeric(18)
+	set @rubro_id = (select TOP 1 rubr_cod from LA_PETER_MACHINE.rubro where rubr_descripcion_corta = @rubro)
+
+	declare @visibilidad_id numeric(18)
+	set @visibilidad_id = (select TOP 1 visi_cod from LA_PETER_MACHINE.visibilidad where visi_descripcion = @visibilidad)
+
+	declare @acepta_pregunta bit
+	IF @preguntas = 'Si'
+		set @acepta_pregunta = 1
+	else
+		set @acepta_pregunta = 0
+
+	declare @acepta_envio bit
+	if @envio = 'Si'
+		set @acepta_envio = 1
+	else 
+		set @acepta_envio = 0 
+
+declare @fecha_desde Datetime
+set @fecha_desde=@fecha_inicio
+declare @fecha_hasta Datetime
+set @fecha_hasta=@fecha_fin
+
+	Insert into LA_PETER_MACHINE.publicacion (publ_descripcion, publ_precio, publ_costo, publ_cod_rubro, publ_cod_visibilidad, 
+	publ_id_vendedor, publ_id_estado, publ_fecha_inicio,publ_fecha_fin, publ_preguntas, publ_cantidad, publ_id_tipo, publ_envio_habilitado)
+	VALUES (@descripcion, convert(numeric(18,2),@precio),convert(numeric(18,2),@costo), @rubro_id, @visibilidad_id, @vendedor_id, 
+	@estado_id, @fecha_desde, @fecha_hasta, @acepta_pregunta, convert(numeric(18),@stock), @tipo_id, @acepta_envio)
+	set @rdo='ok'
+	end try
+	begin catch
+	set @rdo='error de ingreso'
+	end catch
+	
+	end
+GO

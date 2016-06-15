@@ -12,18 +12,31 @@ namespace WindowsFormsApplication1.Generar_Publicación
 {
     public partial class tiposDePublicacion : Form
     {
-        public tiposDePublicacion()
+        string username;
+
+        public tiposDePublicacion(string usuario)
         {
             InitializeComponent();
+            username = usuario;
         }
 
         private void buttonCompra_Click(object sender, EventArgs e)
         {
 
-            Generar_Publicación.generarPublicacion generarPublicacionCompra = new Generar_Publicación.generarPublicacion();
+            Generar_Publicación.generarPublicacionCompra generarPublicacionCompra = new Generar_Publicación.generarPublicacionCompra(this.username);
             this.Hide();
             generarPublicacionCompra.ShowDialog();
             this.Close();
+        }
+
+        private void buttonSubasta_Click(object sender, EventArgs e)
+        {
+
+            Generar_Publicación.generarPublicacionSubasta generarPublicacionSubasta = new Generar_Publicación.generarPublicacionSubasta(this.username);
+            this.Hide();
+            generarPublicacionSubasta.ShowDialog();
+            this.Close();
+
         }
     }
 }

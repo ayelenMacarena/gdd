@@ -90,7 +90,7 @@ AS
 	where Cli_Mail is not null
 	group by Cli_Mail
 
-
+	
 
 
 --PERSONA (Cliente)
@@ -137,6 +137,7 @@ set @clie_id_tipo_doc = (select type_id from LA_PETER_MACHINE.document_type wher
 		from gd_esquema.Maestra
 		where Cli_Dni is not null 
 		group by Cli_Apeliido, Cli_Nombre, Cli_Dni, Cli_Fecha_Nac, Cli_Mail
+
 
 
 --RUBRO

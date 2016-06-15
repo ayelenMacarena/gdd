@@ -60,6 +60,7 @@
             this.buttonSubasta.TabIndex = 2;
             this.buttonSubasta.Text = "Subasta";
             this.buttonSubasta.UseVisualStyleBackColor = true;
+            this.buttonSubasta.Click += new System.EventHandler(this.buttonSubasta_Click);
             // 
             // tiposDePublicacion
             // 
