@@ -37,7 +37,7 @@ namespace WindowsFormsApplication1.ABM_Rol
         private void button1_Click_1(object sender, EventArgs e)
         {
             rolSelected = (string)comboBox1.SelectedItem;
-            ABM_Usuario.MenuPrincipal menuPrincipal = new ABM_Usuario.MenuPrincipal(rolSelected, myUser);
+            MenuPrincipal menuPrincipal = new MenuPrincipal(rolSelected, myUser);
             this.Hide();
             menuPrincipal.ShowDialog();
             this.Close();

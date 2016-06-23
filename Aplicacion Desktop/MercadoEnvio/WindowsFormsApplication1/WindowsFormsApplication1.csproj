@@ -139,10 +139,10 @@
     <Compile Include="ABM Usuario\ListadoDeUsuarios.Designer.cs">
       <DependentUpon>ListadoDeUsuarios.cs</DependentUpon>
     </Compile>
-    <Compile Include="ABM Usuario\MenuPrincipal.cs">
+    <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ABM Usuario\MenuPrincipal.Designer.cs">
+    <Compile Include="MenuPrincipal.Designer.cs">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="ABM Usuario\modificarCliente.cs">
@@ -175,7 +175,99 @@
     <Compile Include="ABM Usuario\user.Designer.cs">
       <DependentUpon>user.cs</DependentUpon>
     </Compile>
+    <Compile Include="ABM Visibilidad\Alta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Visibilidad\Alta.Designer.cs">
+      <DependentUpon>Alta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Visibilidad\Listado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Visibilidad\Listado.Designer.cs">
+      <DependentUpon>Listado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Visibilidad\Selección.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Visibilidad\Selección.Designer.cs">
+      <DependentUpon>Selección.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Visibilidad\Visibilidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Visibilidad\Visibilidad.Designer.cs">
+      <DependentUpon>Visibilidad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Calificar\Calificar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calificar\Calificar.Designer.cs">
+      <DependentUpon>Calificar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComprarOfertar\Comprar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComprarOfertar\Comprar.Designer.cs">
+      <DependentUpon>Comprar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComprarOfertar\Listado_ComprarOfertar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComprarOfertar\Listado_ComprarOfertar.Designer.cs">
+      <DependentUpon>Listado_ComprarOfertar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComprarOfertar\Logica_ComprarOfertar.cs" />
+    <Compile Include="ComprarOfertar\Ofertar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComprarOfertar\Ofertar.Designer.cs">
+      <DependentUpon>Ofertar.cs</DependentUpon>
+    </Compile>
     <Compile Include="conectionClass.cs" />
+    <Compile Include="Facturas\consultaFacturas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Facturas\consultaFacturas.Designer.cs">
+      <DependentUpon>consultaFacturas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Publicación\busquedaPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicación\busquedaPublicacion.Designer.cs">
+      <DependentUpon>busquedaPublicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Publicación\generarPublicacionCompra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicación\generarPublicacionCompra.Designer.cs">
+      <DependentUpon>generarPublicacionCompra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Publicación\generarPublicacionSubasta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicación\generarPublicacionSubasta.Designer.cs">
+      <DependentUpon>generarPublicacionSubasta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Publicación\modificarPublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicación\modificarPublicacion.Designer.cs">
+      <DependentUpon>modificarPublicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Generar Publicación\tiposDePublicacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Generar Publicación\tiposDePublicacion.Designer.cs">
+      <DependentUpon>tiposDePublicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Historial Cliente\Historial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Historial Cliente\Historial.Designer.cs">
+      <DependentUpon>Historial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Historial Cliente\Logica_Historial.cs" />
     <Compile Include="Inicio.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -271,7 +363,7 @@
     <EmbeddedResource Include="ABM Usuario\ListadoDeUsuarios.resx">
       <DependentUpon>ListadoDeUsuarios.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ABM Usuario\MenuPrincipal.resx">
+    <EmbeddedResource Include="MenuPrincipal.resx">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\modificarCliente.resx">
@@ -288,6 +380,51 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\user.resx">
       <DependentUpon>user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Visibilidad\Alta.resx">
+      <DependentUpon>Alta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Visibilidad\Listado.resx">
+      <DependentUpon>Listado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Visibilidad\Selección.resx">
+      <DependentUpon>Selección.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Visibilidad\Visibilidad.resx">
+      <DependentUpon>Visibilidad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calificar\Calificar.resx">
+      <DependentUpon>Calificar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOfertar\Comprar.resx">
+      <DependentUpon>Comprar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOfertar\Listado_ComprarOfertar.resx">
+      <DependentUpon>Listado_ComprarOfertar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComprarOfertar\Ofertar.resx">
+      <DependentUpon>Ofertar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Facturas\consultaFacturas.resx">
+      <DependentUpon>consultaFacturas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\busquedaPublicacion.resx">
+      <DependentUpon>busquedaPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\generarPublicacionCompra.resx">
+      <DependentUpon>generarPublicacionCompra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\generarPublicacionSubasta.resx">
+      <DependentUpon>generarPublicacionSubasta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\modificarPublicacion.resx">
+      <DependentUpon>modificarPublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Generar Publicación\tiposDePublicacion.resx">
+      <DependentUpon>tiposDePublicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Historial Cliente\Historial.resx">
+      <DependentUpon>Historial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inicio.resx">
       <DependentUpon>Inicio.cs</DependentUpon>
@@ -337,14 +474,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ABM Visibilidad\" />
-    <Folder Include="Calificar\" />
-    <Folder Include="ComprarOfertar\" />
-    <Folder Include="Facturas\" />
-    <Folder Include="Generar Publicación\" />
-    <Folder Include="Historial Cliente\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
