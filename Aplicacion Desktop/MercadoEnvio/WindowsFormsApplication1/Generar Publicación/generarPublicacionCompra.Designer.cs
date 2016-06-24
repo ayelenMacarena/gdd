@@ -37,7 +37,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.monthCalendarVencimiento = new System.Windows.Forms.MonthCalendar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.monthCalendarInicio = new System.Windows.Forms.MonthCalendar();
+            this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -52,13 +54,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
@@ -155,8 +153,6 @@
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.textBox4);
             this.groupBox1.Controls.Add(this.textBox3);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.numericUpDown1);
             this.groupBox1.Controls.Add(this.label4);
@@ -172,6 +168,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nueva publicación";
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 290);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(69, 13);
+            this.label11.TabIndex = 38;
+            this.label11.Text = "Estado inicial";
+            // 
             // monthCalendarInicio
             // 
             this.monthCalendarInicio.Location = new System.Drawing.Point(224, 149);
@@ -179,6 +184,20 @@
             this.monthCalendarInicio.TabIndex = 21;
             this.monthCalendarInicio.Visible = false;
             this.monthCalendarInicio.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendarInicio_DateChanged);
+            // 
+            // comboBox5
+            // 
+            this.comboBox5.FormattingEnabled = true;
+            this.comboBox5.Items.AddRange(new object[] {
+            "Activa",
+            "Borrador",
+            "Pausada",
+            "Finalizada"});
+            this.comboBox5.Location = new System.Drawing.Point(112, 286);
+            this.comboBox5.Name = "comboBox5";
+            this.comboBox5.Size = new System.Drawing.Size(288, 21);
+            this.comboBox5.TabIndex = 37;
+            this.comboBox5.Text = "Borrador";
             // 
             // comboBox4
             // 
@@ -305,25 +324,6 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(111, 20);
             this.textBox3.TabIndex = 19;
-            this.textBox3.Validating += new System.ComponentModel.CancelEventHandler(this.textBox3_Validating);
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(273, 120);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(117, 20);
-            this.textBox2.TabIndex = 18;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            this.textBox2.Validating += new System.ComponentModel.CancelEventHandler(this.textBox2_Validating);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(233, 123);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(34, 13);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "Costo";
             // 
             // label3
             // 
@@ -354,29 +354,6 @@
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 14;
             this.label1.Text = "Descripción";
-            // 
-            // comboBox5
-            // 
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Items.AddRange(new object[] {
-            "Activa",
-            "Borrador",
-            "Pausada",
-            "Finalizada"});
-            this.comboBox5.Location = new System.Drawing.Point(112, 286);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(288, 21);
-            this.comboBox5.TabIndex = 37;
-            this.comboBox5.Text = "Borrador";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 290);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(69, 13);
-            this.label11.TabIndex = 38;
-            this.label11.Text = "Estado inicial";
             // 
             // generarPublicacionCompra
             // 
@@ -411,8 +388,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label1;

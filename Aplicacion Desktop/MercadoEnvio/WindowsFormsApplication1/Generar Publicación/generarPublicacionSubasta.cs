@@ -170,12 +170,24 @@ namespace WindowsFormsApplication1.Generar_Publicación
             publicar.Parameters.AddWithValue("@estado", comboBox5.Text);
             publicar.Parameters.AddWithValue("@tipo", "Subasta");
             publicar.Parameters.AddWithValue("@descripcion", textBoxDescripcion.Text);
+            if (Convert.ToDecimal(textBox3.Text) < 0)
+            {
+                MessageBox.Show("El precio no puede ser negativo");
+                return;
+
+            }
             publicar.Parameters.AddWithValue("@precio", textBox3.Text);
-            publicar.Parameters.AddWithValue("@costo", textBox2.Text);
+            publicar.Parameters.AddWithValue("@costo", DBNull.Value);
             publicar.Parameters.AddWithValue("@rubro", comboBox1.Text);
             publicar.Parameters.AddWithValue("@visibilidad", comboBox2.Text);
             publicar.Parameters.AddWithValue("@preguntas", comboBox3.Text);
             publicar.Parameters.AddWithValue("@envio", comboBox4.Text);
+            if (Convert.ToDateTime(textBox4.Text) > Convert.ToDateTime(textBox5.Text))
+            {
+
+                MessageBox.Show("La fecha de fin no puede ser menor a la de inicio");
+                return;
+            }
             publicar.Parameters.AddWithValue("@fecha_inicio", textBox4.Text);
             publicar.Parameters.AddWithValue("@fecha_fin", textBox5.Text);
             publicar.Parameters.AddWithValue("@stock", textBox6.Text);

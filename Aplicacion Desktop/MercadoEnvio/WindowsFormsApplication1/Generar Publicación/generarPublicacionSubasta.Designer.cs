@@ -37,6 +37,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.monthCalendarVencimiento = new System.Windows.Forms.MonthCalendar();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.monthCalendarInicio = new System.Windows.Forms.MonthCalendar();
             this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -53,12 +55,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -155,8 +153,6 @@
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.textBox4);
             this.groupBox1.Controls.Add(this.textBox3);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label1);
@@ -170,6 +166,27 @@
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Nueva publicación";
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Items.AddRange(new object[] {
+            "Si",
+            "No"});
+            this.comboBox4.Location = new System.Drawing.Point(320, 323);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(64, 21);
+            this.comboBox4.TabIndex = 42;
+            this.comboBox4.Text = "Si";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(216, 326);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(78, 13);
+            this.label10.TabIndex = 41;
+            this.label10.Text = "Acepta envío?";
             // 
             // monthCalendarInicio
             // 
@@ -314,24 +331,6 @@
             this.textBox3.TabIndex = 19;
             this.textBox3.Validating += new System.ComponentModel.CancelEventHandler(this.textBox3_Validating);
             // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(273, 120);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(117, 20);
-            this.textBox2.TabIndex = 18;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
-            this.textBox2.Validating += new System.ComponentModel.CancelEventHandler(this.textBox2_Validating);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(233, 123);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(34, 13);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "Costo";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -349,27 +348,6 @@
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 14;
             this.label1.Text = "Descripción";
-            // 
-            // comboBox4
-            // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Items.AddRange(new object[] {
-            "Si",
-            "No"});
-            this.comboBox4.Location = new System.Drawing.Point(320, 323);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(64, 21);
-            this.comboBox4.TabIndex = 42;
-            this.comboBox4.Text = "Si";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(216, 326);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(78, 13);
-            this.label10.TabIndex = 41;
-            this.label10.Text = "Acepta envío?";
             // 
             // generarPublicacionSubasta
             // 
@@ -403,7 +381,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MonthCalendar monthCalendarInicio;
@@ -416,7 +393,6 @@
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.ComboBox comboBox5;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox comboBox4;

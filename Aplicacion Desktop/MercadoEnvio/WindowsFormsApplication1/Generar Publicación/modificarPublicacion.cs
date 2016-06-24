@@ -25,7 +25,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
             textBoxDescripcion.Text = filaSeleccionada.Cells["publ_descripcion"].Value.ToString();
             textBox6.Text = filaSeleccionada.Cells["publ_cantidad"].Value.ToString();
             textBox3.Text = filaSeleccionada.Cells["publ_precio"].Value.ToString();
-            textBox2.Text = filaSeleccionada.Cells["publ_costo"].Value.ToString();
+            
 
             SqlConnection conexion = conectionDB.getConnection();
             conexion.Open();
@@ -145,7 +145,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
         private void monthCalendarVencimiento_DateChanged_1(object sender, DateRangeEventArgs e)
         {
-            textBox5.Text = monthCalendarInicio.SelectionRange.Start.ToShortDateString();
+            textBox5.Text = monthCalendarVencimiento.SelectionRange.Start.ToShortDateString();
             monthCalendarVencimiento.Visible = false;
         }
 
@@ -162,12 +162,24 @@ namespace WindowsFormsApplication1.Generar_Publicación
             publicar.Parameters.AddWithValue("@publ_id", miPublicacion.Cells["publicacion_id"].Value.ToString());
             publicar.Parameters.AddWithValue("@estado", comboBox5.Text);
             publicar.Parameters.AddWithValue("@descripcion", textBoxDescripcion.Text);
+            if (Convert.ToDecimal(textBox3.Text) < 0)
+            {
+                MessageBox.Show("El precio no puede ser negativo");
+                return;
+
+            }
             publicar.Parameters.AddWithValue("@precio", textBox3.Text);
-            publicar.Parameters.AddWithValue("@costo", textBox2.Text);
+            publicar.Parameters.AddWithValue("@costo", DBNull.Value);
             publicar.Parameters.AddWithValue("@rubro", comboBox1.Text);
             publicar.Parameters.AddWithValue("@visibilidad", comboBox2.Text);
             publicar.Parameters.AddWithValue("@preguntas", comboBox3.Text);
             publicar.Parameters.AddWithValue("@envio", comboBox4.Text);
+            if (Convert.ToDateTime(textBox4.Text) > Convert.ToDateTime(textBox5.Text))
+            {
+
+                MessageBox.Show("La fecha de fin no puede ser menor a la de inicio");
+                return;
+            }
             publicar.Parameters.AddWithValue("@fecha_inicio", textBox4.Text);
             publicar.Parameters.AddWithValue("@fecha_fin", textBox5.Text);
             publicar.Parameters.AddWithValue("@stock", textBox6.Text);
@@ -178,6 +190,11 @@ namespace WindowsFormsApplication1.Generar_Publicación
             MessageBox.Show(rdo.Value.ToString());
             conexion.Close();
             this.Close();
+
+        }
+
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
 

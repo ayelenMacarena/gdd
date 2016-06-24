@@ -50,8 +50,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -103,8 +101,6 @@
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.textBox4);
             this.groupBox1.Controls.Add(this.textBox3);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label1);
@@ -215,6 +211,7 @@
             this.comboBox3.Size = new System.Drawing.Size(64, 21);
             this.comboBox3.TabIndex = 32;
             this.comboBox3.Text = "Si";
+            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
             // 
             // label8
             // 
@@ -290,22 +287,6 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(111, 20);
             this.textBox3.TabIndex = 19;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(273, 120);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(117, 20);
-            this.textBox2.TabIndex = 18;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(233, 123);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(34, 13);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "Costo";
             // 
             // label3
             // 
@@ -407,8 +388,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label1;
