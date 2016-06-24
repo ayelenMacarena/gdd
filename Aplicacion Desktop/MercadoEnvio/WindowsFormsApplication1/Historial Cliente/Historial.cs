@@ -20,5 +20,6 @@ namespace WindowsFormsApplication1.Historial_Cliente
             usuario = username;
             this.labelCliente.Text = String.Format("{0}", cliente);
         }
+
     }
 }

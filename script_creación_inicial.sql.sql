@@ -1571,6 +1571,9 @@ AS
 	from gd_esquema.Maestra
 	where Cli_Mail is not null
 	group by Cli_Mail, Cli_Mail, Cli_Dom_Calle, Cli_Cod_Postal, Cli_Nro_Calle, Cli_Nro_Calle, Cli_Piso, Cli_Depto
+
+	insert into LA_PETER_MACHINE.persona(pers_username, pers_habilitado) 
+			values ('admin',1)
 	
 
 --ROLES_USUARIO (Cliente)
@@ -1630,11 +1633,8 @@ insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_persona
 	insert into LA_PETER_MACHINE.calificacion (calificacion_id, cali_valor, cali_detalle,cali_id_vendedor)
 	select distinct Calificacion_Codigo, Calificacion_Cant_Estrellas , Calificacion_Descripcion, (select pers_id from LA_PETER_MACHINE.persona where Publ_Empresa_Mail = pers_mail OR Publ_Cli_Mail = pers_mail) 
 		from gd_esquema.Maestra
-  		where Calificacion_Codigo is not NULL
+  		where Calificacion_Codigo is not NULL and Calificacion_Cant_Estrellas < 6
 		order by Calificacion_Codigo
-
-	update LA_PETER_MACHINE.calificacion
-	set cali_valor = 5 where cali_valor>5
 
 	set identity_insert LA_PETER_MACHINE.calificacion OFF
 

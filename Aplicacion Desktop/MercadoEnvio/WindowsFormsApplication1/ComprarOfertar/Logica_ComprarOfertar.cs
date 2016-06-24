@@ -55,8 +55,6 @@ namespace WindowsFormsApplication1.ComprarOfertar
         }
 
 
-
-
         public static int tamanio(int registrosPorPagina, int cliente, String tipo, String termino)
         {
             int totalPaginas = 1;
@@ -100,6 +98,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
             return totalPaginas;
         }
+
 
         public static void llenarComboRubros(ComboBox rubros)
         {
@@ -157,6 +156,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
             
         }
 
+
         public static void Ofertar(int publ_id, int precio)
         {
             SqlConnection sqlConexion = conectionDB.getConnection();
@@ -188,6 +188,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
         }
 
+
         public static void InsertarFactura(int publ_id, int cantidad)
         {
             SqlConnection sqlConexion = conectionDB.getConnection();
@@ -218,6 +219,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
             }
    
         }
+
 
         public static int ObtenerIdCliente(string usuario)
         {

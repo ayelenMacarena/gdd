@@ -28,19 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.labelCliente = new System.Windows.Forms.Label();
             this.labelPromedioCalif = new System.Windows.Forms.Label();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabCompras = new System.Windows.Forms.TabPage();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.tabOfertas = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.tabControl1.SuspendLayout();
-            this.tabCompras.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            this.tabOfertas.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.dataGridView_Historial = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Historial)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -72,71 +68,69 @@
             this.labelPromedioCalif.TabIndex = 4;
             this.labelPromedioCalif.Text = "Promedio de Calificacion Otorgada:";
             // 
-            // tabControl1
+            // button1
             // 
-            this.tabControl1.Controls.Add(this.tabCompras);
-            this.tabControl1.Controls.Add(this.tabOfertas);
-            this.tabControl1.Location = new System.Drawing.Point(48, 122);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(672, 357);
-            this.tabControl1.TabIndex = 5;
+            this.button1.Location = new System.Drawing.Point(630, 30);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "COMPRAS";
+            this.button1.UseVisualStyleBackColor = true;
             // 
-            // tabCompras
+            // button2
             // 
-            this.tabCompras.Controls.Add(this.dataGridView2);
-            this.tabCompras.Location = new System.Drawing.Point(4, 22);
-            this.tabCompras.Name = "tabCompras";
-            this.tabCompras.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCompras.Size = new System.Drawing.Size(664, 331);
-            this.tabCompras.TabIndex = 0;
-            this.tabCompras.Text = "Compras";
-            this.tabCompras.UseVisualStyleBackColor = true;
+            this.button2.Location = new System.Drawing.Point(630, 59);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "OFERTAS";
+            this.button2.UseVisualStyleBackColor = true;
             // 
-            // dataGridView2
+            // button3
             // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(44, 26);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(558, 266);
-            this.dataGridView2.TabIndex = 1;
+            this.button3.Location = new System.Drawing.Point(691, 429);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 8;
+            this.button3.Text = "LIMPIAR";
+            this.button3.UseVisualStyleBackColor = true;
             // 
-            // tabOfertas
+            // dataGridView_Historial
             // 
-            this.tabOfertas.Controls.Add(this.dataGridView1);
-            this.tabOfertas.Location = new System.Drawing.Point(4, 22);
-            this.tabOfertas.Name = "tabOfertas";
-            this.tabOfertas.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOfertas.Size = new System.Drawing.Size(664, 331);
-            this.tabOfertas.TabIndex = 1;
-            this.tabOfertas.Text = "Ofertas";
-            this.tabOfertas.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(44, 26);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(558, 266);
-            this.dataGridView1.TabIndex = 0;
+            this.dataGridView_Historial.AllowUserToAddRows = false;
+            this.dataGridView_Historial.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.dataGridView_Historial.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridView_Historial.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dataGridView_Historial.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.dataGridView_Historial.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridView_Historial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView_Historial.Location = new System.Drawing.Point(88, 134);
+            this.dataGridView_Historial.MultiSelect = false;
+            this.dataGridView_Historial.Name = "dataGridView_Historial";
+            this.dataGridView_Historial.ReadOnly = true;
+            this.dataGridView_Historial.RowHeadersVisible = false;
+            this.dataGridView_Historial.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView_Historial.Size = new System.Drawing.Size(568, 331);
+            this.dataGridView_Historial.TabIndex = 10;
             // 
             // Historial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(790, 491);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.dataGridView_Historial);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.labelPromedioCalif);
             this.Controls.Add(this.labelCliente);
             this.Controls.Add(this.label1);
             this.Name = "Historial";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MercadoEnvio";
-            this.tabControl1.ResumeLayout(false);
-            this.tabCompras.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            this.tabOfertas.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Historial)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,10 +141,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelCliente;
         private System.Windows.Forms.Label labelPromedioCalif;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabCompras;
-        private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.TabPage tabOfertas;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.DataGridView dataGridView_Historial;
     }
 }
