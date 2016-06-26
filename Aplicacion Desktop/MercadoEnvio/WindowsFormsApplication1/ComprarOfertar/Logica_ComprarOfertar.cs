@@ -13,7 +13,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
     class Logica_ComprarOfertar
     {
    
-        public static DataTable Mostrar(int registrosPorPagina, int numerosPagina, int cliente, String tipo, String termino)
+        public static DataTable Mostrar(int registrosPorPagina, int numerosPagina, int cliente, String tipo, String termino, String rubros)
         {
             DataTable tablaDatos = new DataTable("ListadoCompras");
             SqlConnection sqlConexion = conectionDB.getConnection();
@@ -32,6 +32,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
                 sqlComando.Parameters.AddWithValue("@cliente", cliente);
                 sqlComando.Parameters.AddWithValue("@tipo", tipo);
                 sqlComando.Parameters.AddWithValue("@terminoBuscado",termino);
+                sqlComando.Parameters.AddWithValue("@rubros", rubros);
 
                 sqlComando.ExecuteNonQuery();
 
@@ -55,7 +56,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
         }
 
 
-        public static int tamanio(int registrosPorPagina, int cliente, String tipo, String termino)
+        public static int tamanio(int registrosPorPagina, int cliente, String tipo, String termino, String rubros)
         {
             int totalPaginas = 1;
             SqlConnection sqlConexion = conectionDB.getConnection();
@@ -80,6 +81,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
                 sqlComando.Parameters.AddWithValue("@cliente", cliente);
                 sqlComando.Parameters.AddWithValue("@tipo", tipo);
                 sqlComando.Parameters.AddWithValue("@terminoBuscado", termino);
+                sqlComando.Parameters.AddWithValue("@rubros", rubros);
 
 
                 sqlComando.ExecuteNonQuery();
@@ -259,5 +261,63 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
             return idUser;
         }
+
+        public static String PasarACodRubros(List<string> filtroRubros)
+        {
+            String listaCodigosRubro=String.Empty;
+
+            foreach (String detalleRubro in filtroRubros)
+            {
+                listaCodigosRubro += ObtenerCodRubro(detalleRubro) + ", ";
+            }
+
+            //char[] MyChar = { ',' };
+            //listaCodigosRubro = listaCodigosRubro.TrimEnd(MyChar);
+            return listaCodigosRubro.Remove(listaCodigosRubro.Length-2,2);
+        }
+
+        private static string ObtenerCodRubro(string detalleRubro)
+        {
+            SqlConnection sqlConexion = conectionDB.getConnection();
+            int codRubro;
+
+            try
+            {
+                sqlConexion.Open();
+
+                SqlCommand sqlComando = new SqlCommand();
+                sqlComando.Connection = sqlConexion;
+                sqlComando.CommandText = "LA_PETER_MACHINE.SP_ObtenerCodRubro_ComprarOfertar";
+                sqlComando.CommandType = CommandType.StoredProcedure;
+
+                sqlComando.Parameters.AddWithValue("@detalleRubro", detalleRubro);
+
+                SqlParameter parIdUser = new SqlParameter();
+                parIdUser.ParameterName = "@CodRubro";
+                parIdUser.Direction = ParameterDirection.Output;
+                parIdUser.SqlDbType = SqlDbType.Int;
+                sqlComando.Parameters.Add(parIdUser);
+
+                sqlComando.ExecuteNonQuery();
+
+                codRubro = (int)sqlComando.Parameters["@CodRubro"].Value;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_ObtenerCodRubro_ComprarOfertar. " + e.Message);
+            }
+
+            finally
+            {
+                sqlConexion.Close();
+            }
+
+            var stringCode = codRubro.ToString();
+
+            return codRubro.ToString();
+        }
+
+
+
     }
 }

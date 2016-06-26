@@ -52,7 +52,9 @@ namespace WindowsFormsApplication1.ComprarOfertar
             Grid_ComprarOfertar.DataSource = null;
             var tipo = comboTipo.Text;
 
-            DataTable filasAMostrar = Logica_ComprarOfertar.Mostrar(registrosPorPagina, numeroPagina, cliente, tipo, textBuscado.Text);
+            var rubros = Logica_ComprarOfertar.PasarACodRubros(filtroRubros);
+
+            DataTable filasAMostrar = Logica_ComprarOfertar.Mostrar(registrosPorPagina, numeroPagina, cliente, tipo, textBuscado.Text, rubros);
 
             Grid_ComprarOfertar.DataSource = filasAMostrar;
             Grid_ComprarOfertar.ClearSelection();
@@ -67,7 +69,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
                 buttonOfertar.Visible = true;
             }        
 
-            cantidadDePaginas = Logica_ComprarOfertar.tamanio(registrosPorPagina, cliente, tipo,textBuscado.Text); ;
+            cantidadDePaginas = Logica_ComprarOfertar.tamanio(registrosPorPagina, cliente, tipo,textBuscado.Text, rubros); ;
 
             this.labelNroPagina.Text = String.Format("{0}", numeroPagina);
             this.label_InfoPagina_CO.Text = String.Format("Paginas {0}", cantidadDePaginas);
@@ -177,6 +179,10 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
         }
 
+        private void comboRubros_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            buttonAgregarRubro.Enabled = true;
+        }
 
     }
 }

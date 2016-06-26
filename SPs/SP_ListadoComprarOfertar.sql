@@ -3,7 +3,8 @@ CREATE PROCEDURE LA_PETER_MACHINE.SP_ListadoComprarOfertar
 @numerosPagina INT,
 @cliente INT,
 @tipo VARCHAR(8),
-@terminoBuscado as varchar(255))
+@terminoBuscado as varchar(255),
+@rubros as varchar(255))
 AS
 	DECLARE @ID_TIPO INT
 
@@ -20,7 +21,8 @@ AS
 		END	
 		
 	SELECT publicacion_id, publ_descripcion, publ_precio, publ_cantidad, publ_id_vendedor
-		FROM LA_PETER_MACHINE.publicacion, LA_PETER_MACHINE.estado, LA_PETER_MACHINE.tipo
+		FROM LA_PETER_MACHINE.publicacion JOIN LA_PETER_MACHINE.ListaATabla_ComprarOfertar(@rubros) r on publ_cod_rubro = r.number,
+			 LA_PETER_MACHINE.estado, LA_PETER_MACHINE.tipo		
 		WHERE  publ_id_vendedor != @cliente
 			and publ_id_estado = estado_id and esta_descripcion = 'Finalizada'
 			and publ_id_tipo = @ID_TIPO

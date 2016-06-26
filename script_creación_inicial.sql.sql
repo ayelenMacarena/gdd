@@ -1348,13 +1348,38 @@ IF @codVisibilidad != 10006
 
 GO
 
+CREATE FUNCTION LA_PETER_MACHINE.ListaATabla_ComprarOfertar (@list nvarchar(MAX))
+   RETURNS @tbl TABLE (number int NOT NULL) AS
+BEGIN
+   DECLARE @pos        int,
+           @nextpos    int,
+           @valuelen   int
+
+   SELECT @pos = 0, @nextpos = 1
+
+   WHILE @nextpos > 0
+   BEGIN
+      SELECT @nextpos = charindex(',', @list, @pos + 1)
+      SELECT @valuelen = CASE WHEN @nextpos > 0
+                              THEN @nextpos
+                              ELSE len(@list) + 1
+                         END - @pos - 1
+      INSERT @tbl (number)
+         VALUES (convert(int, substring(@list, @pos + 1, @valuelen)))
+      SELECT @pos = @nextpos
+   END
+   RETURN
+END
+GO
+
 
 CREATE PROCEDURE LA_PETER_MACHINE.SP_ListadoComprarOfertar
 (@registrosPorPagina INT,
 @numerosPagina INT,
 @cliente INT,
 @tipo VARCHAR(8),
-@terminoBuscado as varchar(255))
+@terminoBuscado as varchar(255),
+@rubros as varchar(255))
 AS
 	DECLARE @ID_TIPO INT
 
@@ -1371,7 +1396,8 @@ AS
 		END	
 		
 	SELECT publicacion_id, publ_descripcion, publ_precio, publ_cantidad, publ_id_vendedor
-		FROM LA_PETER_MACHINE.publicacion, LA_PETER_MACHINE.estado, LA_PETER_MACHINE.tipo
+		FROM LA_PETER_MACHINE.publicacion JOIN LA_PETER_MACHINE.ListaATabla_ComprarOfertar(@rubros) r on publ_cod_rubro = r.number,
+			 LA_PETER_MACHINE.estado, LA_PETER_MACHINE.tipo		
 		WHERE  publ_id_vendedor != @cliente
 			and publ_id_estado = estado_id and esta_descripcion = 'Finalizada'
 			and publ_id_tipo = @ID_TIPO
@@ -1390,7 +1416,8 @@ CREATE PROCEDURE LA_PETER_MACHINE.SP_Cantidad_Paginas_ComprarOfertar
 @totalDePaginas INT OUTPUT,
 @cliente INT,
 @tipo VARCHAR(8),
-@terminoBuscado as varchar(255))
+@terminoBuscado as varchar(255),
+@rubros as varchar(255))
 AS
 
 DECLARE @cantidadFilas int
@@ -1412,7 +1439,8 @@ DECLARE @cantidadFilas int
 	END
 		SET @cantidadFilas = 
 			(select COUNT(distinct publicacion_id) 
-					from LA_PETER_MACHINE.publicacion, LA_PETER_MACHINE.estado, LA_PETER_MACHINE.tipo
+			FROM LA_PETER_MACHINE.publicacion JOIN LA_PETER_MACHINE.ListaATabla_ComprarOfertar(@rubros) r on publ_cod_rubro = r.number,
+			 LA_PETER_MACHINE.estado, LA_PETER_MACHINE.tipo		
 					WHERE  publ_id_vendedor != @cliente
 						and publ_id_estado = estado_id and esta_descripcion = 'Finalizada'
 						and publ_id_tipo = @ID_TIPO
@@ -1430,6 +1458,15 @@ DECLARE @cantidadFilas int
 				RETURN;
 			END
 	END
+GO
+
+CREATE PROCEDURE LA_PETER_MACHINE.SP_ObtenerCodRubro_ComprarOfertar
+(@detalleRubro NVARCHAR(255),
+@CodRubro INT OUTPUT)
+AS
+
+SET @CodRubro = (select rubr_cod from LA_PETER_MACHINE.rubro where rubr_descripcion_corta = @detalleRubro)
+
 GO
 
 CREATE PROCEDURE LA_PETER_MACHINE.SP_EjecutarCompra_ComprarOfertar
