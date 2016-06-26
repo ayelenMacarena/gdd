@@ -54,8 +54,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
             return tablaDatos;
         }
-
-
+        
         public static int tamanio(int registrosPorPagina, int cliente, String tipo, String termino, String rubros)
         {
             int totalPaginas = 1;
@@ -100,8 +99,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
             return totalPaginas;
         }
-
-
+        
         public static void llenarComboRubros(ComboBox rubros)
         {
             SqlConnection conexion = conectionDB.getConnection();
@@ -125,7 +123,6 @@ namespace WindowsFormsApplication1.ComprarOfertar
             }
             conexion.Close();
         }
-
 
         public static void Comprar(int publ_id, int cantidad)
         {
@@ -158,7 +155,6 @@ namespace WindowsFormsApplication1.ComprarOfertar
             
         }
 
-
         public static void Ofertar(int publ_id, int precio)
         {
             SqlConnection sqlConexion = conectionDB.getConnection();
@@ -190,7 +186,6 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
         }
 
-
         public static void InsertarFactura(int publ_id, int cantidad)
         {
             SqlConnection sqlConexion = conectionDB.getConnection();
@@ -221,7 +216,6 @@ namespace WindowsFormsApplication1.ComprarOfertar
             }
    
         }
-
 
         public static int ObtenerIdCliente(string usuario)
         {
@@ -318,6 +312,26 @@ namespace WindowsFormsApplication1.ComprarOfertar
         }
 
 
+        public static string ObtenerTodosRubros()
+        {
+            SqlConnection conexion = conectionDB.getConnection();
+            conexion.Open();
+            string rubros = "select rubr_cod from LA_PETER_MACHINE.rubro";
+            SqlCommand listRubros = new SqlCommand(rubros, conexion);
+            conexion.Close();
+            conexion.Open();
+            SqlDataReader rub = listRubros.ExecuteReader();
+            String rubritos = String.Empty;
+            if (rub.HasRows)
+            {
+                while (rub.Read())
+                {
+                    rubritos += (rub["rubr_cod"].ToString() + ", ");
+                }
 
+            }
+
+            return rubritos.Remove(rubritos.Length - 2, 2);
+        }
     }
 }

@@ -51,8 +51,16 @@ namespace WindowsFormsApplication1.ComprarOfertar
         {
             Grid_ComprarOfertar.DataSource = null;
             var tipo = comboTipo.Text;
+            String rubros;
 
-            var rubros = Logica_ComprarOfertar.PasarACodRubros(filtroRubros);
+            if (filtroRubros.Count() == 0)
+            {
+                rubros = Logica_ComprarOfertar.ObtenerTodosRubros();
+            }
+            else
+            {
+                rubros = Logica_ComprarOfertar.PasarACodRubros(filtroRubros);
+            }
 
             DataTable filasAMostrar = Logica_ComprarOfertar.Mostrar(registrosPorPagina, numeroPagina, cliente, tipo, textBuscado.Text, rubros);
 
@@ -149,7 +157,6 @@ namespace WindowsFormsApplication1.ComprarOfertar
             this.Mostrar();          
         }
 
-
         private void Grid_ComprarOfertar_SelectionChanged(object sender, EventArgs e)
         {
             var tipo = comboTipo.Text;
@@ -164,7 +171,6 @@ namespace WindowsFormsApplication1.ComprarOfertar
                 buttonOfertar.Enabled = true;
             }        
         }
-
 
         private void buttonComprar_Click(object sender, EventArgs e)
         {

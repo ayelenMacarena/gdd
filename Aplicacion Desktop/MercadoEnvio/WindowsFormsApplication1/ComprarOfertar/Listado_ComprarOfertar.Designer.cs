@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Grid_ComprarOfertar = new System.Windows.Forms.DataGridView();
             this.Label_Buscador = new System.Windows.Forms.Label();
             this.textBuscado = new System.Windows.Forms.TextBox();
@@ -58,9 +58,9 @@
             // 
             this.Grid_ComprarOfertar.AllowUserToAddRows = false;
             this.Grid_ComprarOfertar.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Desktop;
-            this.Grid_ComprarOfertar.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.Grid_ComprarOfertar.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.Grid_ComprarOfertar.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.Grid_ComprarOfertar.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.Grid_ComprarOfertar.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -238,7 +238,6 @@
             this.buttonAgregarRubro.TabIndex = 13;
             this.buttonAgregarRubro.Text = "AGREGAR RUBRO";
             this.buttonAgregarRubro.UseVisualStyleBackColor = true;
-            this.buttonAgregarRubro.EnabledChanged += new System.EventHandler(this.buttonAgregarRubro_Click);
             this.buttonAgregarRubro.Click += new System.EventHandler(this.buttonAgregarRubro_Click);
             // 
             // buttonBuscar
