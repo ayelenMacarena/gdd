@@ -64,6 +64,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 cmd.Parameters.Add(rdo);
                 cmd.ExecuteNonQuery();
                 MessageBox.Show(rdo.Value.ToString());
+                conexion.Close();
+                this.Close();
             }
             else { MessageBox.Show("contraseña no coincide"); }
         }
