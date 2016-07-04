@@ -42,6 +42,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
             }
 
             Logica_ComprarOfertar.Comprar(Convert.ToInt32(fila.Cells["publicacion_id"].Value), Convert.ToInt32(numericCantidad.Value));
+            
             Logica_ComprarOfertar.InsertarFactura(Convert.ToInt32(fila.Cells["publicacion_id"].Value), Convert.ToInt32(numericCantidad.Value));
 
             listado.Mostrar();

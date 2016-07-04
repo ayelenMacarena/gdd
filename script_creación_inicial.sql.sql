@@ -206,6 +206,8 @@ CREATE TABLE compra (
 	comp_id_publicacion numeric(18) NOT NULL,
 	comp_id_vendedor numeric(18) NOT NULL,
 	comp_id_comprador numeric(18) NOT NULL,
+	comp_fecha datetime NOT NULL,
+	comp_cantidad numeric(18) NOT NULL,
 	comp_num_factura numeric(18),
 	comp_username nvarchar(255) NOT NULL,
 	comp_id_calificacion numeric(18))
@@ -259,6 +261,7 @@ CREATE TABLE item_factura (
 CREATE TABLE oferta ( 
 	oferta_id numeric(18) NOT NULL IDENTITY(1,1),
 	ofer_id_publicacion numeric(18) NOT NULL,
+	ofer_fecha datetime NOT NULL,
 	ofer_valor numeric(18) NOT NULL,
 	ofer_username nvarchar(255) NOT NULL
 )
@@ -1513,7 +1516,7 @@ UPDATE LA_PETER_MACHINE.publicacion SET publ_cantidad = (publ_cantidad - @cantid
 
 GO
 
-CREATE PROCEDURE LA_PETER_MACHINE.SP_ObtenerIdUser_ComprarOfertar
+CREATE PROCEDURE LA_PETER_MACHINE.SP_ObtenerIdUser
 (@username NVARCHAR(255),
 @idUser INT OUTPUT)
 AS
@@ -1530,6 +1533,101 @@ AS
 UPDATE LA_PETER_MACHINE.publicacion SET publ_precio = @precio  WHERE publicacion_id = @publ_id
 
 GO
+
+CREATE PROCEDURE LA_PETER_MACHINE.SP_ObtenerCalificacionProm_Historial
+(@idUsuario INT, @calificacionPromedio numeric(12,3) OUTPUT)
+AS
+
+SET @calificacionPromedio = 
+		(select AVG(E.cali_valor) as calif_prom from LA_PETER_MACHINE.compra C, LA_PETER_MACHINE.calificacion E
+			where C.comp_id_calificacion is not null
+				and C.comp_id_calificacion = E.calificacion_id
+				and C.comp_id_comprador = @idUsuario
+			group by C.comp_id_comprador
+		)
+GO
+
+CREATE PROCEDURE LA_PETER_MACHINE.SP_Listado_Historial
+(@registrosPorPagina INT,
+@numerosPagina INT,
+@cliente nvarchar(255),
+@tipo INT)
+AS	
+BEGIN
+
+	if(@tipo = 1)	
+		BEGIN
+		SELECT C.comp_fecha as Fecha, P.publ_descripcion as Descripcion, C.comp_cantidad as Cantidad,
+				 P.publ_precio as Precio, I.pers_username as Vendedor
+			FROM LA_PETER_MACHINE.compra C, LA_PETER_MACHINE.publicacion P, LA_PETER_MACHINE.persona I 
+			where C.comp_id_publicacion = P.publicacion_id 
+				and C.comp_username = @cliente
+				and C.comp_id_vendedor = I.pers_id
+			order by C.comp_fecha
+		OFFSET (@numerosPagina - 1) * @registrosPorPagina ROWS
+		FETCH NEXT @registrosPorPagina ROWS ONLY
+		END
+		
+	if(@tipo = 2)
+		BEGIN
+		SELECT O.ofer_fecha as Fecha, P.publ_descripcion as Descripcion, O.ofer_valor as Valor_de_Oferta, I.pers_username as Vendedor 
+			FROM LA_PETER_MACHINE.oferta O, LA_PETER_MACHINE.publicacion P, LA_PETER_MACHINE.persona I
+			where O.ofer_id_publicacion = P.publicacion_id 
+				and O.ofer_username = @cliente
+				and I.pers_id = P.publ_id_vendedor
+			order by O.ofer_fecha
+		OFFSET (@numerosPagina - 1) * @registrosPorPagina ROWS
+		FETCH NEXT @registrosPorPagina ROWS ONLY
+		END
+
+END;
+GO
+
+CREATE PROCEDURE LA_PETER_MACHINE.SP_Cantidad_Paginas_Historial
+(@registrosPorPagina INT,
+@totalDePaginas INT OUTPUT,
+@cliente nvarchar(255),
+@tipo int)
+AS
+
+DECLARE @cantidadFilas int
+	
+BEGIN 
+	SET NOCOUNT ON
+	
+	if(@tipo = 1)	
+		BEGIN
+			SET @cantidadFilas = (SELECT COUNT(*)
+			FROM LA_PETER_MACHINE.compra C, LA_PETER_MACHINE.publicacion P, LA_PETER_MACHINE.persona I 
+			where C.comp_id_publicacion = P.publicacion_id 
+				and C.comp_username = @cliente
+				and C.comp_id_vendedor = I.pers_id)
+		END
+		
+	if(@tipo = 2)
+		BEGIN
+		SET @cantidadFilas = (SELECT COUNT(*)
+			FROM LA_PETER_MACHINE.oferta O, LA_PETER_MACHINE.publicacion P, LA_PETER_MACHINE.persona I
+			where O.ofer_id_publicacion = P.publicacion_id 
+				and O.ofer_username = @cliente
+				and I.pers_id = P.publ_id_vendedor)
+		END
+
+		SET @totalDePaginas = @cantidadFilas / @registrosPorPagina
+		IF (@cantidadFilas % @registrosPorPagina) > 0
+			BEGIN
+				SET @totalDePaginas=@totalDePaginas+1
+				RETURN;
+			END
+		IF @totalDePaginas = 0
+			BEGIN
+				SET @totalDePaginas=1
+				RETURN;
+			END
+	END
+GO
+
+
 
 
 ------------------------------------------------------
@@ -1794,17 +1892,24 @@ insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_persona
 		order by Factura_Nro
 
 --OFERTA
-	insert into LA_PETER_MACHINE.oferta(ofer_id_publicacion, ofer_valor, ofer_username)
-	select p.publicacion_id, Oferta_Monto, pe.pers_username
+	insert into LA_PETER_MACHINE.oferta(ofer_id_publicacion, ofer_fecha, ofer_valor, ofer_username)
+	select p.publicacion_id, Oferta_Fecha, Oferta_Monto, pe.pers_username
 		from LA_PETER_MACHINE.publicacion p, LA_PETER_MACHINE.persona pe, gd_esquema.Maestra
 		where p.publicacion_id = Publicacion_cod and pe.pers_mail = Cli_mail and Oferta_Monto is not NULL
 
 --COMPRA
-	insert into LA_PETER_MACHINE.compra(comp_id_publicacion, comp_id_vendedor, comp_id_comprador, comp_num_factura, comp_username, comp_id_calificacion)
-	select p.publicacion_id, pe.pers_id, pe2.pers_id, (select DISTINCT m2.Factura_Nro from gd_esquema.Maestra m2 where m2.Publicacion_Cod = p.publicacion_id and m2.Factura_Nro is not null), pe.pers_username, Calificacion_Codigo
-		from LA_PETER_MACHINE.publicacion p, LA_PETER_MACHINE.persona pe, gd_esquema.Maestra
-		join LA_PETER_MACHINE.persona pe2 on pe2.pers_mail = Publ_Cli_Mail or pe2.pers_mail = Publ_Empresa_Mail
-		where p.publicacion_id = Publicacion_cod and pe.pers_mail = Cli_mail and Compra_Cantidad is not NULL
+	insert into LA_PETER_MACHINE.compra(comp_id_publicacion, comp_id_vendedor, comp_id_comprador, comp_fecha, comp_cantidad,
+											 comp_num_factura, comp_username, comp_id_calificacion)
+	select p.publicacion_id, pe2.pers_id, pe.pers_id, Compra_Fecha, Compra_Cantidad,
+			(select DISTINCT m2.Factura_Nro 
+				from gd_esquema.Maestra m2 where m2.Publicacion_Cod = p.publicacion_id and m2.Factura_Nro is not null),
+			 pe.pers_username, Calificacion_Codigo
+		from LA_PETER_MACHINE.publicacion p, LA_PETER_MACHINE.persona pe, 
+		gd_esquema.Maestra join LA_PETER_MACHINE.persona pe2 on
+						 pe2.pers_mail = Publ_Cli_Mail or pe2.pers_mail = Publ_Empresa_Mail --Vendedor
+		where p.publicacion_id = Publicacion_cod 
+			and pe.pers_mail = Cli_mail --Comprador
+			and Compra_Cantidad is not NULL
 
 GO
 

@@ -10,7 +10,7 @@ namespace WindowsFormsApplication1.Historial_Cliente
 {
     public class Logica_Historial
     {
-        public static DataTable Mostrar(int registrosPorPagina, int numerosPagina, int cliente)
+        public static DataTable Mostrar(int registrosPorPagina, int numerosPagina, String usuario, int tipo)
         {
             DataTable tablaDatos = new DataTable("ListadoHistorial");
             SqlConnection sqlConexion = conectionDB.getConnection();
@@ -36,11 +36,18 @@ namespace WindowsFormsApplication1.Historial_Cliente
                 parNumerosPagina.Value = numerosPagina;
                 sqlComando.Parameters.Add(parNumerosPagina);
 
-                SqlParameter parCliente = new SqlParameter();
-                parCliente.ParameterName = "@cliente";
-                parCliente.SqlDbType = SqlDbType.Int;
-                parCliente.Value = cliente;
-                sqlComando.Parameters.Add(parCliente);
+                SqlParameter parUsuario = new SqlParameter();
+                parUsuario.ParameterName = "@cliente";
+                parUsuario.SqlDbType = SqlDbType.VarChar;
+                parUsuario.Value = usuario;
+                sqlComando.Parameters.Add(parUsuario);
+
+                SqlParameter parTipo = new SqlParameter();
+                parTipo.ParameterName = "@tipo";
+                parTipo.SqlDbType = SqlDbType.Int;
+                parTipo.Value = tipo;
+                sqlComando.Parameters.Add(parTipo);
+
 
                 sqlComando.ExecuteNonQuery();
 
@@ -52,7 +59,7 @@ namespace WindowsFormsApplication1.Historial_Cliente
             catch (Exception e)
             {
                 tablaDatos = null;
-                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_Listado_ComprarOfertar. " + e.Message);
+                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_Listado_Historial. " + e.Message);
             }
 
             finally
@@ -64,9 +71,7 @@ namespace WindowsFormsApplication1.Historial_Cliente
         }
 
 
-
-
-        public static int tamanio(int registrosPorPagina, int cliente)
+        public static int tamanio(int registrosPorPagina, String usuario, int tipo)
         {
             int totalPaginas = 1;
             SqlConnection sqlConexion = conectionDB.getConnection();
@@ -77,7 +82,7 @@ namespace WindowsFormsApplication1.Historial_Cliente
 
                 SqlCommand sqlComando = new SqlCommand();
                 sqlComando.Connection = sqlConexion;
-                sqlComando.CommandText = "LA_PETER_MACHINE.SP_Cantidad_Paginas_ComprarOfertar";
+                sqlComando.CommandText = "LA_PETER_MACHINE.SP_Cantidad_Paginas_Historial";
                 sqlComando.CommandType = CommandType.StoredProcedure;
 
                 SqlParameter parRegistrosPorPagina = new SqlParameter();
@@ -92,11 +97,17 @@ namespace WindowsFormsApplication1.Historial_Cliente
                 parTotalDePaginas.SqlDbType = SqlDbType.Int;
                 sqlComando.Parameters.Add(parTotalDePaginas);
 
-                SqlParameter parCliente = new SqlParameter();
-                parCliente.ParameterName = "@cliente";
-                parCliente.SqlDbType = SqlDbType.Int;
-                parCliente.Value = cliente;
-                sqlComando.Parameters.Add(parCliente);
+                SqlParameter parUsuario = new SqlParameter();
+                parUsuario.ParameterName = "@cliente";
+                parUsuario.SqlDbType = SqlDbType.VarChar;
+                parUsuario.Value = usuario;
+                sqlComando.Parameters.Add(parUsuario);
+
+                SqlParameter parTipo = new SqlParameter();
+                parTipo.ParameterName = "@tipo";
+                parTipo.SqlDbType = SqlDbType.Int;
+                parTipo.Value = tipo;
+                sqlComando.Parameters.Add(parTipo);
 
                 sqlComando.ExecuteNonQuery();
 
@@ -104,7 +115,7 @@ namespace WindowsFormsApplication1.Historial_Cliente
             }
             catch (Exception e)
             {
-                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_Cantidad_Paginas_ComprarOfertar. " + e.Message);
+                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_Cantidad_Paginas_Historial. " + e.Message);
             }
 
             finally
@@ -115,5 +126,89 @@ namespace WindowsFormsApplication1.Historial_Cliente
             return totalPaginas;
         }
 
+        public static int ObtenerIdUsuario(string usuario)
+        {
+            SqlConnection sqlConexion = conectionDB.getConnection();
+            int idUser;
+
+            try
+            {
+                sqlConexion.Open();
+
+                SqlCommand sqlComando = new SqlCommand();
+                sqlComando.Connection = sqlConexion;
+                sqlComando.CommandText = "LA_PETER_MACHINE.SP_ObtenerIdUser";
+                sqlComando.CommandType = CommandType.StoredProcedure;
+
+                sqlComando.Parameters.AddWithValue("@username", usuario);
+
+                SqlParameter parIdUser = new SqlParameter();
+                parIdUser.ParameterName = "@idUser";
+                parIdUser.Direction = ParameterDirection.Output;
+                parIdUser.SqlDbType = SqlDbType.Int;
+                sqlComando.Parameters.Add(parIdUser);
+
+                sqlComando.ExecuteNonQuery();
+
+                idUser = (int)sqlComando.Parameters["@idUser"].Value;
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_ObtenerIdUser. " + e.Message);
+            }
+
+            finally
+            {
+                sqlConexion.Close();
+            }
+
+            return idUser;
+        }
+
+
+        public static decimal ObtenerCalificacionProm(int idUsuario)
+        {
+            SqlConnection sqlConexion = conectionDB.getConnection();
+            decimal calificacionPromedio;
+
+            try
+            {
+                sqlConexion.Open();
+
+                SqlCommand sqlComando = new SqlCommand();
+                sqlComando.Connection = sqlConexion;
+                sqlComando.CommandText = "LA_PETER_MACHINE.SP_ObtenerCalificacionProm_Historial";
+                sqlComando.CommandType = CommandType.StoredProcedure;
+
+                sqlComando.Parameters.AddWithValue("@idUsuario", idUsuario);
+
+                SqlParameter parIdUser = new SqlParameter();
+                parIdUser.ParameterName = "@calificacionPromedio";
+                parIdUser.Direction = ParameterDirection.Output;
+                parIdUser.SqlDbType = SqlDbType.Float;
+                sqlComando.Parameters.Add(parIdUser);
+
+                sqlComando.ExecuteNonQuery();
+
+                calificacionPromedio = Convert.ToDecimal(sqlComando.Parameters["@calificacionPromedio"].Value);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_ObtenerCalificacionProm_Historial. " + e.Message);
+            }
+
+            finally
+            {
+                sqlConexion.Close();
+            }
+
+            return calificacionPromedio;
+
+        }
+
+        internal static string ObtenerPendientesDeCalificacion(int idUsuario)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -136,6 +136,8 @@ namespace WindowsFormsApplication1.ComprarOfertar
             comboRubros.Text = "";
             filtroRubros = new List<string>();
             Grid_ComprarOfertar.DataSource = null;
+            this.labelNroPagina.Text = String.Empty;
+            this.label_InfoPagina_CO.Text = String.Empty;
         }
 
 

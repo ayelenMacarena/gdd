@@ -228,7 +228,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
                 SqlCommand sqlComando = new SqlCommand();
                 sqlComando.Connection = sqlConexion;
-                sqlComando.CommandText = "LA_PETER_MACHINE.SP_ObtenerIdUser_ComprarOfertar";
+                sqlComando.CommandText = "LA_PETER_MACHINE.SP_ObtenerIdUser";
                 sqlComando.CommandType = CommandType.StoredProcedure;
 
                 sqlComando.Parameters.AddWithValue("@username", usuario);
@@ -245,7 +245,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
             }
             catch (Exception e)
             {
-                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_ObtenerIdUser_ComprarOfertar. " + e.Message);
+                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_ObtenerIdUser. " + e.Message);
             }
 
             finally

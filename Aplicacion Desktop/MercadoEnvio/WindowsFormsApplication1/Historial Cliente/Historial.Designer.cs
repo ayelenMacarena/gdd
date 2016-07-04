@@ -32,10 +32,19 @@
             this.label1 = new System.Windows.Forms.Label();
             this.labelCliente = new System.Windows.Forms.Label();
             this.labelPromedioCalif = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.buttonCompras = new System.Windows.Forms.Button();
+            this.buttonOfertas = new System.Windows.Forms.Button();
+            this.buttonLimpiar = new System.Windows.Forms.Button();
             this.dataGridView_Historial = new System.Windows.Forms.DataGridView();
+            this.labelNroPagina = new System.Windows.Forms.Label();
+            this.linkPrimeraPag = new System.Windows.Forms.LinkLabel();
+            this.linkUltimaPag = new System.Windows.Forms.LinkLabel();
+            this.label_InfoPagina_CO = new System.Windows.Forms.Label();
+            this.label_Anterio_CO = new System.Windows.Forms.LinkLabel();
+            this.label_Siguiente_CO = new System.Windows.Forms.LinkLabel();
+            this.textBoxCalificacionPromedio = new System.Windows.Forms.TextBox();
+            this.textBoxPorCalificar = new System.Windows.Forms.TextBox();
+            this.labelPorCalificar = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Historial)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,38 +71,41 @@
             // labelPromedioCalif
             // 
             this.labelPromedioCalif.AutoSize = true;
-            this.labelPromedioCalif.Location = new System.Drawing.Point(72, 74);
+            this.labelPromedioCalif.Location = new System.Drawing.Point(45, 74);
             this.labelPromedioCalif.Name = "labelPromedioCalif";
             this.labelPromedioCalif.Size = new System.Drawing.Size(173, 13);
             this.labelPromedioCalif.TabIndex = 4;
             this.labelPromedioCalif.Text = "Promedio de Calificacion Otorgada:";
             // 
-            // button1
+            // buttonCompras
             // 
-            this.button1.Location = new System.Drawing.Point(630, 30);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "COMPRAS";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonCompras.Location = new System.Drawing.Point(522, 74);
+            this.buttonCompras.Name = "buttonCompras";
+            this.buttonCompras.Size = new System.Drawing.Size(75, 23);
+            this.buttonCompras.TabIndex = 6;
+            this.buttonCompras.Text = "COMPRAS";
+            this.buttonCompras.UseVisualStyleBackColor = true;
+            this.buttonCompras.Click += new System.EventHandler(this.buttonCompras_Click);
             // 
-            // button2
+            // buttonOfertas
             // 
-            this.button2.Location = new System.Drawing.Point(630, 59);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "OFERTAS";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonOfertas.Location = new System.Drawing.Point(611, 74);
+            this.buttonOfertas.Name = "buttonOfertas";
+            this.buttonOfertas.Size = new System.Drawing.Size(75, 23);
+            this.buttonOfertas.TabIndex = 7;
+            this.buttonOfertas.Text = "OFERTAS";
+            this.buttonOfertas.UseVisualStyleBackColor = true;
+            this.buttonOfertas.Click += new System.EventHandler(this.buttonOfertas_Click);
             // 
-            // button3
+            // buttonLimpiar
             // 
-            this.button3.Location = new System.Drawing.Point(691, 429);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "LIMPIAR";
-            this.button3.UseVisualStyleBackColor = true;
+            this.buttonLimpiar.Location = new System.Drawing.Point(691, 429);
+            this.buttonLimpiar.Name = "buttonLimpiar";
+            this.buttonLimpiar.Size = new System.Drawing.Size(75, 23);
+            this.buttonLimpiar.TabIndex = 8;
+            this.buttonLimpiar.Text = "LIMPIAR";
+            this.buttonLimpiar.UseVisualStyleBackColor = true;
+            this.buttonLimpiar.Click += new System.EventHandler(this.buttonLimpiar_Click);
             // 
             // dataGridView_Historial
             // 
@@ -106,7 +118,7 @@
             this.dataGridView_Historial.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dataGridView_Historial.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView_Historial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView_Historial.Location = new System.Drawing.Point(88, 134);
+            this.dataGridView_Historial.Location = new System.Drawing.Point(87, 143);
             this.dataGridView_Historial.MultiSelect = false;
             this.dataGridView_Historial.Name = "dataGridView_Historial";
             this.dataGridView_Historial.ReadOnly = true;
@@ -115,15 +127,118 @@
             this.dataGridView_Historial.Size = new System.Drawing.Size(568, 331);
             this.dataGridView_Historial.TabIndex = 10;
             // 
+            // labelNroPagina
+            // 
+            this.labelNroPagina.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.labelNroPagina.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelNroPagina.Location = new System.Drawing.Point(495, 490);
+            this.labelNroPagina.Name = "labelNroPagina";
+            this.labelNroPagina.Size = new System.Drawing.Size(48, 20);
+            this.labelNroPagina.TabIndex = 18;
+            this.labelNroPagina.Text = "Nº";
+            this.labelNroPagina.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // linkPrimeraPag
+            // 
+            this.linkPrimeraPag.AutoSize = true;
+            this.linkPrimeraPag.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkPrimeraPag.Location = new System.Drawing.Point(367, 493);
+            this.linkPrimeraPag.Name = "linkPrimeraPag";
+            this.linkPrimeraPag.Size = new System.Drawing.Size(57, 17);
+            this.linkPrimeraPag.TabIndex = 17;
+            this.linkPrimeraPag.TabStop = true;
+            this.linkPrimeraPag.Text = "Primera";
+            this.linkPrimeraPag.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkPrimeraPag_LinkClicked_1);
+            // 
+            // linkUltimaPag
+            // 
+            this.linkUltimaPag.AutoSize = true;
+            this.linkUltimaPag.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.linkUltimaPag.Location = new System.Drawing.Point(622, 493);
+            this.linkUltimaPag.Name = "linkUltimaPag";
+            this.linkUltimaPag.Size = new System.Drawing.Size(47, 17);
+            this.linkUltimaPag.TabIndex = 16;
+            this.linkUltimaPag.TabStop = true;
+            this.linkUltimaPag.Text = "Ultima";
+            this.linkUltimaPag.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkUltimaPag_LinkClicked);
+            // 
+            // label_InfoPagina_CO
+            // 
+            this.label_InfoPagina_CO.AutoSize = true;
+            this.label_InfoPagina_CO.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_InfoPagina_CO.Location = new System.Drawing.Point(254, 493);
+            this.label_InfoPagina_CO.Name = "label_InfoPagina_CO";
+            this.label_InfoPagina_CO.Size = new System.Drawing.Size(66, 20);
+            this.label_InfoPagina_CO.TabIndex = 15;
+            this.label_InfoPagina_CO.Text = "Paginas";
+            // 
+            // label_Anterio_CO
+            // 
+            this.label_Anterio_CO.AutoSize = true;
+            this.label_Anterio_CO.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Anterio_CO.Location = new System.Drawing.Point(431, 493);
+            this.label_Anterio_CO.Name = "label_Anterio_CO";
+            this.label_Anterio_CO.Size = new System.Drawing.Size(58, 17);
+            this.label_Anterio_CO.TabIndex = 14;
+            this.label_Anterio_CO.TabStop = true;
+            this.label_Anterio_CO.Text = "Anterior";
+            this.label_Anterio_CO.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.label_Anterio_CO_LinkClicked_1);
+            // 
+            // label_Siguiente_CO
+            // 
+            this.label_Siguiente_CO.AutoSize = true;
+            this.label_Siguiente_CO.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_Siguiente_CO.Location = new System.Drawing.Point(549, 493);
+            this.label_Siguiente_CO.Name = "label_Siguiente_CO";
+            this.label_Siguiente_CO.Size = new System.Drawing.Size(67, 17);
+            this.label_Siguiente_CO.TabIndex = 13;
+            this.label_Siguiente_CO.TabStop = true;
+            this.label_Siguiente_CO.Text = "Siguiente";
+            this.label_Siguiente_CO.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.label_Siguiente_CO_LinkClicked_1);
+            // 
+            // textBoxCalificacionPromedio
+            // 
+            this.textBoxCalificacionPromedio.Location = new System.Drawing.Point(253, 71);
+            this.textBoxCalificacionPromedio.Name = "textBoxCalificacionPromedio";
+            this.textBoxCalificacionPromedio.Size = new System.Drawing.Size(44, 20);
+            this.textBoxCalificacionPromedio.TabIndex = 19;
+            this.textBoxCalificacionPromedio.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBoxPorCalificar
+            // 
+            this.textBoxPorCalificar.Location = new System.Drawing.Point(253, 101);
+            this.textBoxPorCalificar.Name = "textBoxPorCalificar";
+            this.textBoxPorCalificar.Size = new System.Drawing.Size(44, 20);
+            this.textBoxPorCalificar.TabIndex = 21;
+            this.textBoxPorCalificar.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // labelPorCalificar
+            // 
+            this.labelPorCalificar.AutoSize = true;
+            this.labelPorCalificar.Location = new System.Drawing.Point(45, 104);
+            this.labelPorCalificar.Name = "labelPorCalificar";
+            this.labelPorCalificar.Size = new System.Drawing.Size(197, 13);
+            this.labelPorCalificar.TabIndex = 20;
+            this.labelPorCalificar.Text = "Operaciones pendientes de Calificacion:";
+            // 
             // Historial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(790, 491);
+            this.ClientSize = new System.Drawing.Size(790, 577);
+            this.Controls.Add(this.textBoxPorCalificar);
+            this.Controls.Add(this.labelPorCalificar);
+            this.Controls.Add(this.textBoxCalificacionPromedio);
+            this.Controls.Add(this.labelNroPagina);
+            this.Controls.Add(this.linkPrimeraPag);
+            this.Controls.Add(this.linkUltimaPag);
+            this.Controls.Add(this.label_InfoPagina_CO);
+            this.Controls.Add(this.label_Anterio_CO);
+            this.Controls.Add(this.label_Siguiente_CO);
             this.Controls.Add(this.dataGridView_Historial);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonLimpiar);
+            this.Controls.Add(this.buttonOfertas);
+            this.Controls.Add(this.buttonCompras);
             this.Controls.Add(this.labelPromedioCalif);
             this.Controls.Add(this.labelCliente);
             this.Controls.Add(this.label1);
@@ -141,9 +256,18 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelCliente;
         private System.Windows.Forms.Label labelPromedioCalif;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button buttonCompras;
+        private System.Windows.Forms.Button buttonOfertas;
+        private System.Windows.Forms.Button buttonLimpiar;
         private System.Windows.Forms.DataGridView dataGridView_Historial;
+        private System.Windows.Forms.Label labelNroPagina;
+        private System.Windows.Forms.LinkLabel linkPrimeraPag;
+        private System.Windows.Forms.LinkLabel linkUltimaPag;
+        private System.Windows.Forms.Label label_InfoPagina_CO;
+        private System.Windows.Forms.LinkLabel label_Anterio_CO;
+        private System.Windows.Forms.LinkLabel label_Siguiente_CO;
+        private System.Windows.Forms.TextBox textBoxCalificacionPromedio;
+        private System.Windows.Forms.TextBox textBoxPorCalificar;
+        private System.Windows.Forms.Label labelPorCalificar;
     }
 }
