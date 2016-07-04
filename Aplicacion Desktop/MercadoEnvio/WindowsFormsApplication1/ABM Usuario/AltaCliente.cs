@@ -52,9 +52,22 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
 
         }
+        public bool isNotEmpty(TextBox text, String campo)
+        {
+
+            if (text.Text == "")
+            {
+                MessageBox.Show("el campo " + campo + " esta vacio");
+                return false;
+            }
+            else { return true; }
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if(isNotEmpty(textBox1,"usuario") && isNotEmpty(textBox2,"contraseña") &&
+                isNotEmpty(textBox5,"nombre") && isNotEmpty(textBox7,"apellido")&&
+                isNotEmpty(textBox4,"documento"))
             if (textBox2.Text == textBox3.Text)
             {
                 SqlConnection conexion = conectionDB.getConnection();
@@ -123,5 +136,35 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         }
 
+        private void textBox4_Validating(object sender, CancelEventArgs e)
+        {
+        }
+
+        private void soloNumeros(object sender, KeyPressEventArgs e)
+        {
+            if (isNumeric(e.KeyChar) || e.KeyChar == 8) { e.Handled = false; }
+            else { e.Handled = true; }
+        }
+       
+
+        public bool isNumeric(Char c)
+        {
+            if ((c >= '0' && c <= '9'))
+            {
+                return true;
+            }
+            return false;
+        }
+
+     
+
+        private void textBox11_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+    
+
+     
     }
 }

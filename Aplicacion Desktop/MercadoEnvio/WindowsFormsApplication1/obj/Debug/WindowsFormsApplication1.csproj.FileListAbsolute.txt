@@ -19,7 +19,6 @@ D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplicati
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
-D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.ListadoDeUsuarios.resources
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.EditarRoles.resources
 D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.AltaEmpresa.resources
@@ -85,3 +84,23 @@ C:\Users\IEUser\Documents\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplic
 C:\Users\IEUser\Documents\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
 C:\Users\IEUser\Documents\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
 C:\Users\IEUser\Documents\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Rol.AceptarNuevaFuncionalidad.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Usuario.CambiarContraseña.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Deshabilitar_Funcionalidad.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.MenuPrincipal.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Visibilidad.Alta.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Visibilidad.Listado.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Visibilidad.Selección.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ABM_Visibilidad.Visibilidad.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Calificar.Calificar.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ComprarOfertar.Comprar.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ComprarOfertar.Listado_ComprarOfertar.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ComprarOfertar.Ofertar.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Facturas.consultaFacturas.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Generar_Publicación.busquedaPublicacion.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Generar_Publicación.generarPublicacionCompra.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Generar_Publicación.generarPublicacionSubasta.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Generar_Publicación.modificarPublicacion.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Generar_Publicación.tiposDePublicacion.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Historial_Cliente.Historial.resources
+D:\UTN\Tercer año\GDD\gdd\Aplicacion Desktop\MercadoEnvio\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache

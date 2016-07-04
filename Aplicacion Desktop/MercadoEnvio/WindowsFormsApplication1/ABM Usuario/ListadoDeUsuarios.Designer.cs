@@ -116,7 +116,7 @@
             this.textBox5.ReadOnly = true;
             this.textBox5.Size = new System.Drawing.Size(100, 20);
             this.textBox5.TabIndex = 8;
-            this.textBox5.DoubleClick += new System.EventHandler(this.textBox5_DoubleClick);
+            this.textBox5.Click += new System.EventHandler(this.textBox5_DoubleClick);
             // 
             // label4
             // 
@@ -134,7 +134,7 @@
             this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(100, 20);
             this.textBox4.TabIndex = 10;
-            this.textBox4.DoubleClick += new System.EventHandler(this.textBox4_DoubleClick);
+            this.textBox4.Click += new System.EventHandler(this.textBox4_DoubleClick);
             // 
             // label5
             // 

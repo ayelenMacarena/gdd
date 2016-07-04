@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ABM Rol\AceptarNuevaFuncionalidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Rol\AceptarNuevaFuncionalidad.Designer.cs">
+      <DependentUpon>AceptarNuevaFuncionalidad.cs</DependentUpon>
+    </Compile>
     <Compile Include="ABM Rol\AltaRol.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +144,12 @@
     </Compile>
     <Compile Include="ABM Usuario\ListadoDeUsuarios.Designer.cs">
       <DependentUpon>ListadoDeUsuarios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ABM Rol\Deshabilitar Funcionalidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ABM Rol\Deshabilitar Funcionalidad.Designer.cs">
+      <DependentUpon>Deshabilitar Funcionalidad.cs</DependentUpon>
     </Compile>
     <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
@@ -318,6 +330,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ABM Rol\AceptarNuevaFuncionalidad.resx">
+      <DependentUpon>AceptarNuevaFuncionalidad.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ABM Rol\AltaRol.resx">
       <DependentUpon>AltaRol.cs</DependentUpon>
     </EmbeddedResource>
@@ -362,6 +377,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ABM Usuario\ListadoDeUsuarios.resx">
       <DependentUpon>ListadoDeUsuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ABM Rol\Deshabilitar Funcionalidad.resx">
+      <DependentUpon>Deshabilitar Funcionalidad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuPrincipal.resx">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>

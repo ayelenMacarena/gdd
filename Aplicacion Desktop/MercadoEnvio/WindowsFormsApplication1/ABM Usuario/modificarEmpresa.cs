@@ -49,6 +49,11 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (textBox2.Text == "")
+            {
+                MessageBox.Show("debe ingresar una contraseña");
+                return;
+            }
             if (textBox2.Text == textBox3.Text)
             {
                 SqlConnection conexion = conectionDB.getConnection();
@@ -95,7 +100,21 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
 
         }
+        private void soloNumeros(object sender, KeyPressEventArgs e)
+        {
+            if (isNumeric(e.KeyChar) || e.KeyChar == 8) { e.Handled = false; }
+            else { e.Handled = true; }
+        }
 
+
+        public bool isNumeric(Char c)
+        {
+            if ((c >= '0' && c <= '9'))
+            {
+                return true;
+            }
+            return false;
+        }
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             EditarRoles edit = new EditarRoles(usu,"empresa");

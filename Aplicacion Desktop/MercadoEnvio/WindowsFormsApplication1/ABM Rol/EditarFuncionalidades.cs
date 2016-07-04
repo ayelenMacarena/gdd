@@ -60,43 +60,19 @@ namespace WindowsFormsApplication1.ABM_Rol
      
             if (enteroABool(String.Compare(senderGrid.Columns[e.ColumnIndex].HeaderText,"Habilitar")) && e.RowIndex >= 0)
             {
-                SqlConnection conexion = conectionDB.getConnection();
-                conexion.Open();
-                SqlCommand crearFuncRol = new SqlCommand("LA_PETER_MACHINE.agregar_funcionalidad_rol", conexion);
-                SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
-                rdo.Size = 255;
-                rdo.Direction = ParameterDirection.Output;
+               
 
-                crearFuncRol.CommandType = CommandType.StoredProcedure;
-                crearFuncRol.Parameters.Add("@funcionalidad", SqlDbType.NVarChar);
-                crearFuncRol.Parameters["@funcionalidad"].Value = senderGrid.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
-
-                crearFuncRol.Parameters.Add("@rol", SqlDbType.NVarChar);
-                crearFuncRol.Parameters["@rol"].Value = label1.Text;
-                crearFuncRol.Parameters.Add(rdo);
-
-                crearFuncRol.ExecuteNonQuery();
-                MessageBox.Show(rdo.Value.ToString());
+                AceptarNuevaFuncionalidad window = new AceptarNuevaFuncionalidad( senderGrid.Rows[e.RowIndex].Cells[2].FormattedValue.ToString(), label1.Text);
+                window.ShowDialog();
+                
             }
             if (enteroABool(String.Compare(senderGrid.Columns[e.ColumnIndex].HeaderText, "Deshabilitar")) && e.RowIndex >= 0)
             {
-                SqlConnection conexion = conectionDB.getConnection();
-                conexion.Open();
-                SqlCommand eliminarFuncRol = new SqlCommand("LA_PETER_MACHINE.eliminar_funcionalidad_rol", conexion);
-                SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
-                rdo.Size = 255;
-                rdo.Direction = ParameterDirection.Output;
-
-                eliminarFuncRol.CommandType = CommandType.StoredProcedure;
-                eliminarFuncRol.Parameters.Add("@funcionalidad", SqlDbType.NVarChar);
-                eliminarFuncRol.Parameters["@funcionalidad"].Value = senderGrid.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
-
-                eliminarFuncRol.Parameters.Add("@rol", SqlDbType.NVarChar);
-                eliminarFuncRol.Parameters["@rol"].Value = label1.Text;
-                eliminarFuncRol.Parameters.Add(rdo);
-
-                eliminarFuncRol.ExecuteNonQuery();
-                MessageBox.Show(rdo.Value.ToString());
+               
+                Deshabilitar_Funcionalidad window = new Deshabilitar_Funcionalidad( senderGrid.Rows[e.RowIndex].Cells[2].FormattedValue.ToString(), label1.Text);
+                window.ShowDialog();
+                
+        
             }
         }
         private bool enteroABool(int num) {

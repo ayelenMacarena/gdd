@@ -24,9 +24,12 @@ namespace WindowsFormsApplication1.ABM_Usuario
             cmd.CommandText ="select rol_descripcion  from LA_PETER_MACHINE.rol";
              conexion.Open();
              reader = cmd.ExecuteReader();
-             while (reader.Read()) { 
-                comboBox1.Items.Add(reader[0]);
-             }
+             while (reader.Read()) {
+                 if (reader[0].ToString() != "administrativo")
+                 {
+                     comboBox1.Items.Add(reader[0]);
+                 }
+                }
            
         }
 
@@ -75,6 +78,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 {
                     MessageBox.Show(rdo.Value.ToString());
                 }
+                return;
             }
             if (enteroABool(String.Compare(senderGrid.Columns[e.ColumnIndex].HeaderText, "Habilitar")) && e.RowIndex >= 0)
             {
@@ -84,9 +88,12 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@Usuario", SqlDbType.NVarChar);
                 cmd.Parameters["@Usuario"].Value = usu;
-
+                SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
+                rdo.Size = 255;
+                rdo.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(rdo);
                 cmd.ExecuteNonQuery();
-
+                MessageBox.Show(rdo.Value.ToString());
             }
             if (enteroABool(String.Compare(senderGrid.Columns[e.ColumnIndex].HeaderText, "Deshabilitar")) && e.RowIndex >= 0)
             {
@@ -96,8 +103,12 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@Usuario", SqlDbType.NVarChar);
                 cmd.Parameters["@Usuario"].Value = usu;
-
+                SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
+                rdo.Size = 255;
+                rdo.Direction = ParameterDirection.Output;
+                cmd.Parameters.Add(rdo);
                 cmd.ExecuteNonQuery();
+                MessageBox.Show(rdo.Value.ToString());
             }    
         }
 
@@ -170,29 +181,32 @@ namespace WindowsFormsApplication1.ABM_Usuario
             cmd.Parameters["@rol"].Value =comboBox1.Text;
             conexion.Open();
             adapter.Fill(table);
-            dataGridView1.DataSource = table;
-            this.seleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.seleccionar.Text = "Seleccionar";
-            this.seleccionar.UseColumnTextForButtonValue = true;
-            this.seleccionar.HeaderText = "Seleccionar";
-            this.seleccionar.Name = "Seleccionar";
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            if (table.Rows.Count == 0) { }
+            else
+            {
+                dataGridView1.DataSource = table;
+                this.seleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
+                this.seleccionar.Text = "Seleccionar";
+                this.seleccionar.UseColumnTextForButtonValue = true;
+                this.seleccionar.HeaderText = "Seleccionar";
+                this.seleccionar.Name = "Seleccionar";
+                this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.seleccionar});
-            this.habilitar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.habilitar.Text = "Habilitar";
-            this.habilitar.UseColumnTextForButtonValue = true;
-            this.habilitar.HeaderText = "Habilitar";
-            this.habilitar.Name = "Habilitar";
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+                this.habilitar = new System.Windows.Forms.DataGridViewButtonColumn();
+                this.habilitar.Text = "Habilitar";
+                this.habilitar.UseColumnTextForButtonValue = true;
+                this.habilitar.HeaderText = "Habilitar";
+                this.habilitar.Name = "Habilitar";
+                this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.habilitar});
-            this.deshabilitar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.deshabilitar.Text = "Deshabilitar";
-            this.deshabilitar.UseColumnTextForButtonValue = true;
-            this.deshabilitar.HeaderText = "Deshabilitar";
-            this.deshabilitar.Name = "Deshabilitar";
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+                this.deshabilitar = new System.Windows.Forms.DataGridViewButtonColumn();
+                this.deshabilitar.Text = "Deshabilitar";
+                this.deshabilitar.UseColumnTextForButtonValue = true;
+                this.deshabilitar.HeaderText = "Deshabilitar";
+                this.deshabilitar.Name = "Deshabilitar";
+                this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.deshabilitar});
-          
+            }
         }
         
             private String deBoolABit(Boolean b){

@@ -18,7 +18,6 @@ namespace WindowsFormsApplication1.ABM_Rol
             InitializeComponent();
 
         }
-
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Rol rol = new Rol();
@@ -31,24 +30,27 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SqlConnection conexion = conectionDB.getConnection();
-            conexion.Open();
-            SqlCommand crearRol = new SqlCommand("LA_PETER_MACHINE.crearRol", conexion);
-            descripcion= textBox_1.Text;
-            SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
-            rdo.Size = 255;
-             rdo.Direction = ParameterDirection.Output;
-            
-            crearRol.CommandType = CommandType.StoredProcedure;
-            crearRol.Parameters.Add("@descripcion", SqlDbType.NVarChar);
-            crearRol.Parameters["@descripcion"].Value = descripcion;
-            crearRol.Parameters.Add(rdo);
-             crearRol.ExecuteNonQuery();
+            if (textBox_1.Text == "") { MessageBox.Show("Debe ingresar una descripcion"); }
+            else
+            {
+                SqlConnection conexion = conectionDB.getConnection();
+                conexion.Open();
+                SqlCommand crearRol = new SqlCommand("LA_PETER_MACHINE.crearRol", conexion);
+                descripcion = textBox_1.Text;
+                SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
+                rdo.Size = 255;
+                rdo.Direction = ParameterDirection.Output;
 
-             EditarFuncionalidades func = new EditarFuncionalidades(descripcion);
-              MessageBox.Show(rdo.Value.ToString());
-              if (rdo.Value.ToString()=="ok") { func.ShowDialog(); }
-          
+                crearRol.CommandType = CommandType.StoredProcedure;
+                crearRol.Parameters.Add("@descripcion", SqlDbType.NVarChar);
+                crearRol.Parameters["@descripcion"].Value = descripcion;
+                crearRol.Parameters.Add(rdo);
+                crearRol.ExecuteNonQuery();
+
+                EditarFuncionalidades func = new EditarFuncionalidades(descripcion);
+                MessageBox.Show(rdo.Value.ToString());
+                if (rdo.Value.ToString() != "ya existe") { func.ShowDialog(); }
+            } 
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

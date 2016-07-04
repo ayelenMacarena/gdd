@@ -502,6 +502,23 @@ GO
 --     SE CREAN LOS STORE PROCEDURES UTILIZADOS     --
 ------------------------------------------------------
 
+create function LA_PETER_MACHINE.controlNull(@valor nvarchar(255))
+returns nvarchar(255)
+as
+begin 
+declare @rdo nvarchar(255)
+
+if(@valor='')
+begin
+set @rdo=null
+end
+else
+begin
+set @rdo=@valor
+end
+return @rdo
+end
+GO
 
 create procedure LA_PETER_MACHINE.agregar_funcionalidad_rol(@funcionalidad nvarchar(255),@rol nvarchar(255), @rdo nvarchar(255) output)
 as
@@ -518,7 +535,7 @@ if not exists(select*
 								begin
 								insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad,furo_id_rol)
 								values(@func_id,@rol_id)
-								set @rdo='ok'
+								set @rdo='funcionalidad habilitada correctamente'
 								end
 								else
 								set @rdo='ya habilitada'
@@ -546,7 +563,7 @@ begin
 		where rol_descripcion=@descripcion)
 		begin
 	insert into LA_PETER_MACHINE.Rol(rol_descripcion,rol_habilitado) values(@descripcion,1)
-		set @rdo='ok'
+		set @rdo='Rol: ' + @descripcion + ' creado correctamente'
 		end
 		else
 		set @rdo='ya existe'
@@ -567,7 +584,7 @@ if  exists(select*
 								furo_id_rol=@rol_id)
 								begin
 								delete from LA_PETER_MACHINE.funcionalidad_rol where furo_id_funcionalidad=@func_id and furo_id_rol=@rol_id
-								set @rdo='ok'
+								set @rdo='funcionalidad deshabilitada correctamente'
 								end
 								else
 								set @rdo='El rol no tiene esa funcionalidad'
@@ -600,7 +617,7 @@ begin
 end
 GO
 
-create procedure LA_PETER_MACHINE.deshabilitar_rol(@rol nvarchar(255),@rdo nvarchar(255))
+create procedure LA_PETER_MACHINE.deshabilitar_rol(@rol nvarchar(255),@rdo nvarchar(255) output)
 as
 begin
 	declare @id_rol numeric(18)
@@ -610,7 +627,7 @@ begin
 	update LA_PETER_MACHINE.rol
 	set rol_habilitado=0
 	where rol_id=@id_rol
-	set @rdo='ok'
+	set @rdo='Rol deshabilitado'
 	delete from LA_PETER_MACHINE.funcionalidad_rol where furo_id_rol=@id_rol 
 	end
 	else
@@ -618,7 +635,7 @@ begin
 end
 GO
 
-create procedure LA_PETER_MACHINE.habilitar_rol(@rol nvarchar(255),@rdo nvarchar(255))
+create procedure LA_PETER_MACHINE.habilitar_rol(@rol nvarchar(255),@rdo nvarchar(255) output)
 as
 begin
 	declare @id_rol numeric(18)
@@ -628,7 +645,7 @@ begin
 	update LA_PETER_MACHINE.rol
 	set rol_habilitado=1
 	where rol_id=@id_rol
-	set @rdo='ok'
+	set @rdo='Rol habilitado'
 	end
 	else
 	set @rdo='no existe el rol'
@@ -688,14 +705,16 @@ begin try
 	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado)values(@usuario,@hash,1)
 	insert into LA_PETER_MACHINE.persona(pers_ciudad,pers_cod_postal,pers_depto,
 	pers_domicilio_calle,pers_mail,pers_numero_calle,pers_piso,pers_telefono,pers_username,pers_habilitado,pers_fecha_creacion)values(
-	@ciudad,@cod_postal,@depto,@calle,@mail,cast(@numero as numeric),cast(@piso as numeric),@telefono,@usuario,1,CONVERT(datetime,@fechaCreacion,121))
+	LA_PETER_MACHINE.controlNull(@ciudad),LA_PETER_MACHINE.controlNull(@cod_postal),LA_PETER_MACHINE.controlNull(@depto),LA_PETER_MACHINE.controlNull(@calle),LA_PETER_MACHINE.controlNull(@mail),
+	cast(LA_PETER_MACHINE.controlNull(@numero) as numeric),cast(LA_PETER_MACHINE.controlNull(@piso) as numeric),
+	LA_PETER_MACHINE.controlNull(@telefono),@usuario,1,CONVERT(datetime,@fechaCreacion,121))
 	insert into LA_PETER_MACHINE.cliente(clie_apellido,clie_dni,
 	clie_fecha_nac,clie_nombre,clie_id_tipo_doc,clie_id_persona)values(@apellido,cast(@dni as numeric),
 	@fecha,@nombre,(select type_id from LA_PETER_MACHINE.document_type where type_descripcion=@tipo_DNI),
 	(select pers_id from LA_PETER_MACHINE.persona where pers_username=@usuario))
 	insert into LA_PETER_MACHINE.roles_usuario(rolu_username,rolu_id_rol)values(@usuario,
 	(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion='cliente'))
-	set @rdo='ok'
+	set @rdo='cliente creado correctamente'
 	end
 	else
 	set @rdo='usuario en uso'
@@ -712,7 +731,6 @@ begin catch
 end catch
 end 
 GO
-
 create procedure LA_PETER_MACHINE.Controlar_Usuario_Habilitado(@Usuario nvarchar(255),@rdo nvarchar(255) output)
 as
 begin
@@ -728,7 +746,7 @@ select @hab=usua_habilitado from LA_PETER_MACHINE.usuario where usua_username=@U
 end
 GO
 
-create procedure LA_PETER_MACHINE.Deshabilitar_Usuario(@Usuario nvarchar(255))
+create procedure LA_PETER_MACHINE.Deshabilitar_Usuario(@Usuario nvarchar(255),@rdo nvarchar(255) output)
 as
 begin
 	
@@ -737,11 +755,16 @@ begin
 	update LA_PETER_MACHINE.usuario
 	set usua_habilitado=0
 	where usua_username=@Usuario
+	set @rdo='usuario deshabilitado'
+	end
+	else
+	begin
+	set @rdo='usuario inexistente'
 	end
 end
 GO
 
-create procedure LA_PETER_MACHINE.Habilitar_Usuario(@Usuario nvarchar(255))
+create procedure LA_PETER_MACHINE.Habilitar_Usuario(@Usuario nvarchar(255), @rdo nvarchar(255) output)
 as
 begin
 	if exists (select * from LA_PETER_MACHINE.usuario where usua_username=@Usuario)
@@ -749,6 +772,11 @@ begin
 	update LA_PETER_MACHINE.usuario
 	set usua_habilitado=1
 	where usua_username=@Usuario
+	set @rdo='usuario habilitado'
+	end
+	else
+	begin
+	set @rdo='usuario inexistente'
 	end
 end
 GO
@@ -766,7 +794,7 @@ if not exists(select*
 								begin
 								insert into LA_PETER_MACHINE.roles_usuario(rolu_username,rolu_id_rol)
 								values(@usuario,@rol_id)
-								set @rdo='ok'
+								set @rdo='rol asignado correctamente'
 								end
 								else
 								set @rdo='rol activo'
@@ -785,7 +813,7 @@ if  exists(select*
 								rolu_id_rol=@rol_id)
 								begin
 								delete from LA_PETER_MACHINE.roles_usuario where rolu_username=@usuario and rolu_id_rol=@rol_id
-								set @rdo='ok'
+								set @rdo='Rol deshabilitado correctamente'
 								end
 								else
 								set @rdo='El usuario no tiene ese rol'
@@ -810,14 +838,17 @@ begin try
 	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado)values(@usuario,@hash,1)
 	insert into LA_PETER_MACHINE.persona(pers_ciudad,pers_cod_postal,pers_depto,
 	pers_domicilio_calle,pers_mail,pers_numero_calle,pers_piso,pers_telefono,pers_username,pers_habilitado,pers_fecha_creacion)values(
-	@ciudad,@cod_postal,@depto,@calle,@mail,cast(@numero as numeric),cast(@piso as numeric),@telefono,@usuario,1,CONVERT(datetime,@fechaCreacion,121))
+	LA_PETER_MACHINE.controlNull(@ciudad),LA_PETER_MACHINE.controlNull(@cod_postal),
+	LA_PETER_MACHINE.controlNull(@depto),LA_PETER_MACHINE.controlNull(@calle),LA_PETER_MACHINE.controlNull(@mail),
+	cast(LA_PETER_MACHINE.controlNull(@numero) as numeric),cast(LA_PETER_MACHINE.controlNull(@piso) as numeric),
+	LA_PETER_MACHINE.controlNull(@telefono),@usuario,1,CONVERT(datetime,@fechaCreacion,121))
 	insert into LA_PETER_MACHINE.empresa(empr_cuit,
-	empr_nombre_contacto,empr_razon_social,empr_id_persona)values(@cuit,@contacto,
+	empr_nombre_contacto,empr_razon_social,empr_id_persona)values(@cuit,LA_PETER_MACHINE.controlNull(@contacto),
 	@nombre,
 	(select pers_id from LA_PETER_MACHINE.persona where pers_username=@usuario))
 	insert into LA_PETER_MACHINE.roles_usuario(rolu_username,rolu_id_rol)values(@usuario,
 	(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion='empresa'))
-	set @rdo='ok'
+	set @rdo='empresa creada correctamente'
 	end
 	else
 	set @rdo='usuario en uso'
@@ -837,7 +868,7 @@ GO
 
  create procedure LA_PETER_MACHINE.Modificar_Empresa(@usuario nvarchar(255),@pass nvarchar(20),@ciudad nvarchar(255),
  @contacto nvarchar(255),@razon nvarchar(255),@mail nvarchar(255),@telefono nvarchar(50),@calle nvarchar(255),@cod_postal nvarchar(50),
- @numero numeric(18),@dpto nvarchar(50),@piso numeric(18),@rdo nvarchar(255) output)
+ @numero nvarchar(255),@dpto nvarchar(50),@piso nvarchar(255),@rdo nvarchar(255) output)
  as
  begin
  begin try
@@ -850,14 +881,16 @@ GO
  where usua_username=@usuario
  end
  update LA_PETER_MACHINE.persona
- set pers_ciudad=@ciudad,pers_cod_postal=@cod_postal,pers_depto=@dpto,pers_domicilio_calle=@calle,
- pers_mail=@mail,pers_numero_calle=@numero,pers_piso=@piso,pers_telefono=@telefono
+ set pers_ciudad=LA_PETER_MACHINE.controlNull(@ciudad),pers_cod_postal=LA_PETER_MACHINE.controlNull(@cod_postal),
+ pers_depto=LA_PETER_MACHINE.controlNull(@dpto),pers_domicilio_calle=LA_PETER_MACHINE.controlNull(@calle),
+ pers_mail=LA_PETER_MACHINE.controlNull(@mail),pers_numero_calle=cast(LA_PETER_MACHINE.controlNull(@numero) as numeric),
+ pers_piso=cast(LA_PETER_MACHINE.controlNull(@piso) as numeric),pers_telefono=LA_PETER_MACHINE.controlNull(@telefono)
  where pers_username=@usuario
  
  update LA_PETER_MACHINE.empresa
- set empr_nombre_contacto=@contacto,empr_razon_social=@razon
+ set empr_nombre_contacto=LA_PETER_MACHINE.controlNull(@contacto),empr_razon_social=@razon
  where empr_id_persona=(select pers_id from LA_PETER_MACHINE.persona where pers_username=@usuario)
- set @rdo='ok'
+ set @rdo='empresa modificada correctamente'
  end try
  begin catch
  set @rdo='Error de ingreso'
@@ -889,7 +922,7 @@ GO
 
  create procedure LA_PETER_MACHINE.Modificar_Cliente(@usuario nvarchar(255),@pass nvarchar(20),@ciudad nvarchar(255),
  @apellido nvarchar(255),@nombre nvarchar(255),@mail nvarchar(255),@telefono nvarchar(50),@calle nvarchar(255),@cod_postal nvarchar(50),
- @numero numeric(18),@dpto nvarchar(50),@piso numeric(18),@fecha nvarchar(255),@rdo nvarchar(255) output)
+ @numero nvarchar(255),@dpto nvarchar(50),@piso nvarchar(255),@fecha nvarchar(255),@rdo nvarchar(255) output)
  as
  begin
  begin try
@@ -904,14 +937,16 @@ GO
  where usua_username=@usuario
  end
  update LA_PETER_MACHINE.persona
- set pers_ciudad=@ciudad,pers_cod_postal=@cod_postal,pers_depto=@dpto,pers_domicilio_calle=@calle,
- pers_mail=@mail,pers_numero_calle=@numero,pers_piso=@piso,pers_telefono=@telefono
+ set pers_ciudad=LA_PETER_MACHINE.controlNull(@ciudad),pers_cod_postal=LA_PETER_MACHINE.controlNull(@cod_postal),
+ pers_depto=LA_PETER_MACHINE.controlNull(@dpto),pers_domicilio_calle=LA_PETER_MACHINE.controlNull(@calle),
+ pers_mail=LA_PETER_MACHINE.controlNull(@mail),pers_numero_calle=cast(LA_PETER_MACHINE.controlNull(@numero) as numeric),
+ pers_piso=cast(LA_PETER_MACHINE.controlNull(@piso) as numeric),pers_telefono=LA_PETER_MACHINE.controlNull(@telefono)
  where pers_username=@usuario
  
  update LA_PETER_MACHINE.cliente
  set clie_apellido=@apellido,clie_fecha_nac=@fech,clie_nombre=@nombre
  where clie_id_persona=(select pers_id from LA_PETER_MACHINE.persona where pers_username=@usuario)
- set @rdo='ok'
+ set @rdo='cliente modificado correctamente'
  end try
  begin catch
  set @rdo='Error de ingreso'
