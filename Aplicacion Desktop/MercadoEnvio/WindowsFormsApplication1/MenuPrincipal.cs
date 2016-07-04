@@ -318,6 +318,14 @@ namespace WindowsFormsApplication1
             admRol.Show();
             admRol.Location = new Point(0, 49);
         }
+        public void STORE_administrar_rubro()
+        {
+            //Aca voy para administrar rol
+            ABM_Rubro.Rubro admRubro = new ABM_Rubro.Rubro();
+            admRubro.MdiParent = this;
+            admRubro.Show();
+            admRubro.Location = new Point(0, 49);
+        }
         public void STORE_administrar_contrasenia()
         {
             //Aca voy para administrar contrasenia

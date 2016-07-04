@@ -32,7 +32,10 @@ namespace WindowsFormsApplication1.ABM_Rubro
         {
             Alta alta = new Alta();
             this.Hide();
-            alta.ShowDialog();
+            alta.MdiParent = this.MdiParent;
+            alta.Show();
+            alta.Location = new Point(0, 49);
+            this.Close();
 
         }
 
@@ -50,7 +53,9 @@ namespace WindowsFormsApplication1.ABM_Rubro
         {
             Listado listado = new Listado();
             this.Hide();
-            listado.ShowDialog();
+            listado.MdiParent = this.MdiParent;
+            listado.Show();
+            listado.Location = new Point(0, 49);
             this.Close();
         }
     }

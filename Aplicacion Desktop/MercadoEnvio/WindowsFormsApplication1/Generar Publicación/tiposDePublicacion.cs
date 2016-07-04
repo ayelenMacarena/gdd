@@ -25,7 +25,9 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
             Generar_Publicación.generarPublicacionCompra generarPublicacionCompra = new Generar_Publicación.generarPublicacionCompra(this.username);
             this.Hide();
-            generarPublicacionCompra.ShowDialog();
+            generarPublicacionCompra.MdiParent = this.MdiParent;
+            generarPublicacionCompra.Show();
+            generarPublicacionCompra.Location = new Point(0, 49);
             this.Close();
         }
 
@@ -34,7 +36,9 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
             Generar_Publicación.generarPublicacionSubasta generarPublicacionSubasta = new Generar_Publicación.generarPublicacionSubasta(this.username);
             this.Hide();
-            generarPublicacionSubasta.ShowDialog();
+            generarPublicacionSubasta.MdiParent = this.MdiParent;
+            generarPublicacionSubasta.Show();
+            generarPublicacionSubasta.Location = new Point(0, 49);
             this.Close();
 
         }

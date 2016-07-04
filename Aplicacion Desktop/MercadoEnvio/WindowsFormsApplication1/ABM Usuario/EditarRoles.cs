@@ -52,7 +52,9 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
             ListadoDeUsuarios list = new ListadoDeUsuarios();
             this.Hide();
-            list.ShowDialog();
+            list.MdiParent = this.MdiParent;
+            list.Show();
+            list.Location = new Point(0, 49);
             this.Close();
         }
 
@@ -123,13 +125,17 @@ namespace WindowsFormsApplication1.ABM_Usuario
             if (rol == "empresa") {
                 modificarEmpresa mod = new modificarEmpresa(usu);
                 this.Hide();
-                mod.ShowDialog();
+                mod.MdiParent = this.MdiParent;
+                mod.Show();
+                mod.Location = new Point(0, 49);
                 this.Close();
             }
             if (rol == "cliente") {
                 modificarCliente mod = new modificarCliente(usu);
                 this.Hide();
-                mod.ShowDialog();
+                mod.MdiParent = this.MdiParent;
+                mod.Show();
+                mod.Location = new Point(0, 49);
                 this.Close();
             
             }

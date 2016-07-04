@@ -1524,22 +1524,22 @@ AS
 		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('calificar',				'STORE_calificar')
 		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('facturas_realizadas',		'STORE_facturas_realizadas')
 		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('listado_estadistico',		'STORE_listado_estadistico')
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('administrar_usuario',		'STORE_administrar_usuario')
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('administrar_rol',			'STORE_administrar_rol')
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('administrar_rubro',		'STORE_administrar_rubro')
+		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('adm_usuario',				'STORE_administrar_usuario')
+		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('adm_rol',					'STORE_administrar_rol')
+		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('adm_rubro',				'STORE_administrar_rubro')
 
 --FUNCIONALIDAD_ROL
 		-- Rol Admin
 		insert into	 LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad,furo_id_rol) 
-		values((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'administrar_usuario'),
+		values((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'adm_usuario'),
 				(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'administrativo'))
 
 		insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad, furo_id_rol)
-		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'administrar_rubro'),
+		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'adm_rubro'),
 			(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'administrativo'))
 
 		insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad, furo_id_rol)
-		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'administrar_rol'),
+		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'adm_rol'),
 		(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'administrativo'))
 
 

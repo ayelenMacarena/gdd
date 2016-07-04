@@ -76,9 +76,11 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Empresa clie = new Empresa();
+            Empresa empr = new Empresa();
             this.Hide();
-            clie.ShowDialog();
+            empr.MdiParent = this.MdiParent;
+            empr.Show();
+            empr.Location = new Point(0, 49);
             this.Close();
         }
 

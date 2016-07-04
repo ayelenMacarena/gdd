@@ -70,9 +70,21 @@ namespace WindowsFormsApplication1.ABM_Rubro
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             Selección seleccion = new Selección();
-            seleccion.ShowDialog();
             this.Hide();
+            seleccion.MdiParent = this.MdiParent;
+            seleccion.Show();
+            seleccion.Location = new Point(0, 49);
+            this.Close();
+        }
 
+        private void volverLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Rubro rubro = new Rubro();
+            this.Hide();
+            rubro.MdiParent = this.MdiParent;
+            rubro.Show();
+            rubro.Location = new Point(0, 49);
+            this.Close();
         }
     }
 }

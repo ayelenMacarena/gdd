@@ -21,7 +21,9 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
             Usuario usu = new Usuario();
             this.Hide();
-            usu.ShowDialog();
+            usu.MdiParent = this.MdiParent;
+            usu.Show();
+            usu.Location = new Point(0, 49);
             this.Close();
         }
 
@@ -29,7 +31,9 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
             AltaCliente alt = new AltaCliente();
             this.Hide();
-            alt.ShowDialog();
+            alt.MdiParent = this.MdiParent;
+            alt.Show();
+            alt.Location = new Point(0, 49);
             this.Close();
         }
 
@@ -37,7 +41,9 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
             ListadoDeUsuarios list = new ListadoDeUsuarios();
             this.Hide();
-            list.ShowDialog();
+            list.MdiParent = this.MdiParent;
+            list.Show();
+            list.Location = new Point(0, 49);
             this.Close();
         }
     }

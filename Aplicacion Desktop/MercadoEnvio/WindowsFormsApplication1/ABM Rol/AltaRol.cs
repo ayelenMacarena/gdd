@@ -23,7 +23,9 @@ namespace WindowsFormsApplication1.ABM_Rol
         {
             Rol rol = new Rol();
             this.Hide();
-            rol.ShowDialog();
+            rol.MdiParent = this.MdiParent;
+            rol.Show();
+            rol.Location = new Point(0, 49);
             this.Close();
         }
 

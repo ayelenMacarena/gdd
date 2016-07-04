@@ -100,7 +100,9 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
             EditarRoles edit = new EditarRoles(usu,"empresa");
             this.Hide();
-            edit.ShowDialog();
+            edit.MdiParent = this.MdiParent;
+            edit.Show();
+            edit.Location = new Point(0, 49);
             this.Close();
         }
     }

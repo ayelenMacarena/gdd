@@ -22,7 +22,9 @@ namespace WindowsFormsApplication1.ABM_Rol
         {
             Rol rol = new Rol();
             this.Hide();
-            rol.ShowDialog();
+            rol.MdiParent = this.MdiParent;
+            rol.Show();
+            rol.Location = new Point(0, 49);
             this.Close();
         }
 
@@ -32,7 +34,9 @@ namespace WindowsFormsApplication1.ABM_Rol
         {
             Rol rol = new Rol();
             this.Hide();
-            rol.ShowDialog();
+            rol.MdiParent = this.MdiParent;
+            rol.Show();
+            rol.Location = new Point(0, 49);
             this.Close();
         }
 
@@ -124,7 +128,9 @@ namespace WindowsFormsApplication1.ABM_Rol
                 {
                     EditarFuncionalidades select = new EditarFuncionalidades(senderGrid.Rows[e.RowIndex].Cells[0].FormattedValue.ToString());
                     this.Hide();
-                    select.ShowDialog();
+                    select.MdiParent = this.MdiParent;
+                    select.Show();
+                    select.Location = new Point(0, 49);
                     this.Close();
           
                 }

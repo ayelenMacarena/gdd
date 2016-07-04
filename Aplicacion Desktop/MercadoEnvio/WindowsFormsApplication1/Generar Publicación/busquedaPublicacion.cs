@@ -34,7 +34,9 @@ namespace WindowsFormsApplication1.Generar_Publicación
         {
             Generar_Publicación.tiposDePublicacion generarPubli = new Generar_Publicación.tiposDePublicacion(this.user);
             this.Hide();
-            generarPubli.ShowDialog();
+            generarPubli.MdiParent = this.MdiParent;
+            generarPubli.Show();
+            generarPubli.Location = new Point(0, 49);
             this.Close();
         }
 
@@ -45,11 +47,20 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
         private void buttonModificar_Click(object sender, EventArgs e)
         {
-            DataGridViewRow filaSeleccionada = dataGridView1.CurrentRow;
-            Generar_Publicación.modificarPublicacion modificarPublicacion = new Generar_Publicación.modificarPublicacion(filaSeleccionada, this.user);
-            this.Hide();
-            modificarPublicacion.ShowDialog();
-            
+            if (dataGridView1.CurrentRow != null)
+            {
+                DataGridViewRow filaSeleccionada = dataGridView1.CurrentRow;
+                Generar_Publicación.modificarPublicacion modificarPublicacion = new Generar_Publicación.modificarPublicacion(filaSeleccionada, this.user);
+                this.Hide();
+                modificarPublicacion.MdiParent = this.MdiParent;
+                modificarPublicacion.Show();
+                modificarPublicacion.Location = new Point(0, 49);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar una Publicacion para modificar");
+            }
         }
 
     }

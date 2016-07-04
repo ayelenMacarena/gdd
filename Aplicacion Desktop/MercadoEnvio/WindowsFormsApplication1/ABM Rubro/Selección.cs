@@ -16,5 +16,15 @@ namespace WindowsFormsApplication1.ABM_Rubro
         {
             InitializeComponent();
         }
+
+        private void volverLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Rubro rubro = new Rubro();
+            this.Hide();
+            rubro.MdiParent = this.MdiParent;
+            rubro.Show();
+            rubro.Location = new Point(0, 49);
+            this.Close();
+        }
     }
 }

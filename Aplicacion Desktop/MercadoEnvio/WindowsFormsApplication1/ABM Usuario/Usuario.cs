@@ -21,7 +21,9 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
             Cliente clie = new Cliente();
             this.Hide();
-            clie.ShowDialog();
+            clie.MdiParent = this.MdiParent;
+            clie.Show();
+            clie.Location = new Point(0, 49);
             this.Close();
         }
 
@@ -29,7 +31,9 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
             Empresa empr = new Empresa();
             this.Hide();
-            empr.ShowDialog();
+            empr.MdiParent = this.MdiParent;
+            empr.Show();
+            empr.Location = new Point(0, 49);
             this.Close();
         }
     }

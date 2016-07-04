@@ -247,7 +247,9 @@ namespace WindowsFormsApplication1.ABM_Usuario
         {
             Cliente clie = new Cliente();
             this.Hide();
-            clie.ShowDialog();
+            clie.MdiParent = this.MdiParent;
+            clie.Show();
+            clie.Location = new Point(0, 49);
             this.Close();
         }
     }

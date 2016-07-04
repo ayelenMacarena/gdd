@@ -112,7 +112,9 @@ namespace WindowsFormsApplication1.ABM_Rol
         {
             ListadoRol select = new ListadoRol();
             this.Hide();
-            select.ShowDialog();
+            select.MdiParent = this.MdiParent;
+            select.Show();
+            select.Location = new Point(0, 49);
             this.Close();
         }
     }

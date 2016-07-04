@@ -45,6 +45,7 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.volverLink = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -205,11 +206,23 @@
             this.Column5.HeaderText = "Seleccionar";
             this.Column5.Name = "Column5";
             // 
+            // volverLink
+            // 
+            this.volverLink.AutoSize = true;
+            this.volverLink.Location = new System.Drawing.Point(8, 365);
+            this.volverLink.Name = "volverLink";
+            this.volverLink.Size = new System.Drawing.Size(46, 13);
+            this.volverLink.TabIndex = 10;
+            this.volverLink.TabStop = true;
+            this.volverLink.Text = "< Volver";
+            this.volverLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.volverLink_LinkClicked);
+            // 
             // Listado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(615, 367);
+            this.ClientSize = new System.Drawing.Size(615, 385);
+            this.Controls.Add(this.volverLink);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -221,6 +234,7 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -243,6 +257,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewButtonColumn Column5;
+        private System.Windows.Forms.LinkLabel volverLink;
 
 
 

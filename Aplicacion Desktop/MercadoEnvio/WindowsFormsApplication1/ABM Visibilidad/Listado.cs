@@ -23,9 +23,11 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
         }
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Visibilidad visib = new Visibilidad();
-            visib.ShowDialog();
+            Visibilidad visibilidad = new Visibilidad();
             this.Hide();
+            visibilidad.MdiParent = this.MdiParent;
+            visibilidad.Show();
+            visibilidad.Location = new Point(0, 49);
             this.Close();
         }
 
@@ -33,9 +35,11 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
 
         private void linkLabel1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Visibilidad visib = new Visibilidad();
-            visib.ShowDialog();
+            Visibilidad visibilidad = new Visibilidad();
             this.Hide();
+            visibilidad.MdiParent = this.MdiParent;
+            visibilidad.Show();
+            visibilidad.Location = new Point(0, 49);
             this.Close();
         }
 
@@ -96,7 +100,9 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                 int.TryParse(senderGrid.Rows[e.RowIndex].Cells[0].FormattedValue.ToString(), out envio);
                 Selección select = new Selección(codigo,precio,porcentaje,envio,senderGrid.Rows[e.RowIndex].Cells[4].FormattedValue.ToString());
                 this.Hide();
-                select.ShowDialog();
+                select.MdiParent = this.MdiParent;
+                select.Show();
+                select.Location = new Point(0, 49);
                 this.Close();
             }
         }

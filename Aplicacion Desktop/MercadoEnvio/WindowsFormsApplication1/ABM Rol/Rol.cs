@@ -21,7 +21,9 @@ namespace WindowsFormsApplication1.ABM_Rol
         {
             AltaRol alta = new AltaRol();
             this.Hide();
-            alta.ShowDialog();
+            alta.MdiParent = this.MdiParent;
+            alta.Show();
+            alta.Location = new Point(0, 49);
             this.Close();
         }
 
@@ -29,7 +31,9 @@ namespace WindowsFormsApplication1.ABM_Rol
         {
             ListadoRol listado = new ListadoRol();
             this.Hide();
-            listado.ShowDialog();
+            listado.MdiParent = this.MdiParent;
+            listado.Show();
+            listado.Location = new Point(0, 49);
             this.Close();
         }
 

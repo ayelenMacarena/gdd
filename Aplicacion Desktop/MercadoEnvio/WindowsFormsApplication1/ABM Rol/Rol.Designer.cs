@@ -34,9 +34,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(164, 118);
+            this.button2.Location = new System.Drawing.Point(147, 88);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(115, 72);
             this.button2.TabIndex = 3;
             this.button2.Text = "Listado";
             this.button2.UseVisualStyleBackColor = true;
@@ -44,9 +44,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(45, 119);
+            this.button1.Location = new System.Drawing.Point(22, 88);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(110, 72);
             this.button1.TabIndex = 2;
             this.button1.Text = "Alta";
             this.button1.UseVisualStyleBackColor = true;
