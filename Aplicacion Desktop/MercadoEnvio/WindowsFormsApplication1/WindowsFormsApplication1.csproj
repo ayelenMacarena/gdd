@@ -151,6 +151,7 @@
     <Compile Include="ABM Rol\Deshabilitar Funcionalidad.Designer.cs">
       <DependentUpon>Deshabilitar Funcionalidad.cs</DependentUpon>
     </Compile>
+    <Compile Include="Facturas\Logica_Facturas.cs" />
     <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>

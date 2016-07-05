@@ -14,6 +14,10 @@ namespace WindowsFormsApplication1.Facturas
 {
     public partial class consultaFacturas : Form
     {
+        int registrosPorPagina = 10;
+        int numeroPagina = 1;
+        int cantidadDePaginas;
+
         public consultaFacturas()
         {
             InitializeComponent();
@@ -43,33 +47,23 @@ namespace WindowsFormsApplication1.Facturas
             this.priceToLabel.Clear();
             this.detailsLabel.Clear();
             salesmanComboBox.Text = "";
-            dataGridView1.Visible = false;
-            
-
-
+            Grid_ListaFacturas.Visible = false;          
         }
 
-        private void dateFromLabel_DateChanged(object sender, EventArgs e)
-        {
-
-
-
-
-
-        }
 
         private void calendarFrom_DateChanged(object sender, DateRangeEventArgs e)
         {
             dateFromLabel.Text = calendarFrom.SelectionRange.Start.ToShortDateString();
             calendarFrom.Visible = false;
         }
+
         
         private void dateToLabel_onClick(object sender, EventArgs e)
         {
             monthCalendar1.Visible = true;
             calendarFrom.Visible = true;
-
         }
+
 
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
         {
@@ -89,71 +83,36 @@ namespace WindowsFormsApplication1.Facturas
             monthCalendar1.Visible = true;
         }
 
+
         private void button2_Click(object sender, EventArgs e)
         {
-            SqlConnection conexion = conectionDB.getConnection();
-            conexion.Open();
-            SqlCommand buscarFacturas = new SqlCommand("LA_PETER_MACHINE.buscarFacturas", conexion);
-            buscarFacturas.CommandType = CommandType.StoredProcedure;
-
-            if (dateFromLabel.Text == String.Empty)
-            {
-                buscarFacturas.Parameters.AddWithValue("@fechaDesde", DBNull.Value);
-            }
-            else
-            {
-                buscarFacturas.Parameters.AddWithValue("@fechaDesde", dateFromLabel.Text);
-            }
-
-
-            if (dateToLabel.Text == String.Empty)
-            {
-                buscarFacturas.Parameters.AddWithValue("@fechaHasta", DBNull.Value);
-            }
-            else
-            {
-                buscarFacturas.Parameters.AddWithValue("@fechaHasta", dateToLabel.Text);
-            }
-
-            if (priceFromLabel.Text == String.Empty)
-            {
-                buscarFacturas.Parameters.AddWithValue("@precioDesde", DBNull.Value);
-            }
-            else
-            {
-                buscarFacturas.Parameters.AddWithValue("@precioDesde", priceFromLabel.Text);
-            }
-
-            if (priceToLabel.Text == String.Empty)
-            {
-                buscarFacturas.Parameters.AddWithValue("@precioHasta", DBNull.Value);
-            }
-            else
-            {
-                buscarFacturas.Parameters.AddWithValue("@precioHasta", priceToLabel.Text);
-            }
-
-            if (detailsLabel.Text == String.Empty)
-            {
-                buscarFacturas.Parameters.AddWithValue("@descripcion", DBNull.Value);
-            }
-            else
-            {
-                buscarFacturas.Parameters.AddWithValue("@descripcion", detailsLabel.Text);
-            }
-
-            if (salesmanComboBox.Text == String.Empty)
-            { buscarFacturas.Parameters.AddWithValue("@vendedor", DBNull.Value); }
-            else { buscarFacturas.Parameters.AddWithValue("@vendedor", salesmanComboBox.Text); }
-
-            DataTable table = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(buscarFacturas);
-            adapter.Fill(table);
-
+            numeroPagina = 1;
+            mostrarFacturas();
         }
 
+        private void mostrarFacturas()
+        {
+            DataTable filasAMostrar = Logica_Facturas.Mostrar(dateFromLabel.Text, dateToLabel.Text, priceFromLabel.Text, priceToLabel.Text, detailsLabel.Text, salesmanComboBox.Text, registrosPorPagina, numeroPagina);
 
-            
+            Grid_ListaFacturas.DataSource = filasAMostrar;
+
+            var cantidadDeFilas = (Logica_Facturas.tamanio(dateFromLabel.Text, dateToLabel.Text, priceFromLabel.Text,
+                                priceToLabel.Text, detailsLabel.Text, salesmanComboBox.Text, registrosPorPagina)).Rows.Count;
+
+            cantidadDePaginas = cantidadDeFilas / registrosPorPagina;
+
+            if (cantidadDePaginas % registrosPorPagina > 0)
+            {
+                cantidadDePaginas = cantidadDePaginas + 1;
+            }
+            else
+            {
+                cantidadDePaginas = 1;
+            }
+
+            this.labelNroPagina.Text = String.Format("{0}", numeroPagina);
+            this.label_InfoPagina_CO.Text = String.Format("Paginas {0}", cantidadDePaginas);
+        }            
             
 
         private void dateFromLabel_Validating(object sender, CancelEventArgs e)
@@ -164,8 +123,6 @@ namespace WindowsFormsApplication1.Facturas
                 e.Cancel = true;
                 MessageBox.Show("Coloque por favor un rango de fecha válido");
                 return;
-
-
             }
         }
 
@@ -178,8 +135,6 @@ namespace WindowsFormsApplication1.Facturas
                 e.Cancel = true;
                 MessageBox.Show("Coloque por favor un rango de fecha válido");
                 return;
-
-
             }
         }
 
@@ -208,6 +163,36 @@ namespace WindowsFormsApplication1.Facturas
         private void button3_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void linkUltimaPag_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            numeroPagina = cantidadDePaginas;
+            mostrarFacturas();
+        }
+
+        private void linkPrimeraPag_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            numeroPagina = 1;
+            mostrarFacturas();
+        }
+
+        private void label_Anterio_CO_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (numeroPagina > 1)
+            {
+                numeroPagina = numeroPagina - 1;
+                mostrarFacturas();
+            }
+        }
+
+        private void label_Siguiente_CO_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (numeroPagina < cantidadDePaginas)
+            {
+                numeroPagina = numeroPagina + 1;
+                mostrarFacturas();
+            }
         }
 
  

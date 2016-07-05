@@ -1,5 +1,7 @@
 create procedure LA_PETER_MACHINE.buscarFacturas (@fechaDesde varchar(15) , @fechaHasta varchar(15), 
- 	@precioDesde nvarchar(200) , @precioHasta nvarchar(200) , @descripcion nvarchar(255), @vendedor nvarchar(255))
+ 	@precioDesde nvarchar(200) , @precioHasta nvarchar(200) , @descripcion nvarchar(255), @vendedor nvarchar(255),
+	@registrosPorPagina INT,
+	@numerosPagina INT)
 as
 
 begin
@@ -48,6 +50,11 @@ else IF @precioHasta is not Null
 
 if @query is null and @precioHasta is null and @precioDesde is Null and @fechaDesde is null and @fechaHasta is null and @descripcion is null and @vendedor is null
 	set @query = 'select * from LA_PETER_MACHINE.factura'
+
+begin
+set @query = @query + ' order by fact_fecha' + ' OFFSET (' + convert(nvarchar(255),@numerosPagina) + ' - 1) *' +  convert(varchar(255),@registrosPorPagina)
+						 + ' ROWS FETCH NEXT ' + convert(varchar(255),@registrosPorPagina) + ' ROWS ONLY'
+end 
 
 exec (@query)
 
