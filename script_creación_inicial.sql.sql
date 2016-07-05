@@ -1910,6 +1910,7 @@ insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_persona
 		where p.publicacion_id = Publicacion_cod 
 			and pe.pers_mail = Cli_mail --Comprador
 			and Compra_Cantidad is not NULL
+			and Calificacion_Codigo is NULL
 
 GO
 

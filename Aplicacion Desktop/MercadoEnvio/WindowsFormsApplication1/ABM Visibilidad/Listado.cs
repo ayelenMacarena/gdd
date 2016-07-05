@@ -61,19 +61,25 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             cmd.Parameters["@desc"].Value = desc;
             conexion.Open();
             adapter.Fill(table);
-            dataGridView1.DataSource = table;
-            dataGridView1.Columns[0].HeaderText = "Codigo";
-            dataGridView1.Columns[1].HeaderText = "Precio";
-            dataGridView1.Columns[2].HeaderText = "Porcentaje";
-            dataGridView1.Columns[3].HeaderText = "Envio";
-            dataGridView1.Columns[4].HeaderText = "Descripcion";
-            this.seleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.seleccionar.Text = "Seleccionar";
-            this.seleccionar.UseColumnTextForButtonValue = true;
-            this.seleccionar.HeaderText = "Seleccionar";
-            this.seleccionar.Name = "Seleccionar";
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.seleccionar});
+            if (table.Rows.Count != 0)
+            {
+                dataGridView1.DataSource = table;
+                dataGridView1.Columns[0].HeaderText = "Codigo";
+                dataGridView1.Columns[1].HeaderText = "Precio";
+                dataGridView1.Columns[2].HeaderText = "Porcentaje";
+                dataGridView1.Columns[3].HeaderText = "Envio";
+                dataGridView1.Columns[4].HeaderText = "Descripcion";
+                this.seleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
+                this.seleccionar.Text = "Seleccionar";
+                this.seleccionar.UseColumnTextForButtonValue = true;
+                this.seleccionar.HeaderText = "Seleccionar";
+                this.seleccionar.Name = "Seleccionar";
+                this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+                this.seleccionar});
+            }
+            else {
+                MessageBox.Show("No se obtuvieron resultados con los filtros establecidos");
+            }
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
