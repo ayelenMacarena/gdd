@@ -47,7 +47,8 @@ namespace WindowsFormsApplication1.Facturas
             this.priceToLabel.Clear();
             this.detailsLabel.Clear();
             salesmanComboBox.Text = "";
-            Grid_ListaFacturas.Visible = false;          
+            Grid_ListaFacturas.Visible = false;
+            button4.Enabled = false;
         }
 
 
@@ -199,10 +200,11 @@ namespace WindowsFormsApplication1.Facturas
 
         private void button4_Click(object sender, EventArgs e)
         {
-            
-            DataGridViewRow filaSeleccionada = Grid_ListaFacturas.CurrentRow;
-            (new Facturas.itemsFactura(filaSeleccionada)).Show();
-
+            if (Grid_ListaFacturas.CurrentRow != null)
+            {
+                DataGridViewRow filaSeleccionada = Grid_ListaFacturas.CurrentRow;
+                (new Facturas.itemsFactura(filaSeleccionada)).Show();
+            }
 
 
         }
