@@ -1153,7 +1153,7 @@ AS
 	select publicacion_id, publ_descripcion, publ_precio, publ_costo,(select rubr_descripcion_corta from LA_PETER_MACHINE.rubro where rubr_cod = publ_cod_rubro) as Rubro,
 	(select visi_descripcion from LA_PETER_MACHINE.visibilidad where visi_cod = publ_cod_visibilidad) as Visibilidad,
 	(select esta_descripcion from LA_PETER_MACHINE.estado where estado_id = publ_id_estado) as Estado,
-	publ_fecha_inicio, publ_fecha_fin, publ_preguntas, publ_cantidad, publ_id_tipo, publ_envio_habilitado
+	publ_fecha_inicio, publ_fecha_fin, publ_preguntas, publ_cantidad, (select tipo_descripcion from LA_PETER_MACHINE.tipo where tipo_id = publ_id_tipo) as Tipo, publ_envio_habilitado
 	from LA_PETER_MACHINE.publicacion where publ_id_vendedor = @vendedor_id and 
 	publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Borrador') or 
 	publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Activa')

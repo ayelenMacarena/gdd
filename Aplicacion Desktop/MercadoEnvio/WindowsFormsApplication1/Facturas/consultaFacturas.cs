@@ -88,6 +88,7 @@ namespace WindowsFormsApplication1.Facturas
         {
             numeroPagina = 1;
             mostrarFacturas();
+            button4.Enabled = true;
         }
 
         private void mostrarFacturas()
@@ -192,7 +193,18 @@ namespace WindowsFormsApplication1.Facturas
             {
                 numeroPagina = numeroPagina + 1;
                 mostrarFacturas();
+
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            
+            DataGridViewRow filaSeleccionada = Grid_ListaFacturas.CurrentRow;
+            (new Facturas.itemsFactura(filaSeleccionada)).Show();
+
+
+
         }
 
  
