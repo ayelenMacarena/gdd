@@ -20,34 +20,24 @@ namespace WindowsFormsApplication1.ABM_Usuario
             label1.Text = usuario;
             usu = usuario;
             rol = tipo;
+            actualizarGrid();
+
+            dataGridView1.AllowUserToAddRows = false;
+        }
+        private void actualizarGrid() {
             SqlConnection conexion = conectionDB.getConnection();
             DataTable table = new DataTable();
             SqlCommand cmd = new SqlCommand();
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            cmd.CommandText = "select rol_descripcion from LA_PETER_MACHINE.rol";
+            cmd.CommandText = "select  rol_descripcion as Rol, LA_PETER_MACHINE.charABit(rolu_username)  as Habilitado from LA_PETER_MACHINE.rol left outer join LA_PETER_MACHINE.roles_usuario   on rolu_id_rol=rol_id and  rolu_username=@usuario ";
             cmd.CommandType = CommandType.Text;
             cmd.Connection = conexion;
             conexion.Open();
+            cmd.Parameters.Add("@usuario", SqlDbType.NVarChar);
+            cmd.Parameters["@usuario"].Value = usu;
             adapter.Fill(table);
             dataGridView1.DataSource = table;
-            dataGridView1.Columns[0].HeaderText = "Rol";
-            this.habilitar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.habilitar.Text = "Habilitar";
-            this.habilitar.UseColumnTextForButtonValue = true;
-            this.habilitar.HeaderText = "Habilitar";
-            this.habilitar.Name = "Habilitar";
-            this.deshabilitar = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.deshabilitar.Text = "DesHabilitar";
-            this.deshabilitar.UseColumnTextForButtonValue = true;
-            this.deshabilitar.HeaderText = "Deshabilitar";
-            this.deshabilitar.Name = "Deshabilitar";
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.habilitar});
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.deshabilitar});
-            conexion.Close();
         }
-
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             ListadoDeUsuarios list = new ListadoDeUsuarios();
@@ -60,56 +50,16 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            var senderGrid = (DataGridView)sender;
-     
-            if (enteroABool(String.Compare(senderGrid.Columns[e.ColumnIndex].HeaderText,"Habilitar")) && e.RowIndex >= 0)
-            {
-                String rol = senderGrid.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
-                SqlConnection conexion = conectionDB.getConnection();
-                conexion.Open();
-                SqlCommand crearFuncRol = new SqlCommand("LA_PETER_MACHINE.agregar_Usuario_Rol", conexion);
-                SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
-                rdo.Size = 255;
-                rdo.Direction = ParameterDirection.Output;
 
-                crearFuncRol.CommandType = CommandType.StoredProcedure;
-                crearFuncRol.Parameters.Add("@rol", SqlDbType.NVarChar);
-                crearFuncRol.Parameters["@rol"].Value = rol;
 
-                crearFuncRol.Parameters.Add("@usuario", SqlDbType.NVarChar);
-                crearFuncRol.Parameters["@usuario"].Value = label1.Text;
-                crearFuncRol.Parameters.Add(rdo);
-
-                crearFuncRol.ExecuteNonQuery();
-                MessageBox.Show(rdo.Value.ToString());
-            }
-            if (enteroABool(String.Compare(senderGrid.Columns[e.ColumnIndex].HeaderText, "Deshabilitar")) && e.RowIndex >= 0)
-            {
-                SqlConnection conexion = conectionDB.getConnection();
-                conexion.Open();
-                SqlCommand eliminarFuncRol = new SqlCommand("LA_PETER_MACHINE.eliminar_usuario_rol", conexion);
-                SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
-                rdo.Size = 255;
-                rdo.Direction = ParameterDirection.Output;
-
-                eliminarFuncRol.CommandType = CommandType.StoredProcedure;
-                eliminarFuncRol.Parameters.Add("@rol", SqlDbType.NVarChar);
-                eliminarFuncRol.Parameters["@rol"].Value = senderGrid.Rows[e.RowIndex].Cells[2].FormattedValue.ToString();
-
-                eliminarFuncRol.Parameters.Add("@usuario", SqlDbType.NVarChar);
-                eliminarFuncRol.Parameters["@usuario"].Value = label1.Text;
-                eliminarFuncRol.Parameters.Add(rdo);
-
-                eliminarFuncRol.ExecuteNonQuery();
-                MessageBox.Show(rdo.Value.ToString());
-            }
         }
-        private bool enteroABool(int num) {
-            if (num==0) { return true;}
-            else{return false;}
+        private bool enteroABool(int num)
+        {
+            if (num == 0) { return true; }
+            else { return false; }
         }
-         
-        
+
+
 
         public DataGridViewButtonColumn habilitar { get; set; }
 
@@ -122,7 +72,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (rol == "empresa") {
+            if (rol == "empresa")
+            {
                 modificarEmpresa mod = new modificarEmpresa(usu);
                 this.Hide();
                 mod.MdiParent = this.MdiParent;
@@ -130,15 +81,68 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 mod.Location = new Point(0, 49);
                 this.Close();
             }
-            if (rol == "cliente") {
+            if (rol == "cliente")
+            {
                 modificarCliente mod = new modificarCliente(usu);
                 this.Hide();
                 mod.MdiParent = this.MdiParent;
                 mod.Show();
                 mod.Location = new Point(0, 49);
                 this.Close();
-            
+
             }
+        }
+
+        private void Actualizar_Click(object sender, EventArgs e)
+        {
+            SqlConnection conexion = conectionDB.getConnection();
+            conexion.Open();
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                String rol1 = row.Cells["Rol"].FormattedValue.ToString();
+                String boolean = row.Cells["Habilitado"].FormattedValue.ToString();
+                if (boolean == "True")
+                {
+                    SqlCommand crearFuncRol = new SqlCommand("LA_PETER_MACHINE.agregar_Usuario_Rol", conexion);
+                    SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
+                    rdo.Size = 255;
+                    rdo.Direction = ParameterDirection.Output;
+
+                    crearFuncRol.CommandType = CommandType.StoredProcedure;
+                    crearFuncRol.Parameters.Add("@rol", SqlDbType.NVarChar);
+                    crearFuncRol.Parameters["@rol"].Value = rol1;
+
+                    crearFuncRol.Parameters.Add("@usuario", SqlDbType.NVarChar);
+                    crearFuncRol.Parameters["@usuario"].Value = usu;
+                    crearFuncRol.Parameters.Add(rdo);
+              
+               
+                    crearFuncRol.ExecuteNonQuery();
+                }
+                else
+                {
+
+                    SqlCommand eliminarFuncRol = new SqlCommand("LA_PETER_MACHINE.eliminar_usuario_rol", conexion);
+                    SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
+                    rdo.Size = 255;
+                    rdo.Direction = ParameterDirection.Output;
+
+                    eliminarFuncRol.CommandType = CommandType.StoredProcedure;
+                    eliminarFuncRol.Parameters.Add("@rol", SqlDbType.NVarChar);
+                    eliminarFuncRol.Parameters["@rol"].Value = rol1;
+
+                    eliminarFuncRol.Parameters.Add("@usuario", SqlDbType.NVarChar);
+                    eliminarFuncRol.Parameters["@usuario"].Value = usu;
+                    eliminarFuncRol.Parameters.Add(rdo);
+        
+               
+                    eliminarFuncRol.ExecuteNonQuery();
+                }
+
+               
+            }
+            actualizarGrid();
         }
     }
 }

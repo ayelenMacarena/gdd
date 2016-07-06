@@ -2,7 +2,6 @@
 --  SE ELIMINAN LAS FK QUE REFERENCIAN OTRAS TABLAS --
 ------------------------------------------------------
 
-
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_cliente_tipo_dni') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.cliente DROP CONSTRAINT FK_cliente_tipo_dni;
 
@@ -713,6 +712,40 @@ select @hab=usua_habilitado from LA_PETER_MACHINE.usuario where usua_username=@U
 	set @rdo='usuario deshabilitado'
 end
 GO
+
+create function LA_PETER_MACHINE.numericABit(@numero numeric)
+returns Bit
+as
+begin
+declare @rdo Bit
+if(@numero is not null)
+begin 
+set @rdo=1
+end
+else 
+begin
+set @rdo=0
+end
+return @rdo
+end
+go
+
+create function LA_PETER_MACHINE.charABit(@char nvarchar(255))
+returns Bit
+as
+begin
+declare @bit Bit
+if(@char is not null)
+begin
+set @bit=1
+end
+else
+begin
+set @bit=0
+end
+return @bit
+end
+go
 
 create procedure LA_PETER_MACHINE.Deshabilitar_Usuario(@Usuario nvarchar(255),@rdo nvarchar(255) output)
 as
