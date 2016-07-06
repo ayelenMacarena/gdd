@@ -1596,6 +1596,16 @@ SET @porCalificar =
 		)
 GO
 
+CREATE PROCEDURE LA_PETER_MACHINE.finalizarPublicaciones(@fechaSys nvarchar(255))
+AS
+BEGIN
+update LA_PETER_MACHINE.publicacion
+	SET publ_id_estado=4
+	WHERE publ_id_estado != 4 and publ_fecha_fin is not null and publ_fecha_fin < CONVERT(datetime,@fechaSys,121)
+END;
+GO
+
+
 
 
 CREATE PROCEDURE LA_PETER_MACHINE.SP_Listado_Historial
