@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Reflection;
+using System.Configuration;
 
 namespace WindowsFormsApplication1
 {
@@ -23,10 +24,18 @@ namespace WindowsFormsApplication1
             InitializeComponent();
             this.IsMdiContainer = true;
             this.LayoutMdi(MdiLayout.Cascade);
+            string dateTimeStamp = ConfigurationManager.AppSettings["dateTimeStamp"].ToString();
+
 
             usuario = username;
             SqlConnection conexion = conectionDB.getConnection();
             conexion.Open();
+            SqlCommand finalizarPublicaciones = new SqlCommand("LA_PETER_MACHINE.finalizarPublicaciones", conexion);
+            finalizarPublicaciones.CommandType = CommandType.StoredProcedure;
+            //Paso los parámetros al SP
+            finalizarPublicaciones.Parameters.AddWithValue("@fechaSys", dateTimeStamp);
+            finalizarPublicaciones.ExecuteNonQuery();
+
             SqlCommand getFuncionalidades = new SqlCommand("LA_PETER_MACHINE.get_funcionalidades_para_rol", conexion);
             getFuncionalidades.CommandType = CommandType.StoredProcedure;
             //Paso los parámetros al SP
