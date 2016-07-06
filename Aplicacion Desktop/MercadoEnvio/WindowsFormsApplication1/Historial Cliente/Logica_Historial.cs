@@ -189,7 +189,7 @@ namespace WindowsFormsApplication1.Historial_Cliente
                 sqlComando.Parameters.Add(parIdUser);
 
                 sqlComando.ExecuteNonQuery();
-
+                
                 calificacionPromedio = Convert.ToDecimal(sqlComando.Parameters["@calificacionPromedio"].Value);
             }
             catch (Exception e)
@@ -203,12 +203,46 @@ namespace WindowsFormsApplication1.Historial_Cliente
             }
 
             return calificacionPromedio;
-
         }
 
-        internal static string ObtenerPendientesDeCalificacion(int idUsuario)
+        public static int ObtenerPendientesDeCalificacion(int idUsuario)
         {
-            throw new NotImplementedException();
+            SqlConnection sqlConexion = conectionDB.getConnection();
+            int porCalificar;
+
+            try
+            {
+                sqlConexion.Open();
+
+                SqlCommand sqlComando = new SqlCommand();
+                sqlComando.Connection = sqlConexion;
+                sqlComando.CommandText = "LA_PETER_MACHINE.SP_ObtenerComprasPorCalificar_Historial";
+                sqlComando.CommandType = CommandType.StoredProcedure;
+
+                sqlComando.Parameters.AddWithValue("@idUsuario", idUsuario);
+
+                SqlParameter parIdUser = new SqlParameter();
+                parIdUser.ParameterName = "@porCalificar";
+                parIdUser.Direction = ParameterDirection.Output;
+                parIdUser.SqlDbType = SqlDbType.Int;
+                sqlComando.Parameters.Add(parIdUser);
+
+                sqlComando.ExecuteNonQuery();
+
+                porCalificar = (int)(sqlComando.Parameters["@porCalificar"].Value);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Error al intentar ejecutar el procedimiento almacenado SP_ObtenerCalificacionProm_Historial. " + e.Message);
+            }
+
+            finally
+            {
+                sqlConexion.Close();
+            }
+
+            return porCalificar;
         }
+
     }
 }

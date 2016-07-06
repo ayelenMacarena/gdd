@@ -22,7 +22,8 @@ namespace WindowsFormsApplication1.Generar_Publicación
             SqlConnection conexion = conectionDB.getConnection();
             conexion.Open();
             string ultimoNumero = "SELECT TOP 1 publicacion_id from LA_PETER_MACHINE.publicacion order by publicacion_id desc";
-            SqlCommand lastNumber = new SqlCommand(ultimoNumero, conexion);
+            SqlCommand lastNumber = new SqlCommand(
+                ultimoNumero, conexion);
             username = usuario;
             SqlDataReader numero = lastNumber.ExecuteReader();
 
@@ -43,7 +44,6 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 {
                     rubritos.Add(rub["rubr_descripcion_corta"].ToString());
                 }
-
             }
             comboBox1.DataSource = rubritos;
 
@@ -60,25 +60,11 @@ namespace WindowsFormsApplication1.Generar_Publicación
             {
                 while (vis.Read())
                 {
-
-                    comboBox2.Items.Add(vis["visi_descripcion"].ToString());
-                    
+                    comboBox2.Items.Add(vis["visi_descripcion"].ToString());                
                 }
-
-
             }
 
             conexion.Close();
-
-
-        }
-
-
-
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void textBox3_Validating(object sender, CancelEventArgs e)
@@ -92,11 +78,6 @@ namespace WindowsFormsApplication1.Generar_Publicación
             }
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void textBox2_Validating(object sender, CancelEventArgs e)
         {
             Int32 unInt;
@@ -106,7 +87,6 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 MessageBox.Show("El costo debe ser un número");
                 return;
             }
-
         }
 
 
@@ -127,11 +107,6 @@ namespace WindowsFormsApplication1.Generar_Publicación
             monthCalendarVencimiento.Visible = false;
         }
 
-        private void textBoxCod_TextChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -145,7 +120,6 @@ namespace WindowsFormsApplication1.Generar_Publicación
         private void textBox5_Click_1(object sender, EventArgs e)
         {
             monthCalendarVencimiento.Visible = true;
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -166,7 +140,6 @@ namespace WindowsFormsApplication1.Generar_Publicación
             {
                 MessageBox.Show("El precio no puede ser negativo");
                 return;
-
             }
             publicar.Parameters.AddWithValue("@precio", textBox3.Text);
             publicar.Parameters.AddWithValue("@costo", DBNull.Value);
@@ -176,7 +149,6 @@ namespace WindowsFormsApplication1.Generar_Publicación
             publicar.Parameters.AddWithValue("@envio", comboBox4.Text);
             if (Convert.ToDateTime(textBox4.Text) > Convert.ToDateTime(textBox5.Text))
             {
-
                 MessageBox.Show("La fecha de fin no puede ser menor a la de inicio");
                 return;
             }
@@ -187,10 +159,15 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
 
             publicar.ExecuteNonQuery();
-            MessageBox.Show(rdo.Value.ToString());
+            MessageBox.Show(String.Concat("La publicacion se creo de forma: ", rdo.Value.ToString()));
             conexion.Close();
-            this.Close();
 
+            if (comboBox5.Text == "Activa" && comboBox2.Text != "Gratis")
+            {
+                Logica_GenerarPublicacion.facturarPublicacion(comboBox2.Text, username, Convert.ToInt32(textBoxCod.Text));
+            }
+
+            this.Close();
         }
 
 

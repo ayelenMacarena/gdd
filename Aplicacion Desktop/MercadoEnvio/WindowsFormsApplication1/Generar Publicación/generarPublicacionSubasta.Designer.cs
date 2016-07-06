@@ -97,7 +97,6 @@
             this.textBoxCod.Name = "textBoxCod";
             this.textBoxCod.Size = new System.Drawing.Size(121, 20);
             this.textBoxCod.TabIndex = 7;
-            this.textBoxCod.TextChanged += new System.EventHandler(this.textBoxCod_TextChanged_1);
             // 
             // textBoxDescripcion
             // 

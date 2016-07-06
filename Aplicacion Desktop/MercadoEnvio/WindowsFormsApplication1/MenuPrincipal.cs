@@ -245,12 +245,7 @@ namespace WindowsFormsApplication1
             generarPubli.Show();
             generarPubli.Location = new Point(0, 49);
         }
-        public void STORE_categorizar_publicacion()
-        { 
-            //Aca voy para categorizar publicacion
-            this.Hide();
-            this.Close();
-        }
+
         public void STORE_visibilidad()
         {
             //Aca voy para administrar visibilidades

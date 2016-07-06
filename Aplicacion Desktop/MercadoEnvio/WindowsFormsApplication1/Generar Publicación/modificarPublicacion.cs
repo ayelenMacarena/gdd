@@ -64,10 +64,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
                     {
                         comboBox2.SelectedText = vis["visi_descripcion"].ToString();
                     }
-
                 }
-
-
             }
             conexion.Close();
             textBox4.Text = filaSeleccionada.Cells["publ_fecha_inicio"].Value.ToString();
@@ -85,8 +82,6 @@ namespace WindowsFormsApplication1.Generar_Publicación
             conexion.Close();
             comboBox3.Text = filaSeleccionada.Cells["publ_preguntas"].Value.ToString();
             comboBox4.Text = filaSeleccionada.Cells["publ_envio_habilitado"].Value.ToString();
-
-
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -99,22 +94,21 @@ namespace WindowsFormsApplication1.Generar_Publicación
             Int32 unInt;
             if (!Int32.TryParse(textBox3.Text, out unInt))
             {
-
                 MessageBox.Show("El precio debe ser un número");
                 return;
             }
         }
+
         private void textBox2_Validating(object sender, CancelEventArgs e)
         {
             Int32 unInt;
             if (!Int32.TryParse(textBox3.Text, out unInt))
             {
-
                 MessageBox.Show("El costo debe ser un número");
                 return;
             }
-
         }
+
         private void monthCalendarInicio_DateChanged(object sender, DateRangeEventArgs e)
         {
             textBox4.Text = monthCalendarInicio.SelectionRange.Start.ToShortDateString();
@@ -166,7 +160,6 @@ namespace WindowsFormsApplication1.Generar_Publicación
             {
                 MessageBox.Show("El precio no puede ser negativo");
                 return;
-
             }
             publicar.Parameters.AddWithValue("@precio", textBox3.Text);
             publicar.Parameters.AddWithValue("@costo", DBNull.Value);
@@ -189,23 +182,10 @@ namespace WindowsFormsApplication1.Generar_Publicación
             publicar.ExecuteNonQuery();
             MessageBox.Show(rdo.Value.ToString());
             conexion.Close();
+
             this.Close();
 
-        }
-
-        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-
-
-
-
-        
-
-
-
+        }       
 
       
     }

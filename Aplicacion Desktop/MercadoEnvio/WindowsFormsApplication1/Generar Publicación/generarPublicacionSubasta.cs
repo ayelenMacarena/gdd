@@ -46,7 +46,6 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 {
                     rubritos.Add(rub["rubr_descripcion_corta"].ToString());
                 }
-
             }
             comboBox1.DataSource = rubritos;
 
@@ -63,27 +62,11 @@ namespace WindowsFormsApplication1.Generar_Publicación
             {
                 while (vis.Read())
                 {
-
                     comboBox2.Items.Add(vis["visi_descripcion"].ToString());
-
                 }
-
-
             }
 
             conexion.Close();
-
-
-
-
-        }
-
-
-
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void textBox3_Validating(object sender, CancelEventArgs e)
@@ -91,15 +74,9 @@ namespace WindowsFormsApplication1.Generar_Publicación
             Int32 unInt;
             if (!Int32.TryParse(textBox3.Text, out unInt))
             {
-
                 MessageBox.Show("El precio debe ser un número");
                 return;
             }
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void textBox2_Validating(object sender, CancelEventArgs e)
@@ -107,7 +84,6 @@ namespace WindowsFormsApplication1.Generar_Publicación
             Int32 unInt;
             if (!Int32.TryParse(textBox3.Text, out unInt))
             {
-
                 MessageBox.Show("El costo debe ser un número");
                 return;
             }
@@ -134,11 +110,6 @@ namespace WindowsFormsApplication1.Generar_Publicación
         {
             textBox5.Text = monthCalendarVencimiento.SelectionRange.Start.ToShortDateString();
             monthCalendarVencimiento.Visible = false;
-        }
-
-        private void textBoxCod_TextChanged_1(object sender, EventArgs e)
-        {
-
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -197,8 +168,13 @@ namespace WindowsFormsApplication1.Generar_Publicación
             publicar.ExecuteNonQuery();
             MessageBox.Show(rdo.Value.ToString());
             conexion.Close();
-            this.Close();
 
+            if (comboBox5.Text == "Activa" && comboBox2.Text != "Gratis")
+            {
+                Logica_GenerarPublicacion.facturarPublicacion(comboBox2.Text, username, Convert.ToInt32(textBoxCod.Text));
+            }
+
+            this.Close();
         }
 
 

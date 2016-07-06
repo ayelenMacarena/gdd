@@ -1,4 +1,4 @@
-CREATE PROCEDURE LA_PETER_MACHINE.SP_ObtenerCalificacionProm_Historial
+create PROCEDURE LA_PETER_MACHINE.SP_ObtenerCalificacionProm_Historial
 (@idUsuario INT, @calificacionPromedio numeric(12,3) OUTPUT)
 AS
 
@@ -9,4 +9,9 @@ SET @calificacionPromedio =
 				and C.comp_id_comprador = @idUsuario
 			group by C.comp_id_comprador
 		)
+
+	if (@calificacionPromedio is null)
+		begin
+		SET @calificacionPromedio = 0
+		end
 GO

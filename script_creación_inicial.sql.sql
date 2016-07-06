@@ -4,64 +4,49 @@
 
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_cliente_tipo_dni') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.cliente DROP CONSTRAINT FK_cliente_tipo_dni
-;
+ALTER TABLE LA_PETER_MACHINE.cliente DROP CONSTRAINT FK_cliente_tipo_dni;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_cliente_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.cliente DROP CONSTRAINT FK_cliente_vendedor
-;
+ALTER TABLE LA_PETER_MACHINE.cliente DROP CONSTRAINT FK_cliente_vendedor;
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE name = ('FK_cliente_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.Cliente DROP CONSTRAINT FK_cliente_vendedor
-;
+ALTER TABLE LA_PETER_MACHINE.Cliente DROP CONSTRAINT FK_cliente_vendedor;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_factura_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.Factura DROP CONSTRAINT FK_factura_vendedor
-;
+ALTER TABLE LA_PETER_MACHINE.Factura DROP CONSTRAINT FK_factura_vendedor;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_funcionalidad_rol_funcionalidad') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.Funcionalidad_Rol DROP CONSTRAINT FK_funcionalidad_rol_funcionalidad
-;
+ALTER TABLE LA_PETER_MACHINE.Funcionalidad_Rol DROP CONSTRAINT FK_funcionalidad_rol_funcionalidad;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_funcionalidad_rol_rol') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.Funcionalidad_Rol DROP CONSTRAINT FK_funcionalidad_rol_rol
-;
+ALTER TABLE LA_PETER_MACHINE.Funcionalidad_Rol DROP CONSTRAINT FK_funcionalidad_rol_rol;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_publicacion_estado') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.Publicacion DROP CONSTRAINT FK_publicacion_estado
-;
+ALTER TABLE LA_PETER_MACHINE.Publicacion DROP CONSTRAINT FK_publicacion_estado;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_publicacion_rubro') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.Publicacion DROP CONSTRAINT FK_publicacion_rubro
-;
+ALTER TABLE LA_PETER_MACHINE.Publicacion DROP CONSTRAINT FK_publicacion_rubro;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_publicacion_tipo') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.Publicacion DROP CONSTRAINT FK_publicacion_tipo
-;
+ALTER TABLE LA_PETER_MACHINE.Publicacion DROP CONSTRAINT FK_publicacion_tipo;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_publicacion_vendedor') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.Publicacion DROP CONSTRAINT FK_publicacion_vendedor
-;
+ALTER TABLE LA_PETER_MACHINE.Publicacion DROP CONSTRAINT FK_publicacion_vendedor;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_publicacion_visibilidad') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.Publicacion DROP CONSTRAINT FK_publicacion_visibilidad
-;
+ALTER TABLE LA_PETER_MACHINE.Publicacion DROP CONSTRAINT FK_publicacion_visibilidad;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_roles_usuario_rol') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.roles_Usuario DROP CONSTRAINT FK_roles_usuario_rol
-;
+ALTER TABLE LA_PETER_MACHINE.roles_Usuario DROP CONSTRAINT FK_roles_usuario_rol;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_roles_usuario_usuario') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.roles_Usuario DROP CONSTRAINT FK_roles_usuario_usuario
-;
+ALTER TABLE LA_PETER_MACHINE.roles_Usuario DROP CONSTRAINT FK_roles_usuario_usuario;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_vendedor_usuario') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.persona DROP CONSTRAINT FK_vendedor_usuario
-;
+ALTER TABLE LA_PETER_MACHINE.persona DROP CONSTRAINT FK_vendedor_usuario;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_costo_envio_visibilidad') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE LA_PETER_MACHINE.costo_envio DROP CONSTRAINT FK_costo_envio_visibilidad
-;
+ALTER TABLE LA_PETER_MACHINE.costo_envio DROP CONSTRAINT FK_costo_envio_visibilidad;
 
 
 ------------------------------------------------------
@@ -70,84 +55,64 @@ ALTER TABLE LA_PETER_MACHINE.costo_envio DROP CONSTRAINT FK_costo_envio_visibili
 
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.calificacion') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.calificacion
-;
+DROP TABLE LA_PETER_MACHINE.calificacion;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.cliente') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.cliente
-;
+DROP TABLE LA_PETER_MACHINE.cliente;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.compra') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.Compra
-;
+DROP TABLE LA_PETER_MACHINE.Compra;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.empresa') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.Empresa
-;
+DROP TABLE LA_PETER_MACHINE.Empresa;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.publicacion') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.publicacion
-;
+DROP TABLE LA_PETER_MACHINE.publicacion;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.estado') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.Estado
-;
+DROP TABLE LA_PETER_MACHINE.Estado;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.factura') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.Factura
-;
+DROP TABLE LA_PETER_MACHINE.Factura;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.funcionalidad_Rol') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.funcionalidad_Rol
-;
+DROP TABLE LA_PETER_MACHINE.funcionalidad_Rol;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.funcionalidad') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.Funcionalidad
-;
+DROP TABLE LA_PETER_MACHINE.Funcionalidad;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.item_Factura') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.item_Factura
-;
+DROP TABLE LA_PETER_MACHINE.item_Factura;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.oferta') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.oferta
-;
+DROP TABLE LA_PETER_MACHINE.oferta;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.roles_Usuario') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.roles_Usuario
-;
+DROP TABLE LA_PETER_MACHINE.roles_Usuario;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.rol') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.rol
-;
+DROP TABLE LA_PETER_MACHINE.rol;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.rubro') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.rubro
-;
+DROP TABLE LA_PETER_MACHINE.rubro;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.tipo') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.tipo
-;
+DROP TABLE LA_PETER_MACHINE.tipo;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.document_type') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.Document_Type
-;
+DROP TABLE LA_PETER_MACHINE.Document_Type;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.usuario') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.Usuario
-;
+DROP TABLE LA_PETER_MACHINE.Usuario;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.persona') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.persona
-;
+DROP TABLE LA_PETER_MACHINE.persona;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.visibilidad') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.visibilidad
-;
+DROP TABLE LA_PETER_MACHINE.visibilidad;
 
 IF EXISTS (SELECT * FROM sysobjects WHERE id = object_id('LA_PETER_MACHINE.costo_envio') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE LA_PETER_MACHINE.costo_envio
-;
+DROP TABLE LA_PETER_MACHINE.costo_envio;
 
 
 
@@ -1179,13 +1144,17 @@ end
 
 GO
 
-CREATE procedure LA_PETER_MACHINE.publicacionesParaModificar(@username nvarchar(255))
+create procedure LA_PETER_MACHINE.publicacionesParaModificar(@username nvarchar(255))
 AS
 	begin
 	declare @vendedor_id numeric(18)
 	set @vendedor_id = (select TOP 1 pers_id from LA_PETER_MACHINE.persona where pers_username = @username)
 
-	select * from LA_PETER_MACHINE.publicacion where publ_id_vendedor = @vendedor_id and 
+	select publicacion_id, publ_descripcion, publ_precio, publ_costo,(select rubr_descripcion_corta from LA_PETER_MACHINE.rubro where rubr_cod = publ_cod_rubro) as Rubro,
+	(select visi_descripcion from LA_PETER_MACHINE.visibilidad where visi_cod = publ_cod_visibilidad) as Visibilidad,
+	(select esta_descripcion from LA_PETER_MACHINE.estado where estado_id = publ_id_estado) as Estado,
+	publ_fecha_inicio, publ_fecha_fin, publ_preguntas, publ_cantidad, publ_id_tipo, publ_envio_habilitado
+	from LA_PETER_MACHINE.publicacion where publ_id_vendedor = @vendedor_id and 
 	publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Borrador') or 
 	publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Activa')
 	end
@@ -1596,7 +1565,8 @@ UPDATE LA_PETER_MACHINE.publicacion SET publ_precio = @precio  WHERE publicacion
 
 GO
 
-CREATE PROCEDURE LA_PETER_MACHINE.SP_ObtenerCalificacionProm_Historial
+
+create PROCEDURE LA_PETER_MACHINE.SP_ObtenerCalificacionProm_Historial
 (@idUsuario INT, @calificacionPromedio numeric(12,3) OUTPUT)
 AS
 
@@ -1607,7 +1577,26 @@ SET @calificacionPromedio =
 				and C.comp_id_comprador = @idUsuario
 			group by C.comp_id_comprador
 		)
+
+	if (@calificacionPromedio is null)
+		begin
+		SET @calificacionPromedio = 0
+		end
 GO
+
+
+CREATE PROCEDURE LA_PETER_MACHINE.SP_ObtenerComprasPorCalificar_Historial
+(@idUsuario INT, @porCalificar int OUTPUT)
+AS
+
+SET @porCalificar = 
+		(select COUNT(*) from LA_PETER_MACHINE.compra C
+			where C.comp_id_calificacion is null
+				and C.comp_id_comprador = @idUsuario
+		)
+GO
+
+
 
 CREATE PROCEDURE LA_PETER_MACHINE.SP_Listado_Historial
 (@registrosPorPagina INT,
@@ -1712,7 +1701,6 @@ AS
 		
 --FUNCIONALIDAD
 		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('publicar',					'STORE_publicar')
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('categorizar_publicacion',	'STORE_categorizar_publicacion')
 		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('visibilidad',				'STORE_visibilidad')
 		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('comprar_ofertar',			'STORE_comprar_ofertar')
 		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('historial_cliente',		'STORE_historial_cliente')
@@ -1721,16 +1709,20 @@ AS
 		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('listado_estadistico',		'STORE_listado_estadistico')
 		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('adm_usuario',				'STORE_administrar_usuario')
 		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('adm_rol',					'STORE_administrar_rol')
-		insert into LA_PETER_MACHINE.funcionalidad(func_descripcion, func_procedure) values('adm_rubro',				'STORE_administrar_rubro')
+		
 
 --FUNCIONALIDAD_ROL
 		-- Rol Admin
 		insert into	 LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad,furo_id_rol) 
 		values((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'adm_usuario'),
 				(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'administrativo'))
+		
+		insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad, furo_id_rol)
+		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'facturas_realizadas'),
+			(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'administrativo'))
 
 		insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad, furo_id_rol)
-		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'adm_rubro'),
+		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'listado_estadistico'),
 			(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'administrativo'))
 
 		insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad, furo_id_rol)
@@ -1793,8 +1785,6 @@ AS
 
 --ROLES_USUARIO
 	insert into LA_PETER_MACHINE.roles_usuario(rolu_username, rolu_id_rol) values ('admin',(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'administrativo'))
-	insert into LA_PETER_MACHINE.roles_usuario(rolu_username, rolu_id_rol) values ('admin',(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'cliente'))
-	insert into LA_PETER_MACHINE.roles_usuario(rolu_username, rolu_id_rol) values ('admin',(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'empresa'))
 
 --PERSONA (Cliente)
 	insert into LA_PETER_MACHINE.persona(pers_username, pers_mail, pers_domicilio_calle, pers_cod_postal, pers_habilitado,
@@ -1856,19 +1846,6 @@ insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_persona
 	(select pers_id from LA_PETER_MACHINE.persona where pers_mail = Publ_Empresa_Mail)
 		from gd_esquema.Maestra
 		where Publ_Empresa_Cuit is not null
-
-
---CALIFICACION
-
-	set identity_insert LA_PETER_MACHINE.calificacion ON
-
-	insert into LA_PETER_MACHINE.calificacion (calificacion_id, cali_valor, cali_detalle,cali_id_vendedor)
-	select distinct Calificacion_Codigo, Calificacion_Cant_Estrellas , Calificacion_Descripcion, (select pers_id from LA_PETER_MACHINE.persona where Publ_Empresa_Mail = pers_mail OR Publ_Cli_Mail = pers_mail) 
-		from gd_esquema.Maestra
-  		where Calificacion_Codigo is not NULL and Calificacion_Cant_Estrellas < 6
-		order by Calificacion_Codigo
-
-	set identity_insert LA_PETER_MACHINE.calificacion OFF
 
 
 --VISIBILIDAD
@@ -1972,7 +1949,21 @@ insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_persona
 		where p.publicacion_id = Publicacion_cod 
 			and pe.pers_mail = Cli_mail --Comprador
 			and Compra_Cantidad is not NULL
-			and Calificacion_Codigo is NULL
+			and Calificacion_Codigo is not null
+
+--CALIFICACION
+
+	set identity_insert LA_PETER_MACHINE.calificacion ON
+
+	insert into LA_PETER_MACHINE.calificacion (calificacion_id, cali_valor, cali_detalle,cali_id_vendedor)
+	select distinct Calificacion_Codigo, Calificacion_Cant_Estrellas , Calificacion_Descripcion, (select pers_id from LA_PETER_MACHINE.persona where Publ_Empresa_Mail = pers_mail OR Publ_Cli_Mail = pers_mail) 
+		from gd_esquema.Maestra
+  		where Calificacion_Codigo is not NULL --and Calificacion_Cant_Estrellas < 6
+		order by Calificacion_Codigo
+
+	set identity_insert LA_PETER_MACHINE.calificacion OFF
+
+	update LA_PETER_MACHINE.calificacion set cali_valor = 5 from LA_PETER_MACHINE.calificacion where cali_valor > 5 
 
 GO
 

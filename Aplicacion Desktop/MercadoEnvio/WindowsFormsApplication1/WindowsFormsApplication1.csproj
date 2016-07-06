@@ -152,6 +152,7 @@
       <DependentUpon>Deshabilitar Funcionalidad.cs</DependentUpon>
     </Compile>
     <Compile Include="Facturas\Logica_Facturas.cs" />
+    <Compile Include="Generar Publicación\Logica_GenerarPublicacion.cs" />
     <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
