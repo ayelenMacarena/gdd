@@ -177,13 +177,13 @@ namespace WindowsFormsApplication1.ComprarOfertar
         private void buttonComprar_Click(object sender, EventArgs e)
         {
             DataGridViewRow filaSeleccionada = Grid_ComprarOfertar.CurrentRow;
-            (new ComprarOfertar.Comprar(filaSeleccionada, this)).Show();
+            (new ComprarOfertar.Comprar(filaSeleccionada, this, cliente)).Show();
         }
 
         private void buttonOfertar_Click(object sender, EventArgs e)
         {
             DataGridViewRow filaSeleccionada = Grid_ComprarOfertar.CurrentRow;
-            (new ComprarOfertar.Ofertar(filaSeleccionada, this)).Show();
+            (new ComprarOfertar.Ofertar(filaSeleccionada, this, usuario)).Show();
 
         }
 

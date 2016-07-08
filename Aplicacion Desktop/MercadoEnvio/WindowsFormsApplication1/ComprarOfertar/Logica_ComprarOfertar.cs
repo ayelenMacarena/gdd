@@ -124,7 +124,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
             conexion.Close();
         }
 
-        public static void Comprar(int publ_id, int cantidad)
+        public static void Comprar(int publ_id, int cantidad, int comprador, int vendedor)
         {
             SqlConnection sqlConexion = conectionDB.getConnection();
 
@@ -139,6 +139,9 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
                 sqlComando.Parameters.AddWithValue("@publ_id", publ_id);
                 sqlComando.Parameters.AddWithValue("@cantidad", cantidad);
+                sqlComando.Parameters.AddWithValue("@user", comprador);
+                sqlComando.Parameters.AddWithValue("@vendedor", vendedor);
+                sqlComando.Parameters.AddWithValue("@fecha", ConfigurationManager.AppSettings["dateTimeStamp"].ToString());
 
 
                 sqlComando.ExecuteNonQuery();
@@ -155,7 +158,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
             
         }
 
-        public static void Ofertar(int publ_id, int precio)
+        public static void Ofertar(int publ_id, int precio, String usuario)
         {
             SqlConnection sqlConexion = conectionDB.getConnection();
 
@@ -170,6 +173,9 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
                 sqlComando.Parameters.AddWithValue("@publ_id", publ_id);
                 sqlComando.Parameters.AddWithValue("@precio", precio);
+                sqlComando.Parameters.AddWithValue("@fecha", ConfigurationManager.AppSettings["dateTimeStamp"].ToString());
+                sqlComando.Parameters.AddWithValue("@username", usuario);
+
 
 
                 sqlComando.ExecuteNonQuery();

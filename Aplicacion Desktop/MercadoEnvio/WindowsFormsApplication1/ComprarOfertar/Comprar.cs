@@ -14,12 +14,14 @@ namespace WindowsFormsApplication1.ComprarOfertar
     {
         DataGridViewRow fila;
         Listado_ComprarOfertar listado;
+        int comprador;
 
-        public Comprar(DataGridViewRow filaSeleccionada, Listado_ComprarOfertar listadoPubl)
+        public Comprar(DataGridViewRow filaSeleccionada, Listado_ComprarOfertar listadoPubl, int cliente)
         {
             InitializeComponent();
             fila = filaSeleccionada;
             listado = listadoPubl;
+            comprador = cliente;
             var cantidad = filaSeleccionada.Cells["publ_cantidad"].Value;
             numericCantidad.Minimum = 1;
             numericCantidad.Maximum = Convert.ToInt32(filaSeleccionada.Cells["publ_cantidad"].Value);
@@ -41,9 +43,9 @@ namespace WindowsFormsApplication1.ComprarOfertar
                 return;
             }
 
-            Logica_ComprarOfertar.Comprar(Convert.ToInt32(fila.Cells["publicacion_id"].Value), Convert.ToInt32(numericCantidad.Value));
-            
             Logica_ComprarOfertar.InsertarFactura(Convert.ToInt32(fila.Cells["publicacion_id"].Value), Convert.ToInt32(numericCantidad.Value));
+
+            Logica_ComprarOfertar.Comprar(Convert.ToInt32(fila.Cells["publicacion_id"].Value), Convert.ToInt32(numericCantidad.Value), comprador, Convert.ToInt32(fila.Cells["publ_id_vendedor"].Value));
 
             listado.Mostrar();
 

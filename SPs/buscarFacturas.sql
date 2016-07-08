@@ -1,4 +1,4 @@
-create procedure LA_PETER_MACHINE.buscarFacturas (@fechaDesde varchar(15) , @fechaHasta varchar(15), 
+alter procedure LA_PETER_MACHINE.buscarFacturas (@fechaDesde datetime , @fechaHasta datetime, 
  	@precioDesde nvarchar(200) , @precioHasta nvarchar(200) , @descripcion nvarchar(255), @vendedor nvarchar(255),
 	@registrosPorPagina INT,
 	@numerosPagina INT)
@@ -16,14 +16,18 @@ declare @query varchar(255)
 
 
 IF @fechaDesde is Not NULL and @query is not NUll
-	set @query = @query + ' AND fact_fecha >= "' + @fechaDesde + '"'
+	set @query = @query + ' AND fact_fecha >= ''' + convert(varchar(4),year(@fechaDesde)) 
+										+ convert(varchar(2),month(@fechaDesde)) + convert(varchar(2),day(@fechaDesde)) + ''''
 Else IF @fechaDesde is Not NULL 
-	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha >= "' + @fechaDesde + '"'
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha >= ''' + convert(varchar(4),year(@fechaDesde)) 
+										+ convert(varchar(2),month(@fechaDesde)) + convert(varchar(2),day(@fechaDesde)) + ''''
 
 IF @fechaHasta is not Null and @query is not null
-	set @query = @query + ' AND fact_fecha <= "' + @fechaHasta + '"'
+	set @query = @query + ' AND fact_fecha <= ''' + convert(varchar(4),year(@fechaHasta)) 
+											+ convert(varchar(2),month(@fechaHasta)) + convert(varchar(2),day(@fechaHasta)) + ''''
 else IF @fechaHasta is not Null
-	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha <= "' + @fechaHasta + '"'
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha <= ''' + convert(varchar(4),year(@fechaHasta)) 
+											+ convert(varchar(2),month(@fechaHasta)) + convert(varchar(2),day(@fechaHasta)) + ''''
 
 
 IF @descripcion is not NUll and @query is not null

@@ -99,11 +99,13 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.Location = new System.Drawing.Point(67, 50);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(59, 17);
+            this.checkBox1.Size = new System.Drawing.Size(73, 17);
             this.checkBox1.TabIndex = 17;
-            this.checkBox1.Text = "Estado";
+            this.checkBox1.Text = "Habilitado";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // Actualizar

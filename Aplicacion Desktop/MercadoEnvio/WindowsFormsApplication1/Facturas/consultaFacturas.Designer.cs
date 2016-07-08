@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.calendarFrom = new System.Windows.Forms.MonthCalendar();
@@ -54,6 +54,7 @@
             this.label_Anterio_CO = new System.Windows.Forms.LinkLabel();
             this.label_Siguiente_CO = new System.Windows.Forms.LinkLabel();
             this.Grid_ListaFacturas = new System.Windows.Forms.DataGridView();
+            this.button4 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Grid_ListaFacturas)).BeginInit();
             this.SuspendLayout();
@@ -232,7 +233,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(462, 445);
+            this.button3.Location = new System.Drawing.Point(476, 469);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 16;
@@ -244,9 +245,9 @@
             // 
             this.labelNroPagina.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.labelNroPagina.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelNroPagina.Location = new System.Drawing.Point(271, 445);
+            this.labelNroPagina.Location = new System.Drawing.Point(285, 445);
             this.labelNroPagina.Name = "labelNroPagina";
-            this.labelNroPagina.Size = new System.Drawing.Size(48, 20);
+            this.labelNroPagina.Size = new System.Drawing.Size(48, 47);
             this.labelNroPagina.TabIndex = 24;
             this.labelNroPagina.Text = "Nº";
             this.labelNroPagina.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -255,7 +256,7 @@
             // 
             this.linkPrimeraPag.AutoSize = true;
             this.linkPrimeraPag.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkPrimeraPag.Location = new System.Drawing.Point(143, 448);
+            this.linkPrimeraPag.Location = new System.Drawing.Point(142, 461);
             this.linkPrimeraPag.Name = "linkPrimeraPag";
             this.linkPrimeraPag.Size = new System.Drawing.Size(57, 17);
             this.linkPrimeraPag.TabIndex = 23;
@@ -267,7 +268,7 @@
             // 
             this.linkUltimaPag.AutoSize = true;
             this.linkUltimaPag.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkUltimaPag.Location = new System.Drawing.Point(398, 448);
+            this.linkUltimaPag.Location = new System.Drawing.Point(412, 461);
             this.linkUltimaPag.Name = "linkUltimaPag";
             this.linkUltimaPag.Size = new System.Drawing.Size(47, 17);
             this.linkUltimaPag.TabIndex = 22;
@@ -279,7 +280,7 @@
             // 
             this.label_InfoPagina_CO.AutoSize = true;
             this.label_InfoPagina_CO.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_InfoPagina_CO.Location = new System.Drawing.Point(30, 448);
+            this.label_InfoPagina_CO.Location = new System.Drawing.Point(29, 461);
             this.label_InfoPagina_CO.Name = "label_InfoPagina_CO";
             this.label_InfoPagina_CO.Size = new System.Drawing.Size(66, 20);
             this.label_InfoPagina_CO.TabIndex = 21;
@@ -289,7 +290,7 @@
             // 
             this.label_Anterio_CO.AutoSize = true;
             this.label_Anterio_CO.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_Anterio_CO.Location = new System.Drawing.Point(207, 448);
+            this.label_Anterio_CO.Location = new System.Drawing.Point(206, 461);
             this.label_Anterio_CO.Name = "label_Anterio_CO";
             this.label_Anterio_CO.Size = new System.Drawing.Size(58, 17);
             this.label_Anterio_CO.TabIndex = 20;
@@ -301,7 +302,7 @@
             // 
             this.label_Siguiente_CO.AutoSize = true;
             this.label_Siguiente_CO.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_Siguiente_CO.Location = new System.Drawing.Point(325, 448);
+            this.label_Siguiente_CO.Location = new System.Drawing.Point(339, 461);
             this.label_Siguiente_CO.Name = "label_Siguiente_CO";
             this.label_Siguiente_CO.Size = new System.Drawing.Size(67, 17);
             this.label_Siguiente_CO.TabIndex = 19;
@@ -313,14 +314,14 @@
             // 
             this.Grid_ListaFacturas.AllowUserToAddRows = false;
             this.Grid_ListaFacturas.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Desktop;
-            this.Grid_ListaFacturas.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.Grid_ListaFacturas.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.Grid_ListaFacturas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.Grid_ListaFacturas.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.Grid_ListaFacturas.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Grid_ListaFacturas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.Grid_ListaFacturas.Location = new System.Drawing.Point(33, 161);
+            this.Grid_ListaFacturas.Location = new System.Drawing.Point(34, 161);
             this.Grid_ListaFacturas.MultiSelect = false;
             this.Grid_ListaFacturas.Name = "Grid_ListaFacturas";
             this.Grid_ListaFacturas.ReadOnly = true;
@@ -329,11 +330,23 @@
             this.Grid_ListaFacturas.Size = new System.Drawing.Size(488, 278);
             this.Grid_ListaFacturas.TabIndex = 25;
             // 
+            // button4
+            // 
+            this.button4.Enabled = false;
+            this.button4.Location = new System.Drawing.Point(476, 445);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 22);
+            this.button4.TabIndex = 26;
+            this.button4.Text = "Ampliar";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click_1);
+            // 
             // consultaFacturas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 476);
+            this.ClientSize = new System.Drawing.Size(579, 503);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.Grid_ListaFacturas);
             this.Controls.Add(this.labelNroPagina);
             this.Controls.Add(this.linkPrimeraPag);
@@ -380,5 +393,6 @@
         private System.Windows.Forms.LinkLabel label_Anterio_CO;
         private System.Windows.Forms.LinkLabel label_Siguiente_CO;
         private System.Windows.Forms.DataGridView Grid_ListaFacturas;
+        private System.Windows.Forms.Button button4;
     }
 }
