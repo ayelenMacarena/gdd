@@ -47,17 +47,14 @@ namespace WindowsFormsApplication1.Facturas
             this.priceToLabel.Clear();
             this.detailsLabel.Clear();
             salesmanComboBox.Text = "";
-<<<<<<< HEAD
-            Grid_ListaFacturas.Visible = false;
-            button4.Enabled = false;
-=======
+
             button4.Enabled = false;
             //Grid_ListaFacturas.Visible = false;          
             Grid_ListaFacturas.DataSource = null;
 
             this.labelNroPagina.Text = String.Empty;
             this.label_InfoPagina_CO.Text = "Paginas";
->>>>>>> 466c5bc87498e8a441dda8b9d957407bf2213e87
+
         }
 
 
