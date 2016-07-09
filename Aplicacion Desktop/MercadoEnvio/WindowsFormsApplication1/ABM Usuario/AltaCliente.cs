@@ -29,32 +29,23 @@ namespace WindowsFormsApplication1.ABM_Usuario
             conexion.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read()) {
-                comboBox1.Items.Add(reader[0]);
-                
-            }
-           
+                comboBox1.Items.Add(reader[0]);                
+            }           
         }
 
         void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
             MessageBox.Show("formato inapropiado");
         }
+
         void maskedTextBox2_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
             MessageBox.Show("formato inapropiado");
         }
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
 
-        }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
         public bool isNotEmpty(TextBox text, String campo)
         {
-
             if (text.Text == "")
             {
                 MessageBox.Show("el campo " + campo + " esta vacio");
@@ -62,6 +53,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             }
             else { return true; }
         }
+
         public bool isNotEmpty(ComboBox text, String campo)
         {
 
@@ -128,10 +120,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 else { MessageBox.Show("contraseña no coincide"); }
             }
         }
-        private void AltaCliente_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -143,14 +131,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
             this.Close();
         }
 
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox4_Validating(object sender, CancelEventArgs e)
-        {
-        }
 
         private void soloNumeros(object sender, KeyPressEventArgs e)
         {
@@ -168,12 +148,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
             return false;
         }
 
-     
-
-        private void textBox11_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
     
 

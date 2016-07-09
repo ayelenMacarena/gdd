@@ -166,13 +166,22 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
 
             publicar.ExecuteNonQuery();
-            MessageBox.Show(rdo.Value.ToString());
+            
             conexion.Close();
 
-            if (comboBox5.Text == "Activa" && comboBox2.Text != "Gratis")
+            bool usuarioBonificado = Logica_GenerarPublicacion.consultarBonificacion(username);
+
+            if (comboBox5.Text == "Activa" && comboBox2.Text != "Gratis" && !usuarioBonificado)
             {
                 Logica_GenerarPublicacion.facturarPublicacion(comboBox2.Text, username, Convert.ToInt32(textBoxCod.Text));
             }
+            if (comboBox5.Text == "Activa" && comboBox2.Text != "Gratis" && usuarioBonificado)
+            {
+                MessageBox.Show("Felicitaciones, tu primer publicacion es gratuita.");
+                Logica_GenerarPublicacion.quitarBonificacion(username);
+            }
+
+            MessageBox.Show(String.Format("La publicacion se creo de forma: {0}", rdo.Value.ToString()));
 
             this.Close();
         }

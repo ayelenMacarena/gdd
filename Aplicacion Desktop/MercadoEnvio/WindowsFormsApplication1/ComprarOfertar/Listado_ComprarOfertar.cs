@@ -81,7 +81,10 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
             this.labelNroPagina.Text = String.Format("{0}", numeroPagina);
             this.label_InfoPagina_CO.Text = String.Format("Paginas {0}", cantidadDePaginas);
-            this.Grid_ComprarOfertar.Columns["publicacion_id"].Visible = false;
+            if (this.Grid_ComprarOfertar.ColumnCount > 0)
+            {
+                this.Grid_ComprarOfertar.Columns["ID_Publicacion"].Visible = false;
+            }
         }
 
 
@@ -177,14 +180,15 @@ namespace WindowsFormsApplication1.ComprarOfertar
         private void buttonComprar_Click(object sender, EventArgs e)
         {
             DataGridViewRow filaSeleccionada = Grid_ComprarOfertar.CurrentRow;
+            if (filaSeleccionada == null) { MessageBox.Show("Debe seleccionar una Publicacion."); return;}
             (new ComprarOfertar.Comprar(filaSeleccionada, this, cliente)).Show();
         }
 
         private void buttonOfertar_Click(object sender, EventArgs e)
         {
             DataGridViewRow filaSeleccionada = Grid_ComprarOfertar.CurrentRow;
+            if (filaSeleccionada == null) { MessageBox.Show("Debe seleccionar una Publicacion."); return; }
             (new ComprarOfertar.Ofertar(filaSeleccionada, this, usuario)).Show();
-
         }
 
         private void comboRubros_SelectedIndexChanged(object sender, EventArgs e)

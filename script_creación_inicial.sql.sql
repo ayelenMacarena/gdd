@@ -283,7 +283,8 @@ CREATE TABLE usuario (
 	usua_username nvarchar(255) NOT NULL,
 	usua_password varbinary(20) NOT NULL,
 	usua_habilitado bit NOT NULL,
-	usua_intentos_login numeric (1) DEFAULT 0
+	usua_intentos_login numeric (1) DEFAULT 0,
+	usua_bonificado bit NOT NULL
 )
 
 
@@ -667,25 +668,30 @@ begin try
 	begin
 	if not exists(select * from LA_PETER_MACHINE.usuario where usua_username=@usuario)
 	begin
-	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado)values(@usuario,@hash,1)
+	
+	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado, usua_bonificado)values(@usuario,@hash,1,1)
+	
 	insert into LA_PETER_MACHINE.persona(pers_ciudad,pers_cod_postal,pers_depto,
 	pers_domicilio_calle,pers_mail,pers_numero_calle,pers_piso,pers_telefono,pers_username,pers_habilitado,pers_fecha_creacion)values(
 	LA_PETER_MACHINE.controlNull(@ciudad),LA_PETER_MACHINE.controlNull(@cod_postal),LA_PETER_MACHINE.controlNull(@depto),LA_PETER_MACHINE.controlNull(@calle),LA_PETER_MACHINE.controlNull(@mail),
 	cast(LA_PETER_MACHINE.controlNull(@numero) as numeric),cast(LA_PETER_MACHINE.controlNull(@piso) as numeric),
 	LA_PETER_MACHINE.controlNull(@telefono),@usuario,1,CONVERT(datetime,@fechaCreacion,121))
-	insert into LA_PETER_MACHINE.cliente(clie_apellido,clie_dni,
-	clie_fecha_nac,clie_nombre,clie_id_tipo_doc,clie_id_persona)values(@apellido,cast(@dni as numeric),
+	
+	insert into LA_PETER_MACHINE.cliente(clie_apellido,clie_dni, clie_fecha_nac,clie_nombre,clie_id_tipo_doc,clie_id_persona)
+		values(@apellido,cast(@dni as numeric),
 	@fecha,@nombre,(select type_id from LA_PETER_MACHINE.document_type where type_descripcion=@tipo_DNI),
 	(select pers_id from LA_PETER_MACHINE.persona where pers_username=@usuario))
+	
 	insert into LA_PETER_MACHINE.roles_usuario(rolu_username,rolu_id_rol)values(@usuario,
 	(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion='cliente'))
+	
 	set @rdo='cliente creado correctamente'
 	end
 	else
-	set @rdo='usuario en uso'
+		set @rdo='usuario en uso'
 	end
 	else
-	set @rdo='Ya existe el cliente'
+		set @rdo='Ya existe el cliente'
  end try
 begin catch
 	if exists(select * from LA_PETER_MACHINE.usuario where usua_username=@usuario)
@@ -696,6 +702,7 @@ begin catch
 end catch
 end 
 GO
+
 create procedure LA_PETER_MACHINE.Controlar_Usuario_Habilitado(@Usuario nvarchar(255),@rdo nvarchar(255) output)
 as
 begin
@@ -834,7 +841,7 @@ begin try
 	begin
 	if not exists(select * from LA_PETER_MACHINE.usuario where usua_username=@usuario)
 	begin
-	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado)values(@usuario,@hash,1)
+	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado, usua_bonificado)values(@usuario,@hash,1,1)
 	insert into LA_PETER_MACHINE.persona(pers_ciudad,pers_cod_postal,pers_depto,
 	pers_domicilio_calle,pers_mail,pers_numero_calle,pers_piso,pers_telefono,pers_username,pers_habilitado,pers_fecha_creacion)values(
 	LA_PETER_MACHINE.controlNull(@ciudad),LA_PETER_MACHINE.controlNull(@cod_postal),
@@ -1180,15 +1187,17 @@ create procedure LA_PETER_MACHINE.publicacionesParaModificar(@username nvarchar(
 AS
 	begin
 	declare @vendedor_id numeric(18)
+	
 	set @vendedor_id = (select TOP 1 pers_id from LA_PETER_MACHINE.persona where pers_username = @username)
 
 	select publicacion_id, publ_descripcion, publ_precio, publ_costo,(select rubr_descripcion_corta from LA_PETER_MACHINE.rubro where rubr_cod = publ_cod_rubro) as Rubro,
-	(select visi_descripcion from LA_PETER_MACHINE.visibilidad where visi_cod = publ_cod_visibilidad) as Visibilidad,
-	(select esta_descripcion from LA_PETER_MACHINE.estado where estado_id = publ_id_estado) as Estado,
-	publ_fecha_inicio, publ_fecha_fin, publ_preguntas, publ_cantidad, (select tipo_descripcion from LA_PETER_MACHINE.tipo where tipo_id = publ_id_tipo) as Tipo, publ_envio_habilitado
-	from LA_PETER_MACHINE.publicacion where publ_id_vendedor = @vendedor_id and 
-	publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Borrador') or 
-	publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Activa')
+		(select visi_descripcion from LA_PETER_MACHINE.visibilidad where visi_cod = publ_cod_visibilidad) as Visibilidad,
+		(select esta_descripcion from LA_PETER_MACHINE.estado where estado_id = publ_id_estado) as Estado,
+		publ_fecha_inicio, publ_fecha_fin, publ_preguntas, publ_cantidad, (select tipo_descripcion from LA_PETER_MACHINE.tipo where tipo_id = publ_id_tipo) as Tipo, publ_envio_habilitado
+	from LA_PETER_MACHINE.publicacion 
+		where publ_id_vendedor = @vendedor_id
+			and (publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Borrador') or 
+			publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Activa'))
 	end
 GO
 
@@ -1495,7 +1504,8 @@ AS
 			SET @ID_TIPO = 1
 		END	
 		
-	SELECT publicacion_id, publ_descripcion, publ_precio, publ_cantidad, publ_id_vendedor
+	SELECT publicacion_id as ID_Publicacion, publ_descripcion as Descripcion, publ_cantidad as Cantidad, publ_precio as Precio,
+			(select pers_username from LA_PETER_MACHINE.persona where pers_id = publ_id_vendedor ) as Vendedor
 		FROM LA_PETER_MACHINE.publicacion JOIN LA_PETER_MACHINE.ListaATabla_ComprarOfertar(@rubros) r on publ_cod_rubro = r.number,
 			 LA_PETER_MACHINE.estado, LA_PETER_MACHINE.tipo		
 		WHERE  publ_id_vendedor != @cliente
@@ -1764,6 +1774,21 @@ update LA_PETER_MACHINE.publicacion
 END;
 GO
 
+CREATE PROCEDURE LA_PETER_MACHINE.SP_ConsultarUsuarioBonificado_GenerarPublicacion
+(@username NVARCHAR(255),
+@estaBonificado BIT OUTPUT)
+AS
+
+SET @estaBonificado = (select usua_bonificado from LA_PETER_MACHINE.usuario where usua_username = @username)
+
+GO
+
+CREATE PROCEDURE LA_PETER_MACHINE.SP_QuitarBonificado_GenerarPublicacion
+(@username NVARCHAR(255)) AS
+BEGIN
+	update LA_PETER_MACHINE.usuario set usua_bonificado = 0 where usua_username = @username
+END
+GO
 
 
 
@@ -1862,17 +1887,18 @@ AS
 	set @pass = 'w23e'
 	set @hash = hashbytes('sha2_256',@pass);
 
-	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado,usua_intentos_login) values ('admin',@hash,1,0)
+	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado,usua_intentos_login,usua_bonificado) 
+												values ('admin',@hash,1,0,0)
 
 --USUARIO (Empresa)
-	insert into LA_PETER_MACHINE.usuario(usua_username, usua_password, usua_habilitado, usua_intentos_login)
-	select distinct Publ_Empresa_Mail, @hash, 1, 0 from gd_esquema.Maestra
+	insert into LA_PETER_MACHINE.usuario(usua_username, usua_password, usua_habilitado, usua_intentos_login, usua_bonificado)
+	select distinct Publ_Empresa_Mail, @hash, 1, 0, 0 from gd_esquema.Maestra
 		where Publ_Empresa_Mail is not null
 		group by Publ_Empresa_Mail
 
 --USUARIO (Cliente)
-	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado, usua_intentos_login)
-	select distinct Cli_Mail,@hash,1,0 from gd_esquema.Maestra
+	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado, usua_intentos_login, usua_bonificado)
+	select distinct Cli_Mail,@hash,1,0, 0 from gd_esquema.Maestra
 	where Cli_Mail is not null
 	group by Cli_Mail
 
