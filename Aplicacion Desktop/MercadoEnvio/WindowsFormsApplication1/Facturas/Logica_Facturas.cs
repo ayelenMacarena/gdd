@@ -28,7 +28,8 @@ namespace WindowsFormsApplication1.Facturas
                 }
                 else
                 {
-                    buscarFacturas.Parameters.AddWithValue("@fechaDesde", fechaDesde);
+                    var date = Convert.ToDateTime(fechaDesde).Date.ToString("yyyyMMdd");
+                    buscarFacturas.Parameters.AddWithValue("@fechaDesde", date);
                 }
 
                 if (fechaHasta == String.Empty)
@@ -37,7 +38,8 @@ namespace WindowsFormsApplication1.Facturas
                 }
                 else
                 {
-                    buscarFacturas.Parameters.AddWithValue("@fechaHasta", fechaHasta);
+                    var date2 = Convert.ToDateTime(fechaHasta).Date.ToString("yyyyMMdd");
+                    buscarFacturas.Parameters.AddWithValue("@fechaHasta", date2 );
                 }
 
                 if (precioDesde == String.Empty)

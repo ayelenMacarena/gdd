@@ -17,6 +17,8 @@ namespace WindowsFormsApplication1.ABM_Rol
         public ListadoRol()
         {
             InitializeComponent();
+            actualizarGrid();
+            dataGridView1.AllowUserToAddRows = false;
         }
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -42,7 +44,10 @@ namespace WindowsFormsApplication1.ABM_Rol
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            actualizarGrid();
+           
+            }
+        private void actualizarGrid() {
             dataGridView1.DataSource = null;
             dataGridView1.Rows.Clear();
             dataGridView1.Columns.Clear();
@@ -53,19 +58,18 @@ namespace WindowsFormsApplication1.ABM_Rol
             DataTable table = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             text = textBox1.Text;
-            
-            cmd.CommandText = "select rol_descripcion from LA_PETER_MACHINE.rol where (rol_descripcion LIKE '%' + @rol + '%') and rol_habilitado=@habilitado";
+
+            cmd.CommandText = "select rol_descripcion as Rol, rol_habilitado as Habilitado from LA_PETER_MACHINE.rol where (rol_descripcion LIKE '%' + @rol + '%') and rol_habilitado=@habilitado";
             cmd.Parameters.Add("@rol", SqlDbType.NVarChar);
             cmd.Parameters.Add("@habilitado", SqlDbType.Bit);
             cmd.Parameters["@rol"].Value = text;
             cmd.Parameters["@habilitado"].Value = checkBox1.Checked;
-             conexion.Open();
+            conexion.Open();
             adapter.Fill(table);
             if (table.Rows.Count == 0) { }
             else
             {
                 dataGridView1.DataSource = table;
-                dataGridView1.Columns[0].HeaderText = "Rol";
                 this.seleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
                 this.seleccionar.Text = "Seleccionar";
                 this.seleccionar.UseColumnTextForButtonValue = true;
@@ -73,22 +77,8 @@ namespace WindowsFormsApplication1.ABM_Rol
                 this.seleccionar.Name = "Seleccionar";
                 this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.seleccionar});
-                this.habilitar = new System.Windows.Forms.DataGridViewButtonColumn();
-                this.habilitar.Text = "Habilitar";
-                this.habilitar.UseColumnTextForButtonValue = true;
-                this.habilitar.HeaderText = "Habilitar";
-                this.habilitar.Name = "Habilitar";
-                this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.habilitar});
-                this.deshabilitar = new System.Windows.Forms.DataGridViewButtonColumn();
-                this.deshabilitar.Text = "Deshabilitar";
-                this.deshabilitar.UseColumnTextForButtonValue = true;
-                this.deshabilitar.HeaderText = "Deshabilitar";
-                this.deshabilitar.Name = "Deshabilitar";
-                this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.deshabilitar});
             }
-            }
+        }
       
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -139,39 +129,7 @@ namespace WindowsFormsApplication1.ABM_Rol
                 }
                 return;
             }
-            if (enteroABool(String.Compare(senderGrid.Columns[e.ColumnIndex].HeaderText, "Habilitar")) && e.RowIndex >= 0)
-            {
-                SqlConnection conexion = conectionDB.getConnection();
-                conexion.Open();
-                SqlCommand cmd = new SqlCommand("LA_PETER_MACHINE.habilitar_rol", conexion);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
-                rdo.Size = 255;
-                rdo.Direction = ParameterDirection.Output;
-                cmd.Parameters.Add(rdo);
-                cmd.Parameters.Add("@rol", SqlDbType.NVarChar);
-                cmd.Parameters["@rol"].Value = senderGrid.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
-
-                cmd.ExecuteNonQuery();
-                MessageBox.Show(rdo.Value.ToString());
-
-            }
-            if (enteroABool(String.Compare(senderGrid.Columns[e.ColumnIndex].HeaderText, "Deshabilitar")) && e.RowIndex >= 0)
-            {
-                SqlConnection conexion = conectionDB.getConnection();
-                conexion.Open();
-                SqlCommand cmd = new SqlCommand("LA_PETER_MACHINE.deshabilitar_rol", conexion);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
-                rdo.Size = 255;
-                rdo.Direction = ParameterDirection.Output;
-                cmd.Parameters.Add(rdo);
-                cmd.Parameters.Add("@rol", SqlDbType.NVarChar);
-                cmd.Parameters["@rol"].Value = senderGrid.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
-
-                cmd.ExecuteNonQuery();
-                MessageBox.Show(rdo.Value.ToString());
-            }
+        
         }
     
 public  DataGridViewButtonColumn seleccionar { get; set; }
@@ -186,5 +144,48 @@ private void button1_Click(object sender, EventArgs e)
 public DataGridViewButtonColumn habilitar { get; set; }
 
 public DataGridViewButtonColumn deshabilitar { get; set; }
+
+private void Actualizar_Click(object sender, EventArgs e)
+{
+    SqlConnection conexion = conectionDB.getConnection();
+            conexion.Open();
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                String rol1 = row.Cells["Rol"].FormattedValue.ToString();
+                String boolean = row.Cells["Habilitado"].FormattedValue.ToString();
+                if (boolean == "True")
+                {
+                    SqlCommand cmd = new SqlCommand("LA_PETER_MACHINE.habilitar_rol", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
+                    rdo.Size = 255;
+                    rdo.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(rdo);
+                    cmd.Parameters.Add("@rol", SqlDbType.NVarChar);
+                    cmd.Parameters["@rol"].Value = rol1;
+
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+
+                    SqlCommand cmd = new SqlCommand("LA_PETER_MACHINE.deshabilitar_rol", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
+                    rdo.Size = 255;
+                    rdo.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(rdo);
+                    cmd.Parameters.Add("@rol", SqlDbType.NVarChar);
+                    cmd.Parameters["@rol"].Value = rol1;
+
+                    cmd.ExecuteNonQuery();
+                }
+
+               
+            }
+            actualizarGrid();
+        
+}
     }
 }

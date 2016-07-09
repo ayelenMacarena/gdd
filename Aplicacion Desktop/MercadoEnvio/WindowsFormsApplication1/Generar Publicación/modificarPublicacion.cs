@@ -183,6 +183,11 @@ namespace WindowsFormsApplication1.Generar_Publicación
             MessageBox.Show(rdo.Value.ToString());
             conexion.Close();
 
+            if (comboBox5.Text == "Activa" && comboBox2.Text != "Gratis")
+            {
+                Logica_GenerarPublicacion.facturarPublicacion(comboBox2.Text, user, Convert.ToInt32(textBoxCod.Text));
+            }
+
             this.Close();
 
         }       

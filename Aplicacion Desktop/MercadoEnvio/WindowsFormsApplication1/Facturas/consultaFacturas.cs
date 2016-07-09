@@ -47,8 +47,17 @@ namespace WindowsFormsApplication1.Facturas
             this.priceToLabel.Clear();
             this.detailsLabel.Clear();
             salesmanComboBox.Text = "";
+<<<<<<< HEAD
             Grid_ListaFacturas.Visible = false;
             button4.Enabled = false;
+=======
+            button4.Enabled = false;
+            //Grid_ListaFacturas.Visible = false;          
+            Grid_ListaFacturas.DataSource = null;
+
+            this.labelNroPagina.Text = String.Empty;
+            this.label_InfoPagina_CO.Text = "Paginas";
+>>>>>>> 466c5bc87498e8a441dda8b9d957407bf2213e87
         }
 
 
@@ -94,7 +103,7 @@ namespace WindowsFormsApplication1.Facturas
 
         private void mostrarFacturas()
         {
-            DataTable filasAMostrar = Logica_Facturas.Mostrar(dateFromLabel.Text, dateToLabel.Text, priceFromLabel.Text, priceToLabel.Text, detailsLabel.Text, salesmanComboBox.Text, registrosPorPagina, numeroPagina);
+            DataTable filasAMostrar = Logica_Facturas.Mostrar(dateFromLabel.Text, dateToLabel.Text, priceFromLabel.Text, priceToLabel.Text, detailsLabel.Text, salesmanComboBox.Text, registrosPorPagina, numeroPagina);            
 
             Grid_ListaFacturas.DataSource = filasAMostrar;
 
@@ -205,6 +214,14 @@ namespace WindowsFormsApplication1.Facturas
                 DataGridViewRow filaSeleccionada = Grid_ListaFacturas.CurrentRow;
                 (new Facturas.itemsFactura(filaSeleccionada)).Show();
             }
+
+
+        }
+
+        private void button4_Click_1(object sender, EventArgs e)
+        {
+            DataGridViewRow filaSeleccionada = Grid_ListaFacturas.CurrentRow;
+            (new Facturas.itemsFactura(filaSeleccionada)).Show();
 
 
         }

@@ -29,30 +29,32 @@ namespace WindowsFormsApplication1.ABM_Usuario
             conexion.Open();
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read()) {
-                comboBox1.Items.Add(reader[0]);
-                
-            }
-           
+                comboBox1.Items.Add(reader[0]);                
+            }           
         }
 
         void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
             MessageBox.Show("formato inapropiado");
         }
+
         void maskedTextBox2_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
         {
             MessageBox.Show("formato inapropiado");
         }
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
 
-        }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
         public bool isNotEmpty(TextBox text, String campo)
+        {
+            if (text.Text == "")
+            {
+                MessageBox.Show("el campo " + campo + " esta vacio");
+                return false;
+            }
+            else { return true; }
+        }
+
+        public bool isNotEmpty(ComboBox text, String campo)
         {
 
             if (text.Text == "")
@@ -65,60 +67,58 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(isNotEmpty(textBox1,"usuario") && isNotEmpty(textBox2,"contraseña") &&
-                isNotEmpty(textBox5,"nombre") && isNotEmpty(textBox7,"apellido")&&
-                isNotEmpty(textBox4,"documento"))
-            if (textBox2.Text == textBox3.Text)
+            if (isNotEmpty(textBox1, "usuario") && isNotEmpty(textBox2, "contraseña") &&
+                isNotEmpty(textBox5, "nombre") && isNotEmpty(textBox7, "apellido") &&
+                isNotEmpty(textBox4, "documento") && isNotEmpty(comboBox1, "tipo de documento"))
             {
-                SqlConnection conexion = conectionDB.getConnection();
-                conexion.Open();
-                SqlCommand cmd = new SqlCommand("LA_PETER_MACHINE.Crear_Cliente", conexion);
-                SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
-                rdo.Size = 255;
-                rdo.Direction = ParameterDirection.Output;
+                if (textBox2.Text == textBox3.Text)
+                {
+                    SqlConnection conexion = conectionDB.getConnection();
+                    conexion.Open();
+                    SqlCommand cmd = new SqlCommand("LA_PETER_MACHINE.Crear_Cliente", conexion);
+                    SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
+                    rdo.Size = 255;
+                    rdo.Direction = ParameterDirection.Output;
 
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@usuario", SqlDbType.NVarChar);
-                cmd.Parameters["@usuario"].Value = textBox1.Text;
-                cmd.Parameters.Add("@pasword", SqlDbType.NVarChar);
-                cmd.Parameters["@pasword"].Value = textBox2.Text;
-                cmd.Parameters.Add("@nombre", SqlDbType.NVarChar);
-                cmd.Parameters["@nombre"].Value = textBox5.Text;
-                cmd.Parameters.Add("@apellido", SqlDbType.NVarChar);
-                cmd.Parameters["@apellido"].Value = textBox7.Text;
-                cmd.Parameters.Add("@dni", SqlDbType.NVarChar);
-                cmd.Parameters["@dni"].Value = textBox4.Text;
-                cmd.Parameters.Add("@fecha_nac", SqlDbType.NVarChar);
-                cmd.Parameters["@fecha_nac"].Value = maskedTextBox1.Text;
-                cmd.Parameters.Add("@mail", SqlDbType.NVarChar);
-                cmd.Parameters["@mail"].Value = textBox8.Text;
-                cmd.Parameters.Add("@telefono", SqlDbType.NVarChar);
-                cmd.Parameters["@telefono"].Value = textBox9.Text;
-                cmd.Parameters.Add("@calle", SqlDbType.NVarChar);
-                cmd.Parameters["@calle"].Value = textBox10.Text;
-                cmd.Parameters.Add("@cod_postal", SqlDbType.NVarChar);
-                cmd.Parameters["@cod_postal"].Value = textBox11.Text;
-                cmd.Parameters.Add("@ciudad", SqlDbType.NVarChar);
-                cmd.Parameters["@ciudad"].Value = textBox12.Text;
-                cmd.Parameters.Add("@numero", SqlDbType.NVarChar);
-                cmd.Parameters["@numero"].Value = textBox13.Text;
-                cmd.Parameters.Add("@piso", SqlDbType.NVarChar);
-                cmd.Parameters["@piso"].Value = textBox14.Text;
-                cmd.Parameters.Add("@depto", SqlDbType.NVarChar);
-                cmd.Parameters["@depto"].Value = textBox15.Text;
-                cmd.Parameters.Add("@tipo_DNI", SqlDbType.NVarChar);
-                cmd.Parameters["@tipo_DNI"].Value = comboBox1.Text;
-                cmd.Parameters.Add("@fechaCreacion", SqlDbType.NVarChar);
-                cmd.Parameters["@fechaCreacion"].Value = dateTimeStamp;
-                cmd.Parameters.Add(rdo);
-                cmd.ExecuteNonQuery();
-                MessageBox.Show(rdo.Value.ToString());
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@usuario", SqlDbType.NVarChar);
+                    cmd.Parameters["@usuario"].Value = textBox1.Text;
+                    cmd.Parameters.Add("@pasword", SqlDbType.NVarChar);
+                    cmd.Parameters["@pasword"].Value = textBox2.Text;
+                    cmd.Parameters.Add("@nombre", SqlDbType.NVarChar);
+                    cmd.Parameters["@nombre"].Value = textBox5.Text;
+                    cmd.Parameters.Add("@apellido", SqlDbType.NVarChar);
+                    cmd.Parameters["@apellido"].Value = textBox7.Text;
+                    cmd.Parameters.Add("@dni", SqlDbType.NVarChar);
+                    cmd.Parameters["@dni"].Value = textBox4.Text;
+                    cmd.Parameters.Add("@fecha_nac", SqlDbType.NVarChar);
+                    cmd.Parameters["@fecha_nac"].Value = maskedTextBox1.Text;
+                    cmd.Parameters.Add("@mail", SqlDbType.NVarChar);
+                    cmd.Parameters["@mail"].Value = textBox8.Text;
+                    cmd.Parameters.Add("@telefono", SqlDbType.NVarChar);
+                    cmd.Parameters["@telefono"].Value = textBox9.Text;
+                    cmd.Parameters.Add("@calle", SqlDbType.NVarChar);
+                    cmd.Parameters["@calle"].Value = textBox10.Text;
+                    cmd.Parameters.Add("@cod_postal", SqlDbType.NVarChar);
+                    cmd.Parameters["@cod_postal"].Value = textBox11.Text;
+                    cmd.Parameters.Add("@ciudad", SqlDbType.NVarChar);
+                    cmd.Parameters["@ciudad"].Value = textBox12.Text;
+                    cmd.Parameters.Add("@numero", SqlDbType.NVarChar);
+                    cmd.Parameters["@numero"].Value = textBox13.Text;
+                    cmd.Parameters.Add("@piso", SqlDbType.NVarChar);
+                    cmd.Parameters["@piso"].Value = textBox14.Text;
+                    cmd.Parameters.Add("@depto", SqlDbType.NVarChar);
+                    cmd.Parameters["@depto"].Value = textBox15.Text;
+                    cmd.Parameters.Add("@tipo_DNI", SqlDbType.NVarChar);
+                    cmd.Parameters["@tipo_DNI"].Value = comboBox1.Text;
+                    cmd.Parameters.Add("@fechaCreacion", SqlDbType.NVarChar);
+                    cmd.Parameters["@fechaCreacion"].Value = dateTimeStamp;
+                    cmd.Parameters.Add(rdo);
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show(rdo.Value.ToString());
+                }
+                else { MessageBox.Show("contraseña no coincide"); }
             }
-            else { MessageBox.Show("contraseña no coincide"); }
-        }
-        private void AltaCliente_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -131,14 +131,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
             this.Close();
         }
 
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox4_Validating(object sender, CancelEventArgs e)
-        {
-        }
 
         private void soloNumeros(object sender, KeyPressEventArgs e)
         {
@@ -156,12 +148,6 @@ namespace WindowsFormsApplication1.ABM_Usuario
             return false;
         }
 
-     
-
-        private void textBox11_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
     
 

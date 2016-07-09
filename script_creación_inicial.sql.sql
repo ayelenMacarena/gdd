@@ -2,7 +2,6 @@
 --  SE ELIMINAN LAS FK QUE REFERENCIAN OTRAS TABLAS --
 ------------------------------------------------------
 
-
 IF EXISTS (SELECT * FROM sysobjects WHERE name = ('FK_cliente_tipo_dni') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE LA_PETER_MACHINE.cliente DROP CONSTRAINT FK_cliente_tipo_dni;
 
@@ -284,7 +283,8 @@ CREATE TABLE usuario (
 	usua_username nvarchar(255) NOT NULL,
 	usua_password varbinary(20) NOT NULL,
 	usua_habilitado bit NOT NULL,
-	usua_intentos_login numeric (1) DEFAULT 0
+	usua_intentos_login numeric (1) DEFAULT 0,
+	usua_bonificado bit NOT NULL
 )
 
 
@@ -317,9 +317,7 @@ CREATE TABLE costo_envio(
 	cost_id numeric(18) not null IDENTITY(1,1),
 	cost_costo numeric(18,2),
 	cost_visi_cod numeric(18)
-	)
---declare @costo_de_envio numeric(18,2)
---set @costo_de_envio = 100
+)
 
 
 GO
@@ -670,25 +668,30 @@ begin try
 	begin
 	if not exists(select * from LA_PETER_MACHINE.usuario where usua_username=@usuario)
 	begin
-	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado)values(@usuario,@hash,1)
+	
+	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado, usua_bonificado)values(@usuario,@hash,1,1)
+	
 	insert into LA_PETER_MACHINE.persona(pers_ciudad,pers_cod_postal,pers_depto,
 	pers_domicilio_calle,pers_mail,pers_numero_calle,pers_piso,pers_telefono,pers_username,pers_habilitado,pers_fecha_creacion)values(
 	LA_PETER_MACHINE.controlNull(@ciudad),LA_PETER_MACHINE.controlNull(@cod_postal),LA_PETER_MACHINE.controlNull(@depto),LA_PETER_MACHINE.controlNull(@calle),LA_PETER_MACHINE.controlNull(@mail),
 	cast(LA_PETER_MACHINE.controlNull(@numero) as numeric),cast(LA_PETER_MACHINE.controlNull(@piso) as numeric),
 	LA_PETER_MACHINE.controlNull(@telefono),@usuario,1,CONVERT(datetime,@fechaCreacion,121))
-	insert into LA_PETER_MACHINE.cliente(clie_apellido,clie_dni,
-	clie_fecha_nac,clie_nombre,clie_id_tipo_doc,clie_id_persona)values(@apellido,cast(@dni as numeric),
+	
+	insert into LA_PETER_MACHINE.cliente(clie_apellido,clie_dni, clie_fecha_nac,clie_nombre,clie_id_tipo_doc,clie_id_persona)
+		values(@apellido,cast(@dni as numeric),
 	@fecha,@nombre,(select type_id from LA_PETER_MACHINE.document_type where type_descripcion=@tipo_DNI),
 	(select pers_id from LA_PETER_MACHINE.persona where pers_username=@usuario))
+	
 	insert into LA_PETER_MACHINE.roles_usuario(rolu_username,rolu_id_rol)values(@usuario,
 	(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion='cliente'))
+	
 	set @rdo='cliente creado correctamente'
 	end
 	else
-	set @rdo='usuario en uso'
+		set @rdo='usuario en uso'
 	end
 	else
-	set @rdo='Ya existe el cliente'
+		set @rdo='Ya existe el cliente'
  end try
 begin catch
 	if exists(select * from LA_PETER_MACHINE.usuario where usua_username=@usuario)
@@ -699,6 +702,7 @@ begin catch
 end catch
 end 
 GO
+
 create procedure LA_PETER_MACHINE.Controlar_Usuario_Habilitado(@Usuario nvarchar(255),@rdo nvarchar(255) output)
 as
 begin
@@ -713,6 +717,40 @@ select @hab=usua_habilitado from LA_PETER_MACHINE.usuario where usua_username=@U
 	set @rdo='usuario deshabilitado'
 end
 GO
+
+create function LA_PETER_MACHINE.numericABit(@numero numeric)
+returns Bit
+as
+begin
+declare @rdo Bit
+if(@numero is not null)
+begin 
+set @rdo=1
+end
+else 
+begin
+set @rdo=0
+end
+return @rdo
+end
+go
+
+create function LA_PETER_MACHINE.charABit(@char nvarchar(255))
+returns Bit
+as
+begin
+declare @bit Bit
+if(@char is not null)
+begin
+set @bit=1
+end
+else
+begin
+set @bit=0
+end
+return @bit
+end
+go
 
 create procedure LA_PETER_MACHINE.Deshabilitar_Usuario(@Usuario nvarchar(255),@rdo nvarchar(255) output)
 as
@@ -803,7 +841,7 @@ begin try
 	begin
 	if not exists(select * from LA_PETER_MACHINE.usuario where usua_username=@usuario)
 	begin
-	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado)values(@usuario,@hash,1)
+	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado, usua_bonificado)values(@usuario,@hash,1,1)
 	insert into LA_PETER_MACHINE.persona(pers_ciudad,pers_cod_postal,pers_depto,
 	pers_domicilio_calle,pers_mail,pers_numero_calle,pers_piso,pers_telefono,pers_username,pers_habilitado,pers_fecha_creacion)values(
 	LA_PETER_MACHINE.controlNull(@ciudad),LA_PETER_MACHINE.controlNull(@cod_postal),
@@ -1028,25 +1066,26 @@ create procedure LA_PETER_MACHINE.buscarFacturas (@fechaDesde varchar(15) , @fec
 as
 
 begin
+--Asi funciona el filtro de fechas.
+--declare @query varchar(255)
+--set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha <= ' +'''' + @fechaHasta + ''''+ ' and  fact_fecha >= ' +''''+  @fechaDesde+ ''''
 
-
+ 
 declare @miVendedor numeric(18,0)
 if @vendedor is not null
 	set @miVendedor = (select TOP 1 pers_id from LA_PETER_MACHINE.persona where pers_username = @vendedor ) ;
 
 declare @query varchar(255)
 
-
-
 IF @fechaDesde is Not NULL and @query is not NUll
-	set @query = @query + ' AND fact_fecha >= "' + @fechaDesde + '"'
+	set @query = @query + ' AND fact_fecha >= ' + @fechaDesde; 
 Else IF @fechaDesde is Not NULL 
-	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha >= "' + @fechaDesde + '"'
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha >= ' + @fechaDesde;
 
 IF @fechaHasta is not Null and @query is not null
-	set @query = @query + ' AND fact_fecha <= "' + @fechaHasta + '"'
+	set @query = @query + ' AND fact_fecha <= ' + convert(varchar(255), @fechaHasta);
 else IF @fechaHasta is not Null
-	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha <= "' + @fechaHasta + '"'
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha <= ' + convert(varchar(255), @fechaHasta); 
 
 
 IF @descripcion is not NUll and @query is not null
@@ -1148,15 +1187,17 @@ create procedure LA_PETER_MACHINE.publicacionesParaModificar(@username nvarchar(
 AS
 	begin
 	declare @vendedor_id numeric(18)
+	
 	set @vendedor_id = (select TOP 1 pers_id from LA_PETER_MACHINE.persona where pers_username = @username)
 
 	select publicacion_id, publ_descripcion, publ_precio, publ_costo,(select rubr_descripcion_corta from LA_PETER_MACHINE.rubro where rubr_cod = publ_cod_rubro) as Rubro,
-	(select visi_descripcion from LA_PETER_MACHINE.visibilidad where visi_cod = publ_cod_visibilidad) as Visibilidad,
-	(select esta_descripcion from LA_PETER_MACHINE.estado where estado_id = publ_id_estado) as Estado,
-	publ_fecha_inicio, publ_fecha_fin, publ_preguntas, publ_cantidad, (select tipo_descripcion from LA_PETER_MACHINE.tipo where tipo_id = publ_id_tipo) as Tipo, publ_envio_habilitado
-	from LA_PETER_MACHINE.publicacion where publ_id_vendedor = @vendedor_id and 
-	publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Borrador') or 
-	publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Activa')
+		(select visi_descripcion from LA_PETER_MACHINE.visibilidad where visi_cod = publ_cod_visibilidad) as Visibilidad,
+		(select esta_descripcion from LA_PETER_MACHINE.estado where estado_id = publ_id_estado) as Estado,
+		publ_fecha_inicio, publ_fecha_fin, publ_preguntas, publ_cantidad, (select tipo_descripcion from LA_PETER_MACHINE.tipo where tipo_id = publ_id_tipo) as Tipo, publ_envio_habilitado
+	from LA_PETER_MACHINE.publicacion 
+		where publ_id_vendedor = @vendedor_id
+			and (publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Borrador') or 
+			publ_id_estado = (select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Activa'))
 	end
 GO
 
@@ -1213,7 +1254,10 @@ create procedure LA_PETER_MACHINE.buscarComprasSinCalificar(@username nvarchar(2
 	as
 	begin
 		select publ_descripcion, comp_id_vendedor, compra_id from LA_PETER_MACHINE.compra, LA_PETER_MACHINE.publicacion, LA_PETER_MACHINE.persona 
-		where pers_username = @username and comp_id_vendedor = pers_id and publicacion_id = comp_id_publicacion and comp_id_calificacion is null
+		where pers_username = @username 
+			and comp_id_comprador = pers_id
+		    and publicacion_id = comp_id_publicacion 
+			and comp_id_calificacion is null
 	end
 
 go
@@ -1363,7 +1407,6 @@ CREATE PROCEDURE LA_PETER_MACHINE.SP_InsertarFactura_ComprarOfertar
 AS
 
 DECLARE @costoEnvio INT,
-		@costoPublicacion INT,
 		@codVisibilidad INT,
 		@envioHabilitado INT,
 		@costoPorcentaje NUMERIC(18,2),
@@ -1390,28 +1433,25 @@ ELSE
 
 IF @codVisibilidad = 10006
 	BEGIN
-		SET @costoPublicacion = 0
 		SET @costoPorcentaje = 0
 	END
 ELSE 
 	BEGIN
-		SET @costoPublicacion = (select visi_precio from LA_PETER_MACHINE.visibilidad where visi_cod = @codVisibilidad)
 		SET @costoPorcentaje = @precioPubli * (select visi_porcentaje from LA_PETER_MACHINE.visibilidad where visi_cod = @codVisibilidad)
 	END
 
 
-SET @total = (@costoPorcentaje*@cantidad) + @costoEnvio + @costoPublicacion
+SET @total = (@costoPorcentaje*@cantidad) + @costoEnvio
 
 
 INSERT INTO LA_PETER_MACHINE.factura(fact_fecha, fact_total, fact_forma_pago, fact_id_vendedor)
 		VALUES (@fecha,@total,'Efectivo',@vendedor)
 
-SET @numFact = (select TOP 1 fact_num from LA_PETER_MACHINE.factura)
+SET @numFact = (select TOP 1 fact_num from LA_PETER_MACHINE.factura order by fact_num desc)
 
 IF @codVisibilidad != 10006
 	BEGIN
 		INSERT INTO LA_PETER_MACHINE.item_factura VALUES (@numFact,@publ_id, @cantidad, @costoPorcentaje)
-		INSERT INTO LA_PETER_MACHINE.item_factura VALUES (@numFact,@publ_id, 1, @costoPublicacion)
 		INSERT INTO LA_PETER_MACHINE.item_factura VALUES (@numFact,@publ_id, 1, @costoEnvio)
 	END
 
@@ -1464,11 +1504,12 @@ AS
 			SET @ID_TIPO = 1
 		END	
 		
-	SELECT publicacion_id, publ_descripcion, publ_precio, publ_cantidad, publ_id_vendedor
+	SELECT publicacion_id as ID_Publicacion, publ_descripcion as Descripcion, publ_cantidad as Cantidad, publ_precio as Precio,
+			(select pers_username from LA_PETER_MACHINE.persona where pers_id = publ_id_vendedor ) as Vendedor
 		FROM LA_PETER_MACHINE.publicacion JOIN LA_PETER_MACHINE.ListaATabla_ComprarOfertar(@rubros) r on publ_cod_rubro = r.number,
 			 LA_PETER_MACHINE.estado, LA_PETER_MACHINE.tipo		
 		WHERE  publ_id_vendedor != @cliente
-			and publ_id_estado = estado_id and esta_descripcion = 'Finalizada'
+			and publ_id_estado = estado_id and esta_descripcion = 'Activa'
 			and publ_id_tipo = @ID_TIPO
 			and	publ_descripcion LIKE '%' + @terminoBuscado + '%'
 			and publ_cantidad > 0
@@ -1511,7 +1552,7 @@ DECLARE @cantidadFilas int
 			FROM LA_PETER_MACHINE.publicacion JOIN LA_PETER_MACHINE.ListaATabla_ComprarOfertar(@rubros) r on publ_cod_rubro = r.number,
 			 LA_PETER_MACHINE.estado, LA_PETER_MACHINE.tipo		
 					WHERE  publ_id_vendedor != @cliente
-						and publ_id_estado = estado_id and esta_descripcion = 'Finalizada'
+						and publ_id_estado = estado_id and esta_descripcion = 'Activa'
 						and publ_id_tipo = @ID_TIPO
 						and	publ_descripcion LIKE '%' + @terminoBuscado + '%'
 						and publ_cantidad > 0)						
@@ -1538,13 +1579,24 @@ SET @CodRubro = (select rubr_cod from LA_PETER_MACHINE.rubro where rubr_descripc
 
 GO
 
-CREATE PROCEDURE LA_PETER_MACHINE.SP_EjecutarCompra_ComprarOfertar
+create PROCEDURE LA_PETER_MACHINE.SP_EjecutarCompra_ComprarOfertar
 (@publ_id INT,
-@cantidad INT)
+@cantidad INT,
+@user int,
+@vendedor int,
+@fecha nvarchar(255))
 AS
+
+declare @factura numeric(18,0),
+		@username nvarchar(255)
+
+		set @factura = (select top 1 (fact_num) from LA_PETER_MACHINE.factura order by fact_num desc)
+		set @username = (select pers_username from LA_PETER_MACHINE.persona where pers_id = @user)
 
 UPDATE LA_PETER_MACHINE.publicacion SET publ_cantidad = (publ_cantidad - @cantidad) WHERE publicacion_id = @publ_id
 
+INSERT INTO LA_PETER_MACHINE.compra (comp_id_publicacion, comp_id_vendedor, comp_id_comprador, comp_fecha, comp_cantidad, comp_num_factura, comp_username) 
+	values (@publ_id,@vendedor,@user,CONVERT(datetime,@fecha,121),@cantidad,@factura,@username)
 GO
 
 CREATE PROCEDURE LA_PETER_MACHINE.SP_ObtenerIdUser
@@ -1558,10 +1610,15 @@ GO
 
 CREATE PROCEDURE LA_PETER_MACHINE.SP_EjecutarOferta_ComprarOfertar
 (@publ_id INT,
-@precio INT)
+@precio INT,
+@fecha nvarchar(255),
+@username nvarchar(255))
 AS
 
 UPDATE LA_PETER_MACHINE.publicacion SET publ_precio = @precio  WHERE publicacion_id = @publ_id
+
+insert into LA_PETER_MACHINE.oferta (ofer_id_publicacion, ofer_fecha, ofer_valor, ofer_username)
+	values (@publ_id, CONVERT(datetime,@fecha,121), @precio, @username)
 
 GO
 
@@ -1594,15 +1651,6 @@ SET @porCalificar =
 			where C.comp_id_calificacion is null
 				and C.comp_id_comprador = @idUsuario
 		)
-GO
-
-CREATE PROCEDURE LA_PETER_MACHINE.finalizarPublicaciones(@fechaSys nvarchar(255))
-AS
-BEGIN
-update LA_PETER_MACHINE.publicacion
-	SET publ_id_estado=4
-	WHERE publ_id_estado != 4 and publ_fecha_fin is not null and publ_fecha_fin < CONVERT(datetime,@fechaSys,121)
-END;
 GO
 
 
@@ -1688,6 +1736,59 @@ BEGIN
 	END
 GO
 
+CREATE PROCEDURE LA_PETER_MACHINE.SP_FacturarPublicacion_GenerarPublicacion
+(@visibilidad nvarchar(255), @usuario nvarchar(255), @publicacion int, @fechaSys nvarchar(255))
+AS
+BEGIN
+	declare @total numeric(18,2),
+			@idVendedor numeric(18,0)
+
+	select @total = visi_precio from LA_PETER_MACHINE.visibilidad where visi_descripcion = @visibilidad
+	select @idVendedor = pers_id from LA_PETER_MACHINE.persona where pers_username = @usuario
+
+	if (not exists (select * from LA_PETER_MACHINE.item_factura where item_id_publicacion = @publicacion))
+	begin
+	insert into LA_PETER_MACHINE.factura (fact_fecha, fact_total, fact_forma_pago, fact_id_vendedor)
+								values (CONVERT(datetime,@fechaSys,121), @total, 'Efectivo', @idVendedor)
+	
+	declare @numeroFactura numeric(18,0)
+
+	select @numeroFactura = fact_num from LA_PETER_MACHINE.factura where fact_fecha = CONVERT(datetime,@fechaSys,121) and fact_total = @total and fact_id_vendedor = @idVendedor
+
+	insert into LA_PETER_MACHINE.item_factura (item_num_factura, item_id_publicacion, item_cantidad, item_precio_unitario)
+								values (@numeroFactura, @publicacion, 1, @total)
+
+	end
+END
+GO
+
+CREATE PROCEDURE LA_PETER_MACHINE.finalizarPublicaciones(@fechaSys nvarchar(255))
+AS
+BEGIN
+update LA_PETER_MACHINE.publicacion
+					SET publ_id_estado=4
+					WHERE publ_id_estado != 4 
+						and publ_fecha_fin is not null
+						and publ_fecha_fin < CONVERT(datetime,@fechaSys,121)
+
+END;
+GO
+
+CREATE PROCEDURE LA_PETER_MACHINE.SP_ConsultarUsuarioBonificado_GenerarPublicacion
+(@username NVARCHAR(255),
+@estaBonificado BIT OUTPUT)
+AS
+
+SET @estaBonificado = (select usua_bonificado from LA_PETER_MACHINE.usuario where usua_username = @username)
+
+GO
+
+CREATE PROCEDURE LA_PETER_MACHINE.SP_QuitarBonificado_GenerarPublicacion
+(@username NVARCHAR(255)) AS
+BEGIN
+	update LA_PETER_MACHINE.usuario set usua_bonificado = 0 where usua_username = @username
+END
+GO
 
 
 
@@ -1740,6 +1841,11 @@ AS
 		(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'administrativo'))
 
 
+		insert into LA_PETER_MACHINE.funcionalidad_rol (furo_id_funcionalidad, furo_id_rol)
+		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'visibilidad'),
+		(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'administrativo'))
+
+
 		
 -- Rol Cliente
 		insert into LA_PETER_MACHINE.funcionalidad_rol(furo_id_funcionalidad, furo_id_rol) 
@@ -1754,9 +1860,11 @@ AS
 		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'calificar'),
 		(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'cliente'))
 
+		/*
 		insert into LA_PETER_MACHINE.funcionalidad_rol (furo_id_funcionalidad, furo_id_rol)
 		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'visibilidad'),
 		(select rol_id from LA_PETER_MACHINE.rol where rol_descripcion = 'cliente'))
+		*/
 
 		insert into LA_PETER_MACHINE.funcionalidad_rol (furo_id_funcionalidad, furo_id_rol)
 		values ((select funcionalidad_id from LA_PETER_MACHINE.funcionalidad where func_descripcion = 'historial_cliente'),
@@ -1779,17 +1887,18 @@ AS
 	set @pass = 'w23e'
 	set @hash = hashbytes('sha2_256',@pass);
 
-	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado,usua_intentos_login) values ('admin',@hash,1,0)
+	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado,usua_intentos_login,usua_bonificado) 
+												values ('admin',@hash,1,0,0)
 
 --USUARIO (Empresa)
-	insert into LA_PETER_MACHINE.usuario(usua_username, usua_password, usua_habilitado, usua_intentos_login)
-	select distinct Publ_Empresa_Mail, @hash, 1, 0 from gd_esquema.Maestra
+	insert into LA_PETER_MACHINE.usuario(usua_username, usua_password, usua_habilitado, usua_intentos_login, usua_bonificado)
+	select distinct Publ_Empresa_Mail, @hash, 1, 0, 0 from gd_esquema.Maestra
 		where Publ_Empresa_Mail is not null
 		group by Publ_Empresa_Mail
 
 --USUARIO (Cliente)
-	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado, usua_intentos_login)
-	select distinct Cli_Mail,@hash,1,0 from gd_esquema.Maestra
+	insert into LA_PETER_MACHINE.usuario(usua_username,usua_password,usua_habilitado, usua_intentos_login, usua_bonificado)
+	select distinct Cli_Mail,@hash,1,0, 0 from gd_esquema.Maestra
 	where Cli_Mail is not null
 	group by Cli_Mail
 
@@ -1904,7 +2013,7 @@ insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_persona
 		(select rubr_cod from LA_PETER_MACHINE.rubro where rubr_descripcion_corta = Publicacion_Rubro_Descripcion),
 		(select visi_cod from LA_PETER_MACHINE.visibilidad where visi_cod = Publicacion_Visibilidad_Cod),
 		(select pers_id from LA_PETER_MACHINE.persona where Publ_Empresa_Mail = pers_mail OR Publ_Cli_Mail = pers_mail),
-		(select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Finalizada'),
+		(select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Activa'),
 		Publicacion_Fecha, Publicacion_Fecha_Venc, 1, Publicacion_Stock, 
 		(select tipo_id from LA_PETER_MACHINE.tipo where Publicacion_Tipo = tipo_descripcion),0
 		from gd_esquema.Maestra
@@ -1978,3 +2087,82 @@ insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_persona
 GO
 
 exec LA_PETER_MACHINE.SP_Migracion
+go
+
+create TRIGGER LA_PETER_MACHINE.TR_FinalizarPublicacionSinStock
+ON LA_PETER_MACHINE.publicacion
+AFTER UPDATE
+AS
+BEGIN
+	declare @cantidad numeric (18,0),
+			@publicacion numeric (18,0),
+			@finalizado numeric (18,0)
+
+	declare cPublicacion cursor for 
+						select publicacion_id, publ_cantidad 
+							from inserted 
+							where publ_cantidad = 0
+								and	publ_id_tipo = 1
+								and publ_id_estado = 3
+
+	select @finalizado = estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Finalizada'
+
+	open cPublicacion
+	fetch next from cPublicacion into @publicacion, @cantidad
+
+	while @@FETCH_STATUS = 0
+	begin
+		update LA_PETER_MACHINE.publicacion set publ_id_estado = @finalizado 
+				from LA_PETER_MACHINE.publicacion where publicacion_id = @publicacion
+		fetch next from cPublicacion into @publicacion, @cantidad
+	end
+	
+	close cPublicacion
+	deallocate cPublicacion
+END;
+GO
+
+
+
+create TRIGGER LA_PETER_MACHINE.TR_AdjudicarSubasta
+ON LA_PETER_MACHINE.publicacion
+AFTER UPDATE
+AS
+BEGIN
+	declare @publicacion numeric (18,0),
+			@vendedor numeric (18,0),
+			@cantidad numeric (18,0),
+			@comprador nvarchar(255),
+			@estado numeric (18,0),
+			@valor numeric (18,0),
+			@fechaFin datetime,
+			@user numeric (18,0)
+
+
+	declare cPublicacion2 cursor 
+		for select publicacion_id, publ_id_vendedor, publ_cantidad, publ_id_estado, publ_fecha_fin 
+			from inserted where publ_id_estado = 4 and publ_id_tipo = 2
+
+	open cPublicacion2
+
+	fetch next from cPublicacion2 into @publicacion, @vendedor, @cantidad, @estado, @fechaFin
+
+	while @@FETCH_STATUS = 0
+	begin
+		select TOP 1 @comprador = ofer_username, @valor = ofer_valor from LA_PETER_MACHINE.oferta 
+			where ofer_id_publicacion = @publicacion 
+			order by ofer_valor desc
+
+		exec LA_PETER_MACHINE.SP_InsertarFactura_ComprarOfertar @publicacion, @fechaFin, @cantidad
+			
+		set @user = (select pers_id from LA_PETER_MACHINE.persona where pers_username = @comprador)
+
+		exec LA_PETER_MACHINE.SP_EjecutarCompra_ComprarOfertar @publicacion, @cantidad, @user, @vendedor, @fechaFin
+
+		fetch next from cPublicacion2 into @publicacion, @vendedor, @cantidad, @estado, @fechaFin
+	end
+
+	close cPublicacion2
+	deallocate cPublicacion2
+end;	
+GO

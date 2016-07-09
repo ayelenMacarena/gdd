@@ -30,7 +30,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                      comboBox1.Items.Add(reader[0]);
                  }
                 }
-           
+             dataGridView1.AllowUserToAddRows = false;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -50,8 +50,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             var senderGrid = (DataGridView)sender;
-            String usu = senderGrid.Rows[e.RowIndex].Cells[3].FormattedValue.ToString();
-            String tipo = senderGrid.Rows[e.RowIndex].Cells[0].FormattedValue.ToString();
+            String usu = senderGrid.Rows[e.RowIndex].Cells["Usuario"].FormattedValue.ToString();
             if (enteroABool(String.Compare(senderGrid.Columns[e.ColumnIndex].HeaderText, "Seleccionar")) && e.RowIndex >= 0)
             {
                 SqlConnection conexion = conectionDB.getConnection();
@@ -68,11 +67,25 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
                 if (String.Compare(rdo.Value.ToString(), "ok") == 0)
                 {
-                    EditarRoles select = new EditarRoles(usu,tipo);
-                    this.Hide();
-                    select.ShowDialog();
-                    this.Close();
-
+                    if (comboBox1.Text == "cliente")
+                    {
+                        EditarRoles select = new EditarRoles(usu, "cliente");
+                        this.Hide();
+                        select.ShowDialog();
+                        this.Close();
+                    }
+                    else {
+                        if (comboBox1.Text == "empresa")
+                        {
+                            EditarRoles select = new EditarRoles(usu, "empresa");
+                            this.Hide();
+                            select.ShowDialog();
+                            this.Close();
+                        }
+                        else {
+                            MessageBox.Show("Solo se pueden modificar usuarios dentro de la busqueda de empresas o clientes");
+                        }
+                    }
                 }
                 else
                 {
@@ -80,36 +93,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 }
                 return;
             }
-            if (enteroABool(String.Compare(senderGrid.Columns[e.ColumnIndex].HeaderText, "Habilitar")) && e.RowIndex >= 0)
-            {
-                SqlConnection conexion = conectionDB.getConnection();
-                conexion.Open();
-                SqlCommand cmd = new SqlCommand("LA_PETER_MACHINE.Habilitar_Usuario", conexion);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@Usuario", SqlDbType.NVarChar);
-                cmd.Parameters["@Usuario"].Value = usu;
-                SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
-                rdo.Size = 255;
-                rdo.Direction = ParameterDirection.Output;
-                cmd.Parameters.Add(rdo);
-                cmd.ExecuteNonQuery();
-                MessageBox.Show(rdo.Value.ToString());
-            }
-            if (enteroABool(String.Compare(senderGrid.Columns[e.ColumnIndex].HeaderText, "Deshabilitar")) && e.RowIndex >= 0)
-            {
-                SqlConnection conexion = conectionDB.getConnection();
-                conexion.Open();
-                SqlCommand cmd = new SqlCommand("LA_PETER_MACHINE.Deshabilitar_Usuario", conexion);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@Usuario", SqlDbType.NVarChar);
-                cmd.Parameters["@Usuario"].Value = usu;
-                SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
-                rdo.Size = 255;
-                rdo.Direction = ParameterDirection.Output;
-                cmd.Parameters.Add(rdo);
-                cmd.ExecuteNonQuery();
-                MessageBox.Show(rdo.Value.ToString());
-            }    
+        
         }
 
         private void textBox5_DoubleClick(object sender, EventArgs e)
@@ -155,6 +139,9 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button4_Click(object sender, EventArgs e)
         {
+            actualizarGrid();
+        }
+        private void actualizarGrid() {
             dataGridView1.DataSource = null;
             dataGridView1.Rows.Clear();
             dataGridView1.Columns.Clear();
@@ -164,7 +151,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             cmd.Connection = conexion;
             DataTable table = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            cmd.CommandText = "select * from (select 'cliente' as Tipo, clie_nombre + clie_apellido as Nombre,clie_dni as IdentUnico,usua_username as Usuario,pers_ciudad as Ciudad, pers_domicilio_calle as Calle,pers_numero_calle as Numero, pers_mail as Mail from LA_PETER_MACHINE.cliente, LA_PETER_MACHINE.usuario, LA_PETER_MACHINE.persona where pers_id=clie_id_persona and pers_username=usua_username and (clie_nombre like '%' + @nombre + '%') and (clie_dni like '%' + @doc + '%') and (isnull(pers_ciudad,'') like '%' + @ciudad + '%') and usua_habilitado=@hab and pers_fecha_creacion >= right(@desde,4)+substring(@desde,4,2)+left(@desde,2) and pers_fecha_creacion< right(@hasta,4)+substring(@hasta,4,2)+left(@hasta,2) union select 'empresa' as Tipo,empr_razon_social as Nombre, convert(numeric,left(empr_cuit,2)+substring(empr_cuit,4,8)+right(empr_cuit,2)) as IdentUnico,pers_username as Usuario, pers_ciudad as Ciudad, pers_domicilio_calle as Calle,pers_numero_calle as Numero,pers_mail as Mail  from LA_PETER_MACHINE.empresa, LA_PETER_MACHINE.usuario, LA_PETER_MACHINE.persona  where pers_id=empr_id_persona and pers_username=usua_username and (empr_razon_social like '%' + @nombre + '%') and (empr_cuit like '%' + @doc + '%') and (isnull(pers_ciudad,'') like '%' + @ciudad + '%') and usua_habilitado=@hab and pers_fecha_creacion >= right(@desde,4)+substring(@desde,4,2)+left(@desde,2) and pers_fecha_creacion< right(@hasta,4)+substring(@hasta,4,2)+left(@hasta,2)) as tabla  where (tabla.Tipo like @rol + '%')";
+            cmd.CommandText = "select tabla.Nombre,tabla.IdentUnico,tabla.Usuario,tabla.Ciudad,tabla.Calle,tabla.Numero,tabla.Mail,tabla.Habilitado  from (select  clie_nombre + ' ' + clie_apellido as Nombre,clie_dni as IdentUnico,usua_username as Usuario,pers_ciudad as Ciudad, pers_domicilio_calle as Calle,pers_numero_calle as Numero, pers_mail as Mail, usua_habilitado as Habilitado from LA_PETER_MACHINE.cliente, LA_PETER_MACHINE.usuario, LA_PETER_MACHINE.persona where pers_id=clie_id_persona and pers_username=usua_username and (clie_nombre like '%' + @nombre + '%') and (clie_dni like '%' + @doc + '%') and (isnull(pers_ciudad,'') like '%' + @ciudad + '%') and usua_habilitado=@hab and pers_fecha_creacion >= right(@desde,4)+substring(@desde,4,2)+left(@desde,2) and pers_fecha_creacion< right(@hasta,4)+substring(@hasta,4,2)+left(@hasta,2) union select empr_razon_social as Nombre, convert(numeric,left(empr_cuit,2)+substring(empr_cuit,4,8)+right(empr_cuit,2)) as IdentUnico,pers_username as Usuario, pers_ciudad as Ciudad, pers_domicilio_calle as Calle,pers_numero_calle as Numero,pers_mail as Mail, usua_habilitado as Habilitado  from LA_PETER_MACHINE.empresa, LA_PETER_MACHINE.usuario, LA_PETER_MACHINE.persona  where pers_id=empr_id_persona and pers_username=usua_username and (empr_razon_social like '%' + @nombre + '%') and (empr_cuit like '%' + @doc + '%') and (isnull(pers_ciudad,'') like '%' + @ciudad + '%') and usua_habilitado=@hab and pers_fecha_creacion >= right(@desde,4)+substring(@desde,4,2)+left(@desde,2) and pers_fecha_creacion< right(@hasta,4)+substring(@hasta,4,2)+left(@hasta,2)) as tabla, LA_PETER_MACHINE.roles_usuario,LA_PETER_MACHINE.rol  where rolu_id_rol=rol_id and rol_descripcion like @rol + '%' and rolu_username=tabla.Usuario group by tabla.Nombre,tabla.IdentUnico,tabla.Usuario,tabla.Ciudad,tabla.Calle,tabla.Numero,tabla.Mail,tabla.Habilitado ";
             cmd.Parameters.Add("@nombre", SqlDbType.NVarChar);
             cmd.Parameters["@nombre"].Value = textBox1.Text;
             cmd.Parameters.Add("@doc", SqlDbType.NVarChar);
@@ -178,13 +165,15 @@ namespace WindowsFormsApplication1.ABM_Usuario
             cmd.Parameters.Add("@hasta", SqlDbType.NVarChar);
             cmd.Parameters["@hasta"].Value = checkHasta();
             cmd.Parameters.Add("@rol", SqlDbType.NVarChar);
-            cmd.Parameters["@rol"].Value =comboBox1.Text;
+            cmd.Parameters["@rol"].Value = comboBox1.Text;
             conexion.Open();
             adapter.Fill(table);
             if (table.Rows.Count == 0) { }
             else
             {
                 dataGridView1.DataSource = table;
+
+
                 this.seleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
                 this.seleccionar.Text = "Seleccionar";
                 this.seleccionar.UseColumnTextForButtonValue = true;
@@ -192,23 +181,9 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 this.seleccionar.Name = "Seleccionar";
                 this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.seleccionar});
-                this.habilitar = new System.Windows.Forms.DataGridViewButtonColumn();
-                this.habilitar.Text = "Habilitar";
-                this.habilitar.UseColumnTextForButtonValue = true;
-                this.habilitar.HeaderText = "Habilitar";
-                this.habilitar.Name = "Habilitar";
-                this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.habilitar});
-                this.deshabilitar = new System.Windows.Forms.DataGridViewButtonColumn();
-                this.deshabilitar.Text = "Deshabilitar";
-                this.deshabilitar.UseColumnTextForButtonValue = true;
-                this.deshabilitar.HeaderText = "Deshabilitar";
-                this.deshabilitar.Name = "Deshabilitar";
-                this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.deshabilitar});
+
             }
         }
-        
             private String deBoolABit(Boolean b){
                 if (b) { return "1"; }
                     else{return "0";}
@@ -248,7 +223,10 @@ namespace WindowsFormsApplication1.ABM_Usuario
             dataGridView1.Columns.Clear();
             textBox4.Text = "";
             textBox5.Text = "";
+            comboBox1.DropDownStyle = ComboBoxStyle.Simple;
             comboBox1.Text = "";
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+           
         }
 
         public DataGridViewButtonColumn seleccionar { get; set; }
@@ -265,6 +243,49 @@ namespace WindowsFormsApplication1.ABM_Usuario
             clie.Show();
             clie.Location = new Point(0, 49);
             this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SqlConnection conexion = conectionDB.getConnection();
+            conexion.Open();
+            
+            foreach (DataGridViewRow row in dataGridView1.Rows) {
+                String usu = row.Cells["Usuario"].FormattedValue.ToString();
+                String boolean = row.Cells[7].FormattedValue.ToString();
+                 if (boolean == "True")
+                {
+                  
+                   
+                    SqlCommand cmd = new SqlCommand("LA_PETER_MACHINE.Habilitar_Usuario", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@Usuario", SqlDbType.NVarChar);
+                    cmd.Parameters["@Usuario"].Value = usu;
+                    SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
+                    rdo.Size = 255;
+                    rdo.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(rdo);
+                    cmd.ExecuteNonQuery();
+                }
+                else {
+                   
+                    SqlCommand cmd = new SqlCommand("LA_PETER_MACHINE.Deshabilitar_Usuario", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@Usuario", SqlDbType.NVarChar);
+                    cmd.Parameters["@Usuario"].Value = usu;
+                    SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
+                    rdo.Size = 255;
+                    rdo.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(rdo);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            actualizarGrid();
+        }
+
+        private void ListadoDeUsuarios_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

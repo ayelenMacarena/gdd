@@ -5,7 +5,6 @@ CREATE PROCEDURE LA_PETER_MACHINE.SP_InsertarFactura_ComprarOfertar
 AS
 
 DECLARE @costoEnvio INT,
-		@costoPublicacion INT,
 		@codVisibilidad INT,
 		@envioHabilitado INT,
 		@costoPorcentaje NUMERIC(18,2),
@@ -32,28 +31,25 @@ ELSE
 
 IF @codVisibilidad = 10006
 	BEGIN
-		SET @costoPublicacion = 0
 		SET @costoPorcentaje = 0
 	END
 ELSE 
 	BEGIN
-		SET @costoPublicacion = (select visi_precio from LA_PETER_MACHINE.visibilidad where visi_cod = @codVisibilidad)
 		SET @costoPorcentaje = @precioPubli * (select visi_porcentaje from LA_PETER_MACHINE.visibilidad where visi_cod = @codVisibilidad)
 	END
 
 
-SET @total = (@costoPorcentaje*@cantidad) + @costoEnvio + @costoPublicacion
+SET @total = (@costoPorcentaje*@cantidad) + @costoEnvio
 
 
 INSERT INTO LA_PETER_MACHINE.factura(fact_fecha, fact_total, fact_forma_pago, fact_id_vendedor)
 		VALUES (@fecha,@total,'Efectivo',@vendedor)
 
-SET @numFact = (select TOP 1 fact_num from LA_PETER_MACHINE.factura)
+SET @numFact = (select TOP 1 fact_num from LA_PETER_MACHINE.factura order by fact_num desc)
 
 IF @codVisibilidad != 10006
 	BEGIN
 		INSERT INTO LA_PETER_MACHINE.item_factura VALUES (@numFact,@publ_id, @cantidad, @costoPorcentaje)
-		INSERT INTO LA_PETER_MACHINE.item_factura VALUES (@numFact,@publ_id, 1, @costoPublicacion)
 		INSERT INTO LA_PETER_MACHINE.item_factura VALUES (@numFact,@publ_id, 1, @costoEnvio)
 	END
 

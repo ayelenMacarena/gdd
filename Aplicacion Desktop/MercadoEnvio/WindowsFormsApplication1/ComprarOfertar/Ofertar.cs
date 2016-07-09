@@ -14,12 +14,14 @@ namespace WindowsFormsApplication1.ComprarOfertar
     {
         DataGridViewRow fila;
         Listado_ComprarOfertar listado;
+        String user;
 
-        public Ofertar(DataGridViewRow filaSeleccionada, Listado_ComprarOfertar listadoPubl)
+        public Ofertar(DataGridViewRow filaSeleccionada, Listado_ComprarOfertar listadoPubl, String usuario)
         {
             InitializeComponent();
             fila = filaSeleccionada;
             listado = listadoPubl;
+            user = usuario;
             cantidad.Text = filaSeleccionada.Cells["publ_cantidad"].Value.ToString();
             labelInfoDescripcion.Text = filaSeleccionada.Cells["publ_descripcion"].Value.ToString();
             labelInfoVendedor.Text = filaSeleccionada.Cells["publ_id_vendedor"].Value.ToString();
@@ -32,7 +34,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
             if (Convert.ToInt32(textBoxOferta.Text) <= (Convert.ToInt32(this.fila.Cells["publ_precio"].Value))){
                 MessageBox.Show("La oferta debe ser mayor a la actual");}
 
-            Logica_ComprarOfertar.Ofertar(Convert.ToInt32(fila.Cells["publicacion_id"].Value), Convert.ToInt32(textBoxOferta.Text));
+            Logica_ComprarOfertar.Ofertar(Convert.ToInt32(fila.Cells["publicacion_id"].Value), Convert.ToInt32(textBoxOferta.Text), user);
 
             listado.Mostrar();
 

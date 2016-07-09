@@ -45,56 +45,77 @@ namespace WindowsFormsApplication1.ABM_Usuario
             textBox6.Text = table.Rows[0][13].ToString();
         
         }
+        public bool isNotEmpty(TextBox text, String campo)
+        {
+
+            if (text.Text == "")
+            {
+                MessageBox.Show("el campo " + campo + " esta vacio");
+                return false;
+            }
+            else { return true; }
+        }
+        public bool isNotEmpty(ComboBox text, String campo)
+        {
+
+            if (text.Text == "")
+            {
+                MessageBox.Show("el campo " + campo + " esta vacio");
+                return false;
+            }
+            else { return true; }
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (textBox2.Text == "") {
-                MessageBox.Show("debe ingresar una contraseña");
-                return;
-            }
-             if (textBox2.Text == textBox3.Text)
+            if (isNotEmpty(textBox1, "usuario") && isNotEmpty(textBox2, "contraseña") &&
+             isNotEmpty(textBox5, "nombre") && isNotEmpty(textBox7, "apellido") &&
+             isNotEmpty(textBox4, "documento") && isNotEmpty(textBox6, "tipo de documento"))
             {
-                SqlConnection conexion = conectionDB.getConnection();
-                conexion.Open();
-                SqlCommand controlarUsarioHabilitado = new SqlCommand("LA_PETER_MACHINE.Modificar_Cliente", conexion);
-                SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
-                rdo.Size = 255;
-                rdo.Direction = ParameterDirection.Output;
+             
+                if (textBox2.Text == textBox3.Text)
+                {
+                    SqlConnection conexion = conectionDB.getConnection();
+                    conexion.Open();
+                    SqlCommand controlarUsarioHabilitado = new SqlCommand("LA_PETER_MACHINE.Modificar_Cliente", conexion);
+                    SqlParameter rdo = new SqlParameter("@rdo", SqlDbType.NVarChar);
+                    rdo.Size = 255;
+                    rdo.Direction = ParameterDirection.Output;
 
-                rdo.Direction = ParameterDirection.Output;
-                controlarUsarioHabilitado.CommandType = CommandType.StoredProcedure;
-                controlarUsarioHabilitado.Parameters.Add("@Usuario", SqlDbType.NVarChar);
-                controlarUsarioHabilitado.Parameters["@Usuario"].Value = textBox1.Text;
-                controlarUsarioHabilitado.Parameters.Add("@pass", SqlDbType.NVarChar);
-                controlarUsarioHabilitado.Parameters["@pass"].Value = textBox2.Text;
-                controlarUsarioHabilitado.Parameters.Add("@ciudad", SqlDbType.NVarChar);
-                controlarUsarioHabilitado.Parameters["@ciudad"].Value = textBox12.Text;
-                controlarUsarioHabilitado.Parameters.Add("@apellido", SqlDbType.NVarChar);
-                controlarUsarioHabilitado.Parameters["@apellido"].Value = textBox7.Text;
-                controlarUsarioHabilitado.Parameters.Add("@nombre", SqlDbType.NVarChar);
-                controlarUsarioHabilitado.Parameters["@nombre"].Value = textBox5.Text;
-                controlarUsarioHabilitado.Parameters.Add("@mail", SqlDbType.NVarChar);
-                controlarUsarioHabilitado.Parameters["@mail"].Value = textBox8.Text;
-                controlarUsarioHabilitado.Parameters.Add("@telefono", SqlDbType.NVarChar);
-                controlarUsarioHabilitado.Parameters["@telefono"].Value = textBox9.Text;
-                controlarUsarioHabilitado.Parameters.Add("@calle", SqlDbType.NVarChar);
-                 controlarUsarioHabilitado.Parameters["@calle"].Value = textBox10.Text;
-                controlarUsarioHabilitado.Parameters.Add("@cod_postal", SqlDbType.NVarChar);
-                controlarUsarioHabilitado.Parameters["@cod_postal"].Value = textBox11.Text;
-                controlarUsarioHabilitado.Parameters.Add("@numero", SqlDbType.NVarChar);
-                controlarUsarioHabilitado.Parameters["@numero"].Value = textBox13.Text;
-                controlarUsarioHabilitado.Parameters.Add("@dpto", SqlDbType.NVarChar);
-                controlarUsarioHabilitado.Parameters["@dpto"].Value = textBox15.Text;
-                controlarUsarioHabilitado.Parameters.Add("@piso", SqlDbType.NVarChar);
-                controlarUsarioHabilitado.Parameters["@piso"].Value = textBox14.Text;
-                  controlarUsarioHabilitado.Parameters.Add("@fecha", SqlDbType.NVarChar);
-                controlarUsarioHabilitado.Parameters["@fecha"].Value = maskedTextBox1.Text; 
-               controlarUsarioHabilitado.Parameters.Add(rdo);
-                controlarUsarioHabilitado.ExecuteNonQuery();
-                MessageBox.Show(rdo.Value.ToString());
+                    rdo.Direction = ParameterDirection.Output;
+                    controlarUsarioHabilitado.CommandType = CommandType.StoredProcedure;
+                    controlarUsarioHabilitado.Parameters.Add("@Usuario", SqlDbType.NVarChar);
+                    controlarUsarioHabilitado.Parameters["@Usuario"].Value = textBox1.Text;
+                    controlarUsarioHabilitado.Parameters.Add("@pass", SqlDbType.NVarChar);
+                    controlarUsarioHabilitado.Parameters["@pass"].Value = textBox2.Text;
+                    controlarUsarioHabilitado.Parameters.Add("@ciudad", SqlDbType.NVarChar);
+                    controlarUsarioHabilitado.Parameters["@ciudad"].Value = textBox12.Text;
+                    controlarUsarioHabilitado.Parameters.Add("@apellido", SqlDbType.NVarChar);
+                    controlarUsarioHabilitado.Parameters["@apellido"].Value = textBox7.Text;
+                    controlarUsarioHabilitado.Parameters.Add("@nombre", SqlDbType.NVarChar);
+                    controlarUsarioHabilitado.Parameters["@nombre"].Value = textBox5.Text;
+                    controlarUsarioHabilitado.Parameters.Add("@mail", SqlDbType.NVarChar);
+                    controlarUsarioHabilitado.Parameters["@mail"].Value = textBox8.Text;
+                    controlarUsarioHabilitado.Parameters.Add("@telefono", SqlDbType.NVarChar);
+                    controlarUsarioHabilitado.Parameters["@telefono"].Value = textBox9.Text;
+                    controlarUsarioHabilitado.Parameters.Add("@calle", SqlDbType.NVarChar);
+                    controlarUsarioHabilitado.Parameters["@calle"].Value = textBox10.Text;
+                    controlarUsarioHabilitado.Parameters.Add("@cod_postal", SqlDbType.NVarChar);
+                    controlarUsarioHabilitado.Parameters["@cod_postal"].Value = textBox11.Text;
+                    controlarUsarioHabilitado.Parameters.Add("@numero", SqlDbType.NVarChar);
+                    controlarUsarioHabilitado.Parameters["@numero"].Value = textBox13.Text;
+                    controlarUsarioHabilitado.Parameters.Add("@dpto", SqlDbType.NVarChar);
+                    controlarUsarioHabilitado.Parameters["@dpto"].Value = textBox15.Text;
+                    controlarUsarioHabilitado.Parameters.Add("@piso", SqlDbType.NVarChar);
+                    controlarUsarioHabilitado.Parameters["@piso"].Value = textBox14.Text;
+                    controlarUsarioHabilitado.Parameters.Add("@fecha", SqlDbType.NVarChar);
+                    controlarUsarioHabilitado.Parameters["@fecha"].Value = maskedTextBox1.Text;
+                    controlarUsarioHabilitado.Parameters.Add(rdo);
+                    controlarUsarioHabilitado.ExecuteNonQuery();
+                    MessageBox.Show(rdo.Value.ToString());
+                }
+                else { MessageBox.Show("No coincide la contraseña"); }
             }
-            else { MessageBox.Show("No coincide la contraseña"); }
-            
         }
 
         private void soloNumeros(object sender, KeyPressEventArgs e)
