@@ -106,7 +106,8 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Name = "Listado";
-            this.Text = "ListadoRol";
+            this.Text = "ListadoVisibilidad";
+            this.Load += new System.EventHandler(this.Listado_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

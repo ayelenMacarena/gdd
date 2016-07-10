@@ -69,6 +69,8 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                 dataGridView1.Columns[2].HeaderText = "Porcentaje";
                 dataGridView1.Columns[3].HeaderText = "Envio";
                 dataGridView1.Columns[4].HeaderText = "Descripcion";
+                dataGridView1.ReadOnly = true;
+                dataGridView1.AllowUserToAddRows = false;
                 this.seleccionar = new System.Windows.Forms.DataGridViewButtonColumn();
                 this.seleccionar.Text = "Seleccionar";
                 this.seleccionar.UseColumnTextForButtonValue = true;
@@ -101,9 +103,9 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             if (enteroABool(String.Compare(senderGrid.Columns[e.ColumnIndex].HeaderText, "Seleccionar")) && e.RowIndex >= 0)
             {
                 decimal.TryParse(senderGrid.Rows[e.RowIndex].Cells[0].FormattedValue.ToString(), out codigo);
-                decimal.TryParse(senderGrid.Rows[e.RowIndex].Cells[0].FormattedValue.ToString(), out precio);
-                decimal.TryParse(senderGrid.Rows[e.RowIndex].Cells[0].FormattedValue.ToString(), out porcentaje);
-                int.TryParse(senderGrid.Rows[e.RowIndex].Cells[0].FormattedValue.ToString(), out envio);
+                decimal.TryParse(senderGrid.Rows[e.RowIndex].Cells[1].FormattedValue.ToString(), out precio);
+                decimal.TryParse(senderGrid.Rows[e.RowIndex].Cells[2].FormattedValue.ToString(), out porcentaje);
+                int.TryParse(senderGrid.Rows[e.RowIndex].Cells[3].FormattedValue.ToString(), out envio);
                 Selección select = new Selección(codigo,precio,porcentaje,envio,senderGrid.Rows[e.RowIndex].Cells[4].FormattedValue.ToString());
                 this.Hide();
                 select.MdiParent = this.MdiParent;
@@ -121,10 +123,16 @@ private void button1_Click(object sender, EventArgs e)
     dataGridView1.DataSource = null;
     dataGridView1.Rows.Clear();
     dataGridView1.Columns.Clear();
+    this.textBox1.Text = "";
 }
 
 public DataGridViewButtonColumn habilitar { get; set; }
 
 public DataGridViewButtonColumn deshabilitar { get; set; }
+
+private void Listado_Load(object sender, EventArgs e)
+{
+
+}
     }
 }

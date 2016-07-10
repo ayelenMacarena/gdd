@@ -74,7 +74,15 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
                     crearVisib.ExecuteNonQuery();
                     this.respuesta = Convert.ToString(crearVisib.Parameters["@rdo"].Value);
 
-                    MessageBox.Show(this.respuesta);
+                    MessageBox.Show("Se ha creado correctamente la nueva Visibilidad");
+
+                    Listado visibilidad = new Listado();
+                    //Visibilidad visibilidad = new Visibilidad();
+                    this.Hide();
+                    visibilidad.MdiParent = this.MdiParent;
+                    visibilidad.Show();
+                    visibilidad.Location = new Point(0, 49);
+                    this.Close();
                 }
             }
             conexion.Close();

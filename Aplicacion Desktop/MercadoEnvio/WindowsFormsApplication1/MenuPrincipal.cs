@@ -55,6 +55,10 @@ namespace WindowsFormsApplication1
             else
             {
                 MessageBox.Show("El rol no tiene funciones asignadas");
+                this.Hide();
+                ABM_Usuario.user elegirUser = new ABM_Usuario.user();
+                elegirUser.Show();
+                this.Close();
             }
             conexion.Close();
 

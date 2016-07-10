@@ -72,7 +72,8 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
 
                     MessageBox.Show("Se modificaron los valores de la visibilidad seleccionada");
 
-                    Visibilidad visibilidad = new Visibilidad();
+                    Listado visibilidad = new Listado();
+                    //Visibilidad visibilidad = new Visibilidad();
                     this.Hide();
                     visibilidad.MdiParent = this.MdiParent;
                     visibilidad.Show();
@@ -97,17 +98,25 @@ namespace WindowsFormsApplication1.ABM_Visibilidad
             eliminarVisib.Parameters["@codigo"].Scale = 0;
             eliminarVisib.Parameters["@codigo"].Value = this.codigo;
 
-            eliminarVisib.ExecuteNonQuery();
+            try
+            {
+                eliminarVisib.ExecuteNonQuery();
 
-            conexion.Close();
+                conexion.Close();
 
-            MessageBox.Show("Se ha eliminado la Visibilidad seleccionada");
-            Visibilidad visibilidad = new Visibilidad();
-            this.Hide();
-            visibilidad.MdiParent = this.MdiParent;
-            visibilidad.Show();
-            visibilidad.Location = new Point(0, 49);
-            this.Close();
+                MessageBox.Show("Se ha eliminado la Visibilidad seleccionada");
+                Visibilidad visibilidad = new Visibilidad();
+                this.Hide();
+                visibilidad.MdiParent = this.MdiParent;
+                visibilidad.Show();
+                visibilidad.Location = new Point(0, 49);
+                this.Close();
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show("No se puede eliminar la Visibilidad, existen publicaciones que la referencian");
+                conexion.Close();
+            }
         }
 
         private void volverLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

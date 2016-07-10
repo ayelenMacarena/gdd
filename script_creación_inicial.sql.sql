@@ -1386,7 +1386,7 @@ create procedure LA_PETER_MACHINE.crearVisibilidad( @precio numeric(18,0), @porc
 			from LA_PETER_MACHINE.visibilidad
 			where visi_descripcion=@descripcion)
 			begin
-		insert into LA_PETER_MACHINE.visibilidad(visi_precio,visi_porcentaje,visi_envio,visi_descripcion) values(@descripcion,@porcentaje,@envio,@descripcion)
+		insert into LA_PETER_MACHINE.visibilidad(visi_precio,visi_porcentaje,visi_envio,visi_descripcion) values(@precio,@porcentaje,@envio,@descripcion)
 			set @rdo='ok'
 			end
 			else
