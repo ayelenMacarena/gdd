@@ -33,15 +33,13 @@ namespace WindowsFormsApplication1.Generar_Publicación
             SqlCommand listRubros = new SqlCommand(rubros, conexion);
             SqlDataReader rub = listRubros.ExecuteReader();
             List<String> rubritos = new List<String>();
+            comboBox1.Text = filaSeleccionada.Cells["Rubro"].Value.ToString();
+            
             if (rub.HasRows)
             {
                 while (rub.Read())
                 {
                     rubritos.Add(rub["rubr_descripcion_corta"].ToString());
-                    if (rub["rubr_descripcion_corta"].ToString() == filaSeleccionada.Cells["Rubro"].Value.ToString())
-                    {
-                        comboBox1.SelectedItem = rub["rubr_descripcion_corta"].ToString();
-                    }
                 }
 
             }
@@ -49,32 +47,48 @@ namespace WindowsFormsApplication1.Generar_Publicación
             comboBox1.DataSource = rubritos;
             conexion.Close();
             conexion.Open();
+
             string visibilidad = "select visi_descripcion, visi_cod from LA_PETER_MACHINE.visibilidad";
             SqlCommand listaVisi = new SqlCommand(visibilidad, conexion);
 
             SqlDataReader vis = listaVisi.ExecuteReader();
             List<String> visib = new List<String>();
+
+            comboBox2.Text = filaSeleccionada.Cells["Visibilidad"].Value.ToString();
             if (vis.HasRows)
             {
                 while (vis.Read())
                 {
 
                     comboBox2.Items.Add(vis["visi_descripcion"].ToString());
-                    if (vis["visi_descripcion"].ToString() == filaSeleccionada.Cells["Visibilidad"].Value.ToString())
-                    {
-                        comboBox2.SelectedText = vis["visi_descripcion"].ToString();
-                    }
                 }
             }
             conexion.Close();
             textBox4.Text = filaSeleccionada.Cells["publ_fecha_inicio"].Value.ToString();
             textBox5.Text = filaSeleccionada.Cells["publ_fecha_fin"].Value.ToString();
             conexion.Open();
-            comboBox5.SelectedText =  filaSeleccionada.Cells["Estado"].Value.ToString();
+            comboBox5.Text =  filaSeleccionada.Cells["Estado"].Value.ToString();
 
             conexion.Close();
-            comboBox3.Text = filaSeleccionada.Cells["publ_preguntas"].Value.ToString();
-            comboBox4.Text = filaSeleccionada.Cells["publ_envio_habilitado"].Value.ToString();
+            MessageBox.Show(filaSeleccionada.Cells["Rubro"].Value.ToString());
+            if (filaSeleccionada.Cells["publ_preguntas"].Value.ToString() == "True")
+            {
+
+                comboBox3.Text = "Si";
+            }
+            else
+            {
+                comboBox3.Text = "No";
+            }
+            if (filaSeleccionada.Cells["publ_envio_habilitado"].Value.ToString() == "True")
+            {
+
+                comboBox4.Text = "Si";
+            }
+            else
+            {
+                comboBox4.Text = "No";
+            }            
         }
 
         private void soloNumeros(object sender, KeyPressEventArgs e)

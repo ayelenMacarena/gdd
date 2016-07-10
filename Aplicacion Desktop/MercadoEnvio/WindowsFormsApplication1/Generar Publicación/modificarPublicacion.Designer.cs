@@ -150,6 +150,7 @@
             // 
             // comboBox5
             // 
+            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox5.FormattingEnabled = true;
             this.comboBox5.Items.AddRange(new object[] {
             "Activa",
@@ -160,7 +161,6 @@
             this.comboBox5.Name = "comboBox5";
             this.comboBox5.Size = new System.Drawing.Size(288, 21);
             this.comboBox5.TabIndex = 37;
-            this.comboBox5.Text = "Borrador";
             // 
             // comboBox4
             // 
