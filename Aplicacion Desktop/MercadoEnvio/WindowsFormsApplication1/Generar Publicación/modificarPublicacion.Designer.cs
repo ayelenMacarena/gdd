@@ -121,6 +121,7 @@
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(111, 20);
             this.textBox6.TabIndex = 39;
+            this.textBox6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloNumeros);
             // 
             // label11
             // 
@@ -163,6 +164,7 @@
             // 
             // comboBox4
             // 
+            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox4.FormattingEnabled = true;
             this.comboBox4.Items.AddRange(new object[] {
             "Si",
@@ -171,7 +173,6 @@
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(64, 21);
             this.comboBox4.TabIndex = 36;
-            this.comboBox4.Text = "Si";
             // 
             // label10
             // 
@@ -202,6 +203,7 @@
             // 
             // comboBox3
             // 
+            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Items.AddRange(new object[] {
             "Si",
@@ -210,7 +212,6 @@
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(64, 21);
             this.comboBox3.TabIndex = 32;
-            this.comboBox3.Text = "Si";
             // 
             // label8
             // 
@@ -223,6 +224,7 @@
             // 
             // comboBox2
             // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(55, 192);
             this.comboBox2.Name = "comboBox2";
@@ -240,6 +242,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(55, 157);
             this.comboBox1.Name = "comboBox1";
@@ -259,6 +262,7 @@
             // 
             this.textBox5.Location = new System.Drawing.Point(122, 248);
             this.textBox5.Name = "textBox5";
+            this.textBox5.ReadOnly = true;
             this.textBox5.Size = new System.Drawing.Size(158, 20);
             this.textBox5.TabIndex = 22;
             this.textBox5.Click += new System.EventHandler(this.textBox5_Click);
@@ -276,6 +280,7 @@
             // 
             this.textBox4.Location = new System.Drawing.Point(122, 218);
             this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(158, 20);
             this.textBox4.TabIndex = 20;
             this.textBox4.Click += new System.EventHandler(this.textBox4_Click);
@@ -286,6 +291,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(111, 20);
             this.textBox3.TabIndex = 19;
+            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloNumeros);
             // 
             // label3
             // 

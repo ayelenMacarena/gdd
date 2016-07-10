@@ -38,7 +38,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 while (rub.Read())
                 {
                     rubritos.Add(rub["rubr_descripcion_corta"].ToString());
-                    if (rub["rubr_cod"].ToString() == filaSeleccionada.Cells["publ_cod_rubro"].Value.ToString())
+                    if (rub["rubr_descripcion_corta"].ToString() == filaSeleccionada.Cells["Rubro"].Value.ToString())
                     {
                         comboBox1.SelectedItem = rub["rubr_descripcion_corta"].ToString();
                     }
@@ -60,7 +60,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 {
 
                     comboBox2.Items.Add(vis["visi_descripcion"].ToString());
-                    if (vis["visi_cod"].ToString() == filaSeleccionada.Cells["publ_cod_visibilidad"].Value.ToString())
+                    if (vis["visi_descripcion"].ToString() == filaSeleccionada.Cells["Visibilidad"].Value.ToString())
                     {
                         comboBox2.SelectedText = vis["visi_descripcion"].ToString();
                     }
@@ -70,18 +70,27 @@ namespace WindowsFormsApplication1.Generar_Publicación
             textBox4.Text = filaSeleccionada.Cells["publ_fecha_inicio"].Value.ToString();
             textBox5.Text = filaSeleccionada.Cells["publ_fecha_fin"].Value.ToString();
             conexion.Open();
-            string estado = "select esta_descripcion from LA_PETER_MACHINE.estado where estado_id = " + filaSeleccionada.Cells["publ_id_estado"].Value.ToString();
-            SqlCommand estadoComando = new SqlCommand(estado, conexion);
+            comboBox5.SelectedText =  filaSeleccionada.Cells["Estado"].Value.ToString();
 
-            SqlDataReader est = estadoComando.ExecuteReader();
-
-            while (est.Read())
-            {
-                comboBox5.SelectedText = est["esta_descripcion"].ToString();
-            }
             conexion.Close();
             comboBox3.Text = filaSeleccionada.Cells["publ_preguntas"].Value.ToString();
             comboBox4.Text = filaSeleccionada.Cells["publ_envio_habilitado"].Value.ToString();
+        }
+
+        private void soloNumeros(object sender, KeyPressEventArgs e)
+        {
+            if (isNumeric(e.KeyChar) || e.KeyChar == 8) { e.Handled = false; }
+            else { e.Handled = true; }
+        }
+
+
+        public bool isNumeric(Char c)
+        {
+            if ((c >= '0' && c <= '9'))
+            {
+                return true;
+            }
+            return false;
         }
 
         private void button2_Click(object sender, EventArgs e)

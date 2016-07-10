@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
         public generarPublicacionCompra(string usuario)
         {
             InitializeComponent();
-
+            
             SqlConnection conexion = conectionDB.getConnection();
             conexion.Open();
             string ultimoNumero = "SELECT TOP 1 publicacion_id from LA_PETER_MACHINE.publicacion order by publicacion_id desc";
@@ -65,6 +66,22 @@ namespace WindowsFormsApplication1.Generar_Publicación
             }
 
             conexion.Close();
+        }
+
+        private void soloNumeros(object sender, KeyPressEventArgs e)
+        {
+            if (isNumeric(e.KeyChar) || e.KeyChar == 8) { e.Handled = false; }
+            else { e.Handled = true; }
+        }
+
+
+        public bool isNumeric(Char c)
+        {
+            if ((c >= '0' && c <= '9'))
+            {
+                return true;
+            }
+            return false;
         }
 
         private void textBox3_Validating(object sender, CancelEventArgs e)
@@ -132,28 +149,114 @@ namespace WindowsFormsApplication1.Generar_Publicación
             rdo.Direction = ParameterDirection.Output;
             SqlCommand publicar = new SqlCommand("LA_PETER_MACHINE.crearPublicacion", conexion);
             publicar.CommandType = CommandType.StoredProcedure;
-            publicar.Parameters.AddWithValue("@username", this.username); 
-            publicar.Parameters.AddWithValue("@estado", comboBox5.Text);
+            publicar.Parameters.AddWithValue("@username", this.username);
+            if (comboBox5.Text == String.Empty)
+            {
+                MessageBox.Show("Debe seleccionar un estado");
+                return;
+            }
+            else
+            {
+                publicar.Parameters.AddWithValue("@estado", comboBox5.Text);
+            }
+
             publicar.Parameters.AddWithValue("@tipo", "Compra Inmediata");
-            publicar.Parameters.AddWithValue("@descripcion", textBoxDescripcion.Text);
-            if (Convert.ToDecimal(textBox3.Text) < 0)
+            if (textBoxDescripcion.Text == String.Empty)
+            {
+                MessageBox.Show("Debe colocar una descripción");
+                return;
+            }
+            else
+            {
+                publicar.Parameters.AddWithValue("@descripcion", textBoxDescripcion.Text);
+            }
+            
+            if (textBox3.Text != String.Empty && Convert.ToDecimal(textBox3.Text) < 0)
             {
                 MessageBox.Show("El precio no puede ser negativo");
                 return;
             }
-            publicar.Parameters.AddWithValue("@precio", textBox3.Text);
+            if (textBox3.Text == String.Empty)
+            {
+                MessageBox.Show("Tiene que ingresar un precio");
+                return;
+            }
+            else
+            {
+
+                publicar.Parameters.AddWithValue("@precio", textBox3.Text);
+            }
             publicar.Parameters.AddWithValue("@costo", DBNull.Value);
-            publicar.Parameters.AddWithValue("@rubro", comboBox1.Text);
-            publicar.Parameters.AddWithValue("@visibilidad", comboBox2.Text);
-            publicar.Parameters.AddWithValue("@preguntas", comboBox3.Text);
-            publicar.Parameters.AddWithValue("@envio", comboBox4.Text);
+            if (comboBox1.Text == String.Empty)
+            {
+                MessageBox.Show("Debe seleccionar un rubro");
+                return;
+            }
+            else
+            {
+                publicar.Parameters.AddWithValue("@rubro", comboBox1.Text);
+            }
+
+            if (comboBox2.Text == String.Empty)
+            {
+                MessageBox.Show("Debe seleccionar una visibilidad");
+                return;
+            }
+            else
+            {
+                publicar.Parameters.AddWithValue("@visibilidad", comboBox2.Text);
+            }
+            if (comboBox3.Text == String.Empty)
+            {
+                MessageBox.Show("Debe indicar si la publicación acepta o no preguntas");
+                return;
+            }
+            else
+            {
+                publicar.Parameters.AddWithValue("@preguntas", comboBox3.Text);
+            }
+            if (comboBox4.Text == String.Empty)
+            {
+                MessageBox.Show("Debe indicar si la publicación acepta o no envío");
+                return;
+            }
+            else
+            {
+                publicar.Parameters.AddWithValue("@envio", comboBox4.Text);
+            }
+            
+            if (textBox4.Text == String.Empty)
+            {
+                MessageBox.Show("Debe ingresar una fecha de inicio");
+                return;
+            }
+            
+            if (textBox5.Text == String.Empty)
+            {
+                MessageBox.Show("Debe ingresar una fecha de finalización");
+                return;
+            }
+            
             if (Convert.ToDateTime(textBox4.Text) > Convert.ToDateTime(textBox5.Text))
             {
                 MessageBox.Show("La fecha de fin no puede ser menor a la de inicio");
                 return;
             }
+
+            if (Convert.ToDateTime(textBox4.Text) < Convert.ToDateTime(ConfigurationManager.AppSettings["dateTimeStamp"].ToString()) ||
+                Convert.ToDateTime(textBox5.Text) < Convert.ToDateTime(ConfigurationManager.AppSettings["dateTimeStamp"].ToString()))
+            {
+                MessageBox.Show("Las fechas no pueden ser anterior a la fecha de hoy");
+                return;
+            }
+
             publicar.Parameters.AddWithValue("@fecha_inicio", textBox4.Text);
             publicar.Parameters.AddWithValue("@fecha_fin", textBox5.Text);
+
+            if(numericUpDown1.Text == String.Empty){
+                MessageBox.Show("Debe ingresar un stock");
+                return;
+            }
             publicar.Parameters.AddWithValue("@stock", numericUpDown1.Text);
             publicar.Parameters.Add(rdo);
 
