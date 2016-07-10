@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace WindowsFormsApplication1.Generar_Publicación
                 sqlComando.Parameters.AddWithValue("@visibilidad", visibilidad);
                 sqlComando.Parameters.AddWithValue("@usuario", username);
                 sqlComando.Parameters.AddWithValue("@publicacion", idPublicacion);
+                sqlComando.Parameters.AddWithValue("@fechaSys", ConfigurationManager.AppSettings["dateTimeStamp"].ToString());
 
                 sqlComando.ExecuteNonQuery();
             }

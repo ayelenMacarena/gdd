@@ -232,19 +232,19 @@ CREATE TABLE oferta (
 
 CREATE TABLE publicacion ( 
 	publicacion_id numeric(18)  NOT NULL IDENTITY(1,1),
-	publ_descripcion nvarchar(255),
-	publ_precio numeric(18,2),
+	publ_descripcion nvarchar(255) NOT NULL,
+	publ_precio numeric(18,2) NOT NULL,
 	publ_costo numeric(18,2),
 	publ_cod_rubro numeric(18) NOT NULL,
 	publ_cod_visibilidad numeric(18) NOT NULL,
 	publ_id_vendedor numeric(18) NOT NULL,
 	publ_id_estado numeric(18) NOT NULL,
-	publ_fecha_inicio datetime,
-	publ_fecha_fin datetime,
-	publ_preguntas bit,
-	publ_cantidad numeric(18),
+	publ_fecha_inicio datetime NOT NULL,
+	publ_fecha_fin datetime NOT NULL,
+	publ_preguntas bit NOT NULL,
+	publ_cantidad numeric(18) NOT NULL,
 	publ_id_tipo numeric(18) NOT NULL,
-	publ_envio_habilitado bit
+	publ_envio_habilitado bit NOT NULL
 )
 
 CREATE TABLE rol ( 
@@ -1766,10 +1766,12 @@ CREATE PROCEDURE LA_PETER_MACHINE.finalizarPublicaciones(@fechaSys nvarchar(255)
 AS
 BEGIN
 update LA_PETER_MACHINE.publicacion
-					SET publ_id_estado=4
+					SET publ_id_estado=4 --Finalizada
 					WHERE publ_id_estado != 4 
 						and publ_fecha_fin is not null
 						and publ_fecha_fin < CONVERT(datetime,@fechaSys,121)
+						and publ_id_estado = 3 --Activa
+						and publ_cantidad > 0
 
 END;
 GO

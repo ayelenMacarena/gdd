@@ -125,7 +125,7 @@
             // 
             // monthCalendarVencimiento
             // 
-            this.monthCalendarVencimiento.Location = new System.Drawing.Point(24, 192);
+            this.monthCalendarVencimiento.Location = new System.Drawing.Point(24, 160);
             this.monthCalendarVencimiento.Name = "monthCalendarVencimiento";
             this.monthCalendarVencimiento.TabIndex = 12;
             this.monthCalendarVencimiento.Visible = false;
@@ -168,6 +168,7 @@
             // 
             // comboBox4
             // 
+            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox4.FormattingEnabled = true;
             this.comboBox4.Items.AddRange(new object[] {
             "Si",
@@ -176,7 +177,6 @@
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(64, 21);
             this.comboBox4.TabIndex = 42;
-            this.comboBox4.Text = "Si";
             // 
             // label10
             // 
@@ -189,7 +189,7 @@
             // 
             // monthCalendarInicio
             // 
-            this.monthCalendarInicio.Location = new System.Drawing.Point(212, 195);
+            this.monthCalendarInicio.Location = new System.Drawing.Point(224, 160);
             this.monthCalendarInicio.Name = "monthCalendarInicio";
             this.monthCalendarInicio.TabIndex = 21;
             this.monthCalendarInicio.Visible = false;
@@ -197,6 +197,7 @@
             // 
             // comboBox5
             // 
+            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox5.FormattingEnabled = true;
             this.comboBox5.Items.AddRange(new object[] {
             "Activa",
@@ -207,7 +208,6 @@
             this.comboBox5.Name = "comboBox5";
             this.comboBox5.Size = new System.Drawing.Size(285, 21);
             this.comboBox5.TabIndex = 39;
-            this.comboBox5.Text = "Borrador";
             // 
             // label11
             // 
@@ -224,6 +224,7 @@
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(111, 20);
             this.textBox6.TabIndex = 35;
+            this.textBox6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloNumeros);
             // 
             // textBox1
             // 
@@ -245,12 +246,18 @@
             // 
             // comboBox3
             // 
+            this.comboBox3.AutoCompleteCustomSource.AddRange(new string[] {
+            "Si",
+            "No"});
+            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Items.AddRange(new object[] {
+            "Si",
+            "No"});
             this.comboBox3.Location = new System.Drawing.Point(112, 323);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(64, 21);
             this.comboBox3.TabIndex = 32;
-            this.comboBox3.Text = "Si";
             // 
             // label8
             // 
@@ -263,6 +270,7 @@
             // 
             // comboBox2
             // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(72, 192);
             this.comboBox2.Name = "comboBox2";
@@ -280,6 +288,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(72, 157);
             this.comboBox1.Name = "comboBox1";
@@ -299,6 +308,7 @@
             // 
             this.textBox5.Location = new System.Drawing.Point(122, 248);
             this.textBox5.Name = "textBox5";
+            this.textBox5.ReadOnly = true;
             this.textBox5.Size = new System.Drawing.Size(158, 20);
             this.textBox5.TabIndex = 22;
             this.textBox5.Click += new System.EventHandler(this.textBox5_Click);
@@ -317,6 +327,7 @@
             // 
             this.textBox4.Location = new System.Drawing.Point(122, 218);
             this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(158, 20);
             this.textBox4.TabIndex = 20;
             this.textBox4.Click += new System.EventHandler(this.textBox4_Click);
@@ -328,6 +339,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(111, 20);
             this.textBox3.TabIndex = 19;
+            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloNumeros);
             this.textBox3.Validating += new System.ComponentModel.CancelEventHandler(this.textBox3_Validating);
             // 
             // label3
