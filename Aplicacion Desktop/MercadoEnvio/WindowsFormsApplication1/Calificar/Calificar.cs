@@ -47,6 +47,7 @@ namespace WindowsFormsApplication1.Calificar
                     listaComprasId.Add(compraId);
                 }
                 comboBox1.DataSource = listaCompras;
+                comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
                 this.button1.Enabled = true;
             }
             else
@@ -101,7 +102,7 @@ namespace WindowsFormsApplication1.Calificar
 
                 califCompra.ExecuteNonQuery();
 
-                MessageBox.Show("Se ha comentado la compra correctamente");
+                MessageBox.Show("Se ha calificado la compra correctamente");
 
                 this.Hide();
                 this.Close();
