@@ -98,8 +98,33 @@ namespace WindowsFormsApplication1.Facturas
             button4.Enabled = true;
         }
 
+        private void soloNumeros(object sender, KeyPressEventArgs e)
+        {
+            if (isNumeric(e.KeyChar) || e.KeyChar == 8) { e.Handled = false; }
+            else { e.Handled = true; }
+        }
+
+
+        public bool isNumeric(Char c)
+        {
+            if ((c >= '0' && c <= '9'))
+            {
+                return true;
+            }
+            return false;
+        }
+
         private void mostrarFacturas()
         {
+            if (dateFromLabel.Text != String.Empty && dateToLabel.Text != String.Empty){
+
+                if (Convert.ToDateTime(dateFromLabel.Text) > Convert.ToDateTime(dateToLabel.Text))
+                {
+                    MessageBox.Show("La fecha de fin no puede ser menor a la de inicio");
+                    return;
+                }
+            }
+
             DataTable filasAMostrar = Logica_Facturas.Mostrar(dateFromLabel.Text, dateToLabel.Text, priceFromLabel.Text, priceToLabel.Text, detailsLabel.Text, salesmanComboBox.Text, registrosPorPagina, numeroPagina);            
 
             Grid_ListaFacturas.DataSource = filasAMostrar;

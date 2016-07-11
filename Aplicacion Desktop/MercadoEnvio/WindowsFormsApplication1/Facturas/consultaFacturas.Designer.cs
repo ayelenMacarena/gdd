@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.calendarFrom = new System.Windows.Forms.MonthCalendar();
@@ -87,7 +87,7 @@
             // monthCalendar1
             // 
             this.monthCalendar1.AllowDrop = true;
-            this.monthCalendar1.Location = new System.Drawing.Point(223, -11);
+            this.monthCalendar1.Location = new System.Drawing.Point(190, 0);
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 14;
             this.monthCalendar1.TitleBackColor = System.Drawing.SystemColors.ControlDark;
@@ -97,7 +97,7 @@
             // calendarFrom
             // 
             this.calendarFrom.AllowDrop = true;
-            this.calendarFrom.Location = new System.Drawing.Point(76, -11);
+            this.calendarFrom.Location = new System.Drawing.Point(190, -11);
             this.calendarFrom.Name = "calendarFrom";
             this.calendarFrom.TabIndex = 13;
             this.calendarFrom.TitleBackColor = System.Drawing.SystemColors.ControlDark;
@@ -127,6 +127,7 @@
             // 
             // salesmanComboBox
             // 
+            this.salesmanComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.salesmanComboBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.salesmanComboBox.FormattingEnabled = true;
             this.salesmanComboBox.Location = new System.Drawing.Point(126, 113);
@@ -165,6 +166,7 @@
             this.priceToLabel.Name = "priceToLabel";
             this.priceToLabel.Size = new System.Drawing.Size(100, 20);
             this.priceToLabel.TabIndex = 7;
+            this.priceToLabel.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloNumeros);
             // 
             // label3
             // 
@@ -181,6 +183,7 @@
             this.priceFromLabel.Name = "priceFromLabel";
             this.priceFromLabel.Size = new System.Drawing.Size(100, 20);
             this.priceFromLabel.TabIndex = 5;
+            this.priceFromLabel.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloNumeros);
             this.priceFromLabel.Validating += new System.ComponentModel.CancelEventHandler(this.priceFromLabel_Validating);
             // 
             // label4
@@ -314,9 +317,9 @@
             // 
             this.Grid_ListaFacturas.AllowUserToAddRows = false;
             this.Grid_ListaFacturas.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Desktop;
-            this.Grid_ListaFacturas.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.Grid_ListaFacturas.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.Grid_ListaFacturas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.Grid_ListaFacturas.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.Grid_ListaFacturas.BorderStyle = System.Windows.Forms.BorderStyle.None;

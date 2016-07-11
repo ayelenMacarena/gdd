@@ -29,11 +29,10 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
             SqlConnection conexion = conectionDB.getConnection();
             conexion.Open();
-            string rubros = "select rubr_descripcion_corta, rubr_cod from LA_PETER_MACHINE.rubro";
+            string rubros = "select rubr_descripcion_corta from LA_PETER_MACHINE.rubro";
             SqlCommand listRubros = new SqlCommand(rubros, conexion);
             SqlDataReader rub = listRubros.ExecuteReader();
             List<String> rubritos = new List<String>();
-            comboBox1.Text = filaSeleccionada.Cells["Rubro"].Value.ToString();
             
             if (rub.HasRows)
             {
@@ -44,17 +43,17 @@ namespace WindowsFormsApplication1.Generar_Publicación
 
             }
 
+            comboBox1.Text = filaSeleccionada.Cells["Rubro"].Value.ToString();
+            
             comboBox1.DataSource = rubritos;
             conexion.Close();
             conexion.Open();
 
-            string visibilidad = "select visi_descripcion, visi_cod from LA_PETER_MACHINE.visibilidad";
+            string visibilidad = "select visi_descripcion from LA_PETER_MACHINE.visibilidad";
             SqlCommand listaVisi = new SqlCommand(visibilidad, conexion);
 
             SqlDataReader vis = listaVisi.ExecuteReader();
             List<String> visib = new List<String>();
-
-            comboBox2.Text = filaSeleccionada.Cells["Visibilidad"].Value.ToString();
             if (vis.HasRows)
             {
                 while (vis.Read())
@@ -63,10 +62,13 @@ namespace WindowsFormsApplication1.Generar_Publicación
                     comboBox2.Items.Add(vis["visi_descripcion"].ToString());
                 }
             }
-            conexion.Close();
+
+            comboBox2.Text = filaSeleccionada.Cells["Visibilidad"].Value.ToString();
+            
+            
             textBox4.Text = filaSeleccionada.Cells["publ_fecha_inicio"].Value.ToString();
             textBox5.Text = filaSeleccionada.Cells["publ_fecha_fin"].Value.ToString();
-            conexion.Open();
+            
             comboBox5.Text =  filaSeleccionada.Cells["Estado"].Value.ToString();
 
             conexion.Close();
