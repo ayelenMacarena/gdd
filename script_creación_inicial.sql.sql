@@ -1078,19 +1078,19 @@ if @vendedor is not null
 declare @query varchar(255)
 
 IF @fechaDesde is Not NULL and @query is not NUll
-	set @query = @query + ' AND fact_fecha >= ' + @fechaDesde; 
+	set @query = @query + ' AND fact_fecha >= ' + '''' + @fechaDesde + ''''; 
 Else IF @fechaDesde is Not NULL 
-	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha >= ' + @fechaDesde;
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha >= ' + '''' + @fechaDesde + '''';
 
 IF @fechaHasta is not Null and @query is not null
-	set @query = @query + ' AND fact_fecha <= ' + convert(varchar(255), @fechaHasta);
+	set @query = @query + ' AND fact_fecha <= ' + '''' +  @fechaHasta + '''';
 else IF @fechaHasta is not Null
-	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha <= ' + convert(varchar(255), @fechaHasta); 
+	set @query = 'select * from LA_PETER_MACHINE.factura where fact_fecha <= ' + '''' +  @fechaHasta + ''''; 
 
 
 IF @descripcion is not NUll and @query is not null
 	set @query = @query + 'AND fact_num = ' + convert(varchar(255), @descripcion);
-else
+else if @descripcion is not null
 	set @query = 'select * from LA_PETER_MACHINE.factura where fact_num = ' +  convert(varchar(255), @descripcion) ;
 
 
