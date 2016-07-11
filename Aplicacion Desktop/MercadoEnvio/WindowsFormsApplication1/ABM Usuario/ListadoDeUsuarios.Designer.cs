@@ -150,6 +150,8 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.Location = new System.Drawing.Point(213, 43);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(73, 17);
@@ -199,7 +201,7 @@
             // 
             // monthCalendar1
             // 
-            this.monthCalendar1.Location = new System.Drawing.Point(177, 37);
+            this.monthCalendar1.Location = new System.Drawing.Point(186, 43);
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 19;
             this.monthCalendar1.Visible = false;
@@ -208,7 +210,7 @@
             // 
             // monthCalendar2
             // 
-            this.monthCalendar2.Location = new System.Drawing.Point(177, 38);
+            this.monthCalendar2.Location = new System.Drawing.Point(186, 44);
             this.monthCalendar2.Name = "monthCalendar2";
             this.monthCalendar2.TabIndex = 20;
             this.monthCalendar2.Visible = false;

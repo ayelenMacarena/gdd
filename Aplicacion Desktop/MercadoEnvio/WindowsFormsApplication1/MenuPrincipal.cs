@@ -344,5 +344,11 @@ namespace WindowsFormsApplication1
 
         }
 
+        private void button14_Click(object sender, EventArgs e)
+        {
+            ABM_Usuario.CambiarContraseña window = new ABM_Usuario.CambiarContraseña(usuario);
+            window.ShowDialog();
+        }
+
     }
 }

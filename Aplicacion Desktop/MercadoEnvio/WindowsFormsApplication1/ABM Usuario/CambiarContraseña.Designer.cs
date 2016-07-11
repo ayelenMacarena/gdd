@@ -115,7 +115,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 8;
-            this.button1.Text = "Cambar";
+            this.button1.Text = "Modificar";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -144,6 +144,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "CambiarContraseña";
             this.Text = "CambiarContraseña";
+            this.Load += new System.EventHandler(this.CambiarContraseña_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

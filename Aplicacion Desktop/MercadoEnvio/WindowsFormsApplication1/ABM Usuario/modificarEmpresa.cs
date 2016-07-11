@@ -102,6 +102,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
                     controlarUsarioHabilitado.Parameters.Add(rdo);
                     controlarUsarioHabilitado.ExecuteNonQuery();
                     MessageBox.Show(rdo.Value.ToString());
+
+                    if (rdo.Value.ToString() == "empresa modificada correctamente") { this.Close(); }
                 }
                 else { MessageBox.Show("No coincide la contraseña"); }
             }

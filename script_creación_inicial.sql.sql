@@ -911,14 +911,14 @@ declare @hashViejo varbinary(20)
 set @hashViejo=HASHBYTES('sha2_256',@contraseñaVieja)
 
 if exists (select* from LA_PETER_MACHINE.usuario
-where usua_username=@usuario and usua_password=@contraseñaVieja)
+where usua_username=@usuario and usua_password=@hashViejo)
 begin
 declare @hashNuevo varbinary(20)
 set @hashNuevo=HASHBYTES('sha2_256',@contraseñaNueva)
 update LA_PETER_MACHINE.usuario
 set usua_password=@hashNuevo
 where usua_username=@usuario
-set @rdo='OK'
+set @rdo='Contraseña modificada correctamente'
 end
 else
 set @rdo='Contraseña incorrecta'

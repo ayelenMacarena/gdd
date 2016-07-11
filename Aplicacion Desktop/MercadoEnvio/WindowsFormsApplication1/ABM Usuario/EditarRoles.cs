@@ -75,21 +75,17 @@ namespace WindowsFormsApplication1.ABM_Usuario
             if (rol == "empresa")
             {
                 modificarEmpresa mod = new modificarEmpresa(usu);
-                this.Hide();
                 mod.MdiParent = this.MdiParent;
                 mod.Show();
                 mod.Location = new Point(0, 49);
-                this.Close();
             }
             if (rol == "cliente")
             {
                 modificarCliente mod = new modificarCliente(usu);
-                this.Hide();
                 mod.MdiParent = this.MdiParent;
                 mod.Show();
                 mod.Location = new Point(0, 49);
-                this.Close();
-
+          
             }
         }
 

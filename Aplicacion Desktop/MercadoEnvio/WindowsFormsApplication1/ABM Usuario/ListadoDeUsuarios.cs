@@ -31,6 +31,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                  }
                 }
              dataGridView1.AllowUserToAddRows = false;
+             comboBox1.Items.Add("");
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -70,18 +71,15 @@ namespace WindowsFormsApplication1.ABM_Usuario
                     if (comboBox1.Text == "cliente")
                     {
                         EditarRoles select = new EditarRoles(usu, "cliente");
-                        this.Hide();
                         select.ShowDialog();
-                        this.Close();
+                       
                     }
                     else {
                         if (comboBox1.Text == "empresa")
                         {
                             EditarRoles select = new EditarRoles(usu, "empresa");
-                            this.Hide();
                             select.ShowDialog();
-                            this.Close();
-                        }
+                          }
                         else {
                             MessageBox.Show("Solo se pueden modificar usuarios dentro de la busqueda de empresas o clientes");
                         }
@@ -151,7 +149,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             cmd.Connection = conexion;
             DataTable table = new DataTable();
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            cmd.CommandText = "select tabla.Nombre,tabla.IdentUnico,tabla.Usuario,tabla.Ciudad,tabla.Calle,tabla.Numero,tabla.Mail,tabla.Habilitado  from (select  clie_nombre + ' ' + clie_apellido as Nombre,clie_dni as IdentUnico,usua_username as Usuario,pers_ciudad as Ciudad, pers_domicilio_calle as Calle,pers_numero_calle as Numero, pers_mail as Mail, usua_habilitado as Habilitado from LA_PETER_MACHINE.cliente, LA_PETER_MACHINE.usuario, LA_PETER_MACHINE.persona where pers_id=clie_id_persona and pers_username=usua_username and (clie_nombre like '%' + @nombre + '%') and (clie_dni like '%' + @doc + '%') and (isnull(pers_ciudad,'') like '%' + @ciudad + '%') and usua_habilitado=@hab and pers_fecha_creacion >= right(@desde,4)+substring(@desde,4,2)+left(@desde,2) and pers_fecha_creacion< right(@hasta,4)+substring(@hasta,4,2)+left(@hasta,2) union select empr_razon_social as Nombre, convert(numeric,left(empr_cuit,2)+substring(empr_cuit,4,8)+right(empr_cuit,2)) as IdentUnico,pers_username as Usuario, pers_ciudad as Ciudad, pers_domicilio_calle as Calle,pers_numero_calle as Numero,pers_mail as Mail, usua_habilitado as Habilitado  from LA_PETER_MACHINE.empresa, LA_PETER_MACHINE.usuario, LA_PETER_MACHINE.persona  where pers_id=empr_id_persona and pers_username=usua_username and (empr_razon_social like '%' + @nombre + '%') and (empr_cuit like '%' + @doc + '%') and (isnull(pers_ciudad,'') like '%' + @ciudad + '%') and usua_habilitado=@hab and pers_fecha_creacion >= right(@desde,4)+substring(@desde,4,2)+left(@desde,2) and pers_fecha_creacion< right(@hasta,4)+substring(@hasta,4,2)+left(@hasta,2)) as tabla, LA_PETER_MACHINE.roles_usuario,LA_PETER_MACHINE.rol  where rolu_id_rol=rol_id and rol_descripcion like @rol + '%' and rolu_username=tabla.Usuario group by tabla.Nombre,tabla.IdentUnico,tabla.Usuario,tabla.Ciudad,tabla.Calle,tabla.Numero,tabla.Mail,tabla.Habilitado ";
+            cmd.CommandText = "select tabla.Nombre,tabla.IdentUnico,tabla.Usuario,tabla.Ciudad,tabla.Calle,tabla.Numero,tabla.Mail,tabla.Habilitado  from (select  clie_nombre + ' ' + clie_apellido as Nombre,clie_dni as IdentUnico,usua_username as Usuario,pers_ciudad as Ciudad, pers_domicilio_calle as Calle,pers_numero_calle as Numero, pers_mail as Mail, usua_habilitado as Habilitado from LA_PETER_MACHINE.cliente, LA_PETER_MACHINE.usuario, LA_PETER_MACHINE.persona where pers_id=clie_id_persona and pers_username=usua_username  and (isnull(pers_ciudad,'') like '%' + @ciudad + '%') and usua_habilitado=@hab and pers_fecha_creacion >= right(@desde,4)+substring(@desde,4,2)+left(@desde,2) and pers_fecha_creacion< right(@hasta,4)+substring(@hasta,4,2)+left(@hasta,2) union select empr_razon_social as Nombre, convert(numeric,left(empr_cuit,2)+substring(empr_cuit,4,8)+right(empr_cuit,2)) as IdentUnico,pers_username as Usuario, pers_ciudad as Ciudad, pers_domicilio_calle as Calle,pers_numero_calle as Numero,pers_mail as Mail, usua_habilitado as Habilitado  from LA_PETER_MACHINE.empresa, LA_PETER_MACHINE.usuario, LA_PETER_MACHINE.persona  where pers_id=empr_id_persona and pers_username=usua_username and (isnull(pers_ciudad,'') like '%' + @ciudad + '%') and usua_habilitado=@hab and pers_fecha_creacion >= right(@desde,4)+substring(@desde,4,2)+left(@desde,2) and pers_fecha_creacion< right(@hasta,4)+substring(@hasta,4,2)+left(@hasta,2)) as tabla, LA_PETER_MACHINE.roles_usuario,LA_PETER_MACHINE.rol  where rolu_id_rol=rol_id and rol_descripcion like @rol + '%' and rolu_username=tabla.Usuario and (tabla.nombre like '%' + @nombre + '%') and (tabla.IdentUnico like '%' + @doc + '%') group by tabla.Nombre,tabla.IdentUnico,tabla.Usuario,tabla.Ciudad,tabla.Calle,tabla.Numero,tabla.Mail,tabla.Habilitado ";
             cmd.Parameters.Add("@nombre", SqlDbType.NVarChar);
             cmd.Parameters["@nombre"].Value = textBox1.Text;
             cmd.Parameters.Add("@doc", SqlDbType.NVarChar);
@@ -218,11 +216,15 @@ namespace WindowsFormsApplication1.ABM_Usuario
 
         private void button3_Click(object sender, EventArgs e)
         {
+            
             dataGridView1.DataSource = null;
             dataGridView1.Rows.Clear();
             dataGridView1.Columns.Clear();
             textBox4.Text = "";
             textBox5.Text = "";
+            textBox2.Text = "";
+            textBox3.Text = "";
+            textBox1.Text = "";
             comboBox1.DropDownStyle = ComboBoxStyle.Simple;
             comboBox1.Text = "";
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;

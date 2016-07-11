@@ -14,13 +14,13 @@ namespace WindowsFormsApplication1.ABM_Usuario
 {
     public partial class AltaCliente : Form
     {
-         string dateTimeStamp = ConfigurationManager.AppSettings["dateTimeStamp"].ToString();
+        string dateTimeStamp = ConfigurationManager.AppSettings["dateTimeStamp"].ToString();
 
         public AltaCliente()
         {
             InitializeComponent();
             maskedTextBox1.Mask = "00/00/0000";
-           
+
             SqlConnection conexion = conectionDB.getConnection();
             SqlCommand cmd = new SqlCommand();
             cmd.CommandType = CommandType.Text;
@@ -28,9 +28,10 @@ namespace WindowsFormsApplication1.ABM_Usuario
             cmd.CommandText = "select type_descripcion from LA_PETER_MACHINE.document_type";
             conexion.Open();
             SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read()) {
-                comboBox1.Items.Add(reader[0]);                
-            }           
+            while (reader.Read())
+            {
+                comboBox1.Items.Add(reader[0]);
+            }
         }
 
         void maskedTextBox1_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
@@ -61,9 +62,11 @@ namespace WindowsFormsApplication1.ABM_Usuario
             {
                 MessageBox.Show("el campo " + campo + " esta vacio");
                 return false;
+
             }
             else { return true; }
         }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -116,6 +119,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                     cmd.Parameters.Add(rdo);
                     cmd.ExecuteNonQuery();
                     MessageBox.Show(rdo.Value.ToString());
+                    if (rdo.Value.ToString() == "cliente creado correctamente") { this.Close(); }
                 }
                 else { MessageBox.Show("contraseña no coincide"); }
             }
@@ -137,7 +141,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
             if (isNumeric(e.KeyChar) || e.KeyChar == 8) { e.Handled = false; }
             else { e.Handled = true; }
         }
-       
+
 
         public bool isNumeric(Char c)
         {
@@ -148,9 +152,5 @@ namespace WindowsFormsApplication1.ABM_Usuario
             return false;
         }
 
-
-    
-
-     
     }
 }

@@ -113,6 +113,7 @@ namespace WindowsFormsApplication1.ABM_Usuario
                     controlarUsarioHabilitado.Parameters.Add(rdo);
                     controlarUsarioHabilitado.ExecuteNonQuery();
                     MessageBox.Show(rdo.Value.ToString());
+                    if (rdo.Value.ToString() == "cliente modificado correctamente") {this.Close(); }
                 }
                 else { MessageBox.Show("No coincide la contraseña"); }
             }

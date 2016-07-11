@@ -90,6 +90,8 @@ namespace WindowsFormsApplication1.ABM_Usuario
                         cmd.Parameters.Add(rdo);
                         cmd.ExecuteNonQuery();
                         MessageBox.Show(rdo.Value.ToString());
+                         if (rdo.Value.ToString() == "empresa creado correctamente") { this.Close(); }
+                
                         conexion.Close();
 
                     }

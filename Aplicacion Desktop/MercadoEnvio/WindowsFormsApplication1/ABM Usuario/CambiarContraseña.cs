@@ -39,12 +39,18 @@ namespace WindowsFormsApplication1.ABM_Usuario
                 cmd.Parameters["@contraseñaNueva"].Value = textBox3.Text;
                 cmd.Parameters.Add("@contraseñaVieja", SqlDbType.NVarChar);
                 cmd.Parameters["@contraseñaVieja"].Value = textBox1.Text;
-
+                cmd.Parameters.Add(rdo);
                 cmd.ExecuteNonQuery();
                 MessageBox.Show(rdo.Value.ToString());
+                if (rdo.Value.ToString() == "Contraseña modificada correctamente") { this.Close(); }
             }
             else { MessageBox.Show("La contraseña no coincide"); }
        
+        }
+
+        private void CambiarContraseña_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
