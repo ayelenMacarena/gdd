@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Grid_ComprarOfertar = new System.Windows.Forms.DataGridView();
             this.Label_Buscador = new System.Windows.Forms.Label();
             this.textBuscado = new System.Windows.Forms.TextBox();
@@ -58,9 +58,9 @@
             // 
             this.Grid_ComprarOfertar.AllowUserToAddRows = false;
             this.Grid_ComprarOfertar.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.Desktop;
-            this.Grid_ComprarOfertar.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.Grid_ComprarOfertar.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.Grid_ComprarOfertar.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.Grid_ComprarOfertar.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.Grid_ComprarOfertar.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -163,6 +163,7 @@
             // 
             // comboRubros
             // 
+            this.comboRubros.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboRubros.FormattingEnabled = true;
             this.comboRubros.Location = new System.Drawing.Point(75, 116);
             this.comboRubros.Name = "comboRubros";
@@ -210,6 +211,7 @@
             // 
             // comboTipo
             // 
+            this.comboTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboTipo.FormattingEnabled = true;
             this.comboTipo.Items.AddRange(new object[] {
             "COMPRAS",

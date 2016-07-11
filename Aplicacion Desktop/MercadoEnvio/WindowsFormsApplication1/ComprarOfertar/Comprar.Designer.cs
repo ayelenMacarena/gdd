@@ -104,6 +104,7 @@
             // 
             // comboBoxFormaPago
             // 
+            this.comboBoxFormaPago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFormaPago.FormattingEnabled = true;
             this.comboBoxFormaPago.Items.AddRange(new object[] {
             "Efectivo"});

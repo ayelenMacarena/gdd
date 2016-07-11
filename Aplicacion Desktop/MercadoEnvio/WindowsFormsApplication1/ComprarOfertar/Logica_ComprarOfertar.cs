@@ -33,6 +33,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
                 sqlComando.Parameters.AddWithValue("@tipo", tipo);
                 sqlComando.Parameters.AddWithValue("@terminoBuscado",termino);
                 sqlComando.Parameters.AddWithValue("@rubros", rubros);
+                sqlComando.Parameters.AddWithValue("@fechaSys", ConfigurationManager.AppSettings["dateTimeStamp"].ToString());
 
                 sqlComando.ExecuteNonQuery();
 
@@ -81,7 +82,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
                 sqlComando.Parameters.AddWithValue("@tipo", tipo);
                 sqlComando.Parameters.AddWithValue("@terminoBuscado", termino);
                 sqlComando.Parameters.AddWithValue("@rubros", rubros);
-
+                sqlComando.Parameters.AddWithValue("@fechaSys", ConfigurationManager.AppSettings["dateTimeStamp"].ToString());
 
                 sqlComando.ExecuteNonQuery();
 

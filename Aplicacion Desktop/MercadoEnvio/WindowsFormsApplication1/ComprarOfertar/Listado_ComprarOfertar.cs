@@ -38,12 +38,12 @@ namespace WindowsFormsApplication1.ComprarOfertar
 
             this.buttonComprar.Enabled = false;
             this.buttonOfertar.Enabled = false;
-            
+
             this.labelRubrosSeleccionados.Text = String.Format("");
 
 
             filtroRubros = new List<String>();
-            Logica_ComprarOfertar.llenarComboRubros(this.comboRubros);            
+            Logica_ComprarOfertar.llenarComboRubros(this.comboRubros);
         }
 
 
@@ -75,15 +75,16 @@ namespace WindowsFormsApplication1.ComprarOfertar
             if (tipo == "SUBASTAS")
             {
                 buttonOfertar.Visible = true;
-            }        
+            }
 
-            cantidadDePaginas = Logica_ComprarOfertar.tamanio(registrosPorPagina, cliente, tipo,textBuscado.Text, rubros); ;
+            cantidadDePaginas = Logica_ComprarOfertar.tamanio(registrosPorPagina, cliente, tipo, textBuscado.Text, rubros); ;
 
             this.labelNroPagina.Text = String.Format("{0}", numeroPagina);
             this.label_InfoPagina_CO.Text = String.Format("Paginas {0}", cantidadDePaginas);
             if (this.Grid_ComprarOfertar.ColumnCount > 0)
             {
-                this.Grid_ComprarOfertar.Columns["ID_Publicacion"].Visible = false;
+                this.Grid_ComprarOfertar.Columns["publicacion_id"].Visible = false;
+                this.Grid_ComprarOfertar.Columns["publ_id_vendedor"].Visible = false;
             }
         }
 
@@ -92,7 +93,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
         {
             if (numeroPagina > 1)
             {
-                numeroPagina = numeroPagina-1;
+                numeroPagina = numeroPagina - 1;
                 Mostrar();
             }
         }
@@ -139,8 +140,8 @@ namespace WindowsFormsApplication1.ComprarOfertar
             comboRubros.Text = "";
             filtroRubros = new List<string>();
             Grid_ComprarOfertar.DataSource = null;
-            this.labelNroPagina.Text = String.Empty;
-            this.label_InfoPagina_CO.Text = String.Empty;
+            this.labelNroPagina.Text = "Nº";
+            this.label_InfoPagina_CO.Text = "Paginas";
         }
 
 
@@ -159,7 +160,7 @@ namespace WindowsFormsApplication1.ComprarOfertar
             }
 
             this.numeroPagina = 1;
-            this.Mostrar();          
+            this.Mostrar();
         }
 
         private void Grid_ComprarOfertar_SelectionChanged(object sender, EventArgs e)
@@ -174,13 +175,13 @@ namespace WindowsFormsApplication1.ComprarOfertar
             if (tipo == "SUBASTAS")
             {
                 buttonOfertar.Enabled = true;
-            }        
+            }
         }
 
         private void buttonComprar_Click(object sender, EventArgs e)
         {
             DataGridViewRow filaSeleccionada = Grid_ComprarOfertar.CurrentRow;
-            if (filaSeleccionada == null) { MessageBox.Show("Debe seleccionar una Publicacion."); return;}
+            if (filaSeleccionada == null) { MessageBox.Show("Debe seleccionar una Publicacion."); return; }
             (new ComprarOfertar.Comprar(filaSeleccionada, this, cliente)).Show();
         }
 

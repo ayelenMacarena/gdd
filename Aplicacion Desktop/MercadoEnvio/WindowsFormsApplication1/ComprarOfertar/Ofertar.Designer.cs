@@ -116,6 +116,7 @@
             this.textBoxOferta.Name = "textBoxOferta";
             this.textBoxOferta.Size = new System.Drawing.Size(100, 20);
             this.textBoxOferta.TabIndex = 25;
+            this.textBoxOferta.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.soloNumeros);
             // 
             // labelCantidad
             // 

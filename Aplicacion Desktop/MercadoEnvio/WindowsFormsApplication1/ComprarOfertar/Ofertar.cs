@@ -22,17 +22,18 @@ namespace WindowsFormsApplication1.ComprarOfertar
             fila = filaSeleccionada;
             listado = listadoPubl;
             user = usuario;
-            cantidad.Text = filaSeleccionada.Cells["publ_cantidad"].Value.ToString();
-            labelInfoDescripcion.Text = filaSeleccionada.Cells["publ_descripcion"].Value.ToString();
-            labelInfoVendedor.Text = filaSeleccionada.Cells["publ_id_vendedor"].Value.ToString();
-            textBoxOferta.Text = (Convert.ToInt32(filaSeleccionada.Cells["publ_precio"].Value) + 1).ToString();
-            labelPrice.Text = (Convert.ToDecimal(filaSeleccionada.Cells["publ_precio"].Value)).ToString();
+            cantidad.Text = filaSeleccionada.Cells["Cantidad"].Value.ToString();
+            labelInfoDescripcion.Text = filaSeleccionada.Cells["Descripcion"].Value.ToString();
+            labelInfoVendedor.Text = filaSeleccionada.Cells["Vendedor"].Value.ToString();
+            textBoxOferta.Text = (Convert.ToInt32(filaSeleccionada.Cells["Precio"].Value) + 1).ToString();
+            labelPrice.Text = (Convert.ToDecimal(filaSeleccionada.Cells["Precio"].Value)).ToString();
         }
 
         private void buttonConfirmarCompra_Click(object sender, EventArgs e)
         {
-            if (Convert.ToInt32(textBoxOferta.Text) <= (Convert.ToInt32(this.fila.Cells["publ_precio"].Value))){
-                MessageBox.Show("La oferta debe ser mayor a la actual");}
+            if (Convert.ToInt32(textBoxOferta.Text) <= (Convert.ToInt32(this.fila.Cells["Precio"].Value))){
+                MessageBox.Show("La oferta debe ser mayor a la actual: ${0}",
+                                        Convert.ToString(Convert.ToInt32(this.fila.Cells["Precio"].Value)));}
 
             Logica_ComprarOfertar.Ofertar(Convert.ToInt32(fila.Cells["publicacion_id"].Value), Convert.ToInt32(textBoxOferta.Text), user);
 
@@ -45,6 +46,23 @@ namespace WindowsFormsApplication1.ComprarOfertar
         {
             this.Close();
         }
+
+        private void soloNumeros(object sender, KeyPressEventArgs e)
+        {
+            if (isNumeric(e.KeyChar) || e.KeyChar == 8) { e.Handled = false; }
+            else { e.Handled = true; }
+        }
+
+
+        public bool isNumeric(Char c)
+        {
+            if ((c >= '0' && c <= '9'))
+            {
+                return true;
+            }
+            return false;
+        }
+
 
     }
 }

@@ -1488,7 +1488,8 @@ CREATE PROCEDURE LA_PETER_MACHINE.SP_ListadoComprarOfertar
 @cliente INT,
 @tipo VARCHAR(8),
 @terminoBuscado as varchar(255),
-@rubros as varchar(255))
+@rubros as varchar(255),
+@fechaSys nvarchar(255))
 AS
 	DECLARE @ID_TIPO INT
 
@@ -1504,8 +1505,8 @@ AS
 			SET @ID_TIPO = 1
 		END	
 		
-	SELECT publicacion_id as ID_Publicacion, publ_descripcion as Descripcion, publ_cantidad as Cantidad, publ_precio as Precio,
-			(select pers_username from LA_PETER_MACHINE.persona where pers_id = publ_id_vendedor ) as Vendedor
+	SELECT publicacion_id, publ_descripcion as Descripcion, publ_cantidad as Cantidad, publ_precio as Precio,
+			(select pers_username from LA_PETER_MACHINE.persona where pers_id = publ_id_vendedor) as Vendedor, publ_id_vendedor
 		FROM LA_PETER_MACHINE.publicacion JOIN LA_PETER_MACHINE.ListaATabla_ComprarOfertar(@rubros) r on publ_cod_rubro = r.number,
 			 LA_PETER_MACHINE.estado, LA_PETER_MACHINE.tipo		
 		WHERE  publ_id_vendedor != @cliente
@@ -1513,7 +1514,9 @@ AS
 			and publ_id_tipo = @ID_TIPO
 			and	publ_descripcion LIKE '%' + @terminoBuscado + '%'
 			and publ_cantidad > 0
-		GROUP BY publicacion_id, publ_descripcion, publ_precio, publ_id_vendedor, publ_id_tipo, publ_cantidad, publ_cod_visibilidad
+			and (CONVERT(datetime,@fechaSys,121)) > publ_fecha_inicio
+			and (CONVERT(datetime,@fechaSys,121)) < publ_fecha_fin
+		GROUP BY publicacion_id, publ_descripcion, publ_precio, publ_id_vendedor, publ_cantidad, publ_cod_visibilidad
 		ORDER BY publ_cod_visibilidad asc
 
 	OFFSET (@numerosPagina - 1) * @registrosPorPagina ROWS
@@ -1527,7 +1530,8 @@ CREATE PROCEDURE LA_PETER_MACHINE.SP_Cantidad_Paginas_ComprarOfertar
 @cliente INT,
 @tipo VARCHAR(8),
 @terminoBuscado as varchar(255),
-@rubros as varchar(255))
+@rubros as varchar(255),
+@fechaSys nvarchar(255))
 AS
 
 DECLARE @cantidadFilas int
@@ -1555,7 +1559,9 @@ DECLARE @cantidadFilas int
 						and publ_id_estado = estado_id and esta_descripcion = 'Activa'
 						and publ_id_tipo = @ID_TIPO
 						and	publ_descripcion LIKE '%' + @terminoBuscado + '%'
-						and publ_cantidad > 0)						
+						and publ_cantidad > 0
+						and (CONVERT(datetime,@fechaSys,121)) > publ_fecha_inicio
+						and (CONVERT(datetime,@fechaSys,121)) < publ_fecha_fin)						
 		SET @totalDePaginas = @cantidadFilas / @registrosPorPagina
 		IF (@cantidadFilas % @registrosPorPagina) > 0
 			BEGIN
@@ -2015,7 +2021,7 @@ insert into LA_PETER_MACHINE.empresa(empr_razon_social,empr_cuit,empr_id_persona
 		(select rubr_cod from LA_PETER_MACHINE.rubro where rubr_descripcion_corta = Publicacion_Rubro_Descripcion),
 		(select visi_cod from LA_PETER_MACHINE.visibilidad where visi_cod = Publicacion_Visibilidad_Cod),
 		(select pers_id from LA_PETER_MACHINE.persona where Publ_Empresa_Mail = pers_mail OR Publ_Cli_Mail = pers_mail),
-		(select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Activa'),
+		(select estado_id from LA_PETER_MACHINE.estado where esta_descripcion = 'Finalizada'),
 		Publicacion_Fecha, Publicacion_Fecha_Venc, 1, Publicacion_Stock, 
 		(select tipo_id from LA_PETER_MACHINE.tipo where Publicacion_Tipo = tipo_descripcion),0
 		from gd_esquema.Maestra
